@@ -1,12 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MyDocAppointment.BusinessLayer.Data;
+using MyDocAppointment.BusinessLayer.Entities;
 
 namespace MyDocAppointment.BusinessLayer.Repositories
 {
-    internal class DoctorRepository
+    public class DoctorRepository
     {
+        private readonly MyDocAppointmentDatabaseContext context;
+
+        public void Add(Doctor doctor)
+        {
+            this.context.Add(doctor);
+            this.context.SaveChanges();
+        }
+
+        public void Update(Doctor doctor)
+        {
+            this.context.Update(doctor);
+            this.context.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var doctor = this.context.Doctors.FirstOrDefault(d => d.Id == id);
+
+            if (doctor == null)
+            {
+                throw new ArgumentException($"There is no doctor with given id: {id}");
+            }
+            this.context.Doctors.Remove(doctor);
+            this.context.SaveChanges();
+        }
     }
 }

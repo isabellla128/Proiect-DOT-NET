@@ -14,7 +14,7 @@
 
         public String Specializtion { get; set; }
 
-        public Hospial Hospial { get; set; }
+        public Hospital Hospial { get; set; }
 
     }
 }
