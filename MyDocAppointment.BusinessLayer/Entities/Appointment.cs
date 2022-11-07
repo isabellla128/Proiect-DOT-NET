@@ -11,6 +11,10 @@ namespace MyDocAppointment.BusinessLayer.Entities
 {
     public class Appointment
     {
+        public Appointment()
+        {
+        }
+
         public Appointment(Patient patient, Doctor doctor, DateTime startTime, DateTime endTime)
         {
             Doctor = doctor;

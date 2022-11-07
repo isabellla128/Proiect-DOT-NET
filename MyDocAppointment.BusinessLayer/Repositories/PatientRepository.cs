@@ -40,7 +40,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
 
         public void Delete(int id)
         {
-            var patient = this.context.Patients.FirstOrDefault(patient => patient.Id, id);
+            var patient = this.context.Patients.FirstOrDefault(patient => patient.Id == id);
             this.context.Patients.Remove(patient);
             this.context.Patients.Remove(GetById(id));
         }
