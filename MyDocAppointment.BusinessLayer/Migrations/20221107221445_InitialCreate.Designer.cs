@@ -11,7 +11,7 @@ using MyDocAppointment.BusinessLayer.Data;
 namespace MyDocAppointment.BusinessLayer.Migrations
 {
     [DbContext(typeof(MyDocAppointmentDatabaseContext))]
-    [Migration("20221107220749_InitialCreate")]
+    [Migration("20221107221445_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
