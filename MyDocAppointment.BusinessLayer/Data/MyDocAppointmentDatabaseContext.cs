@@ -12,6 +12,8 @@ namespace MyDocAppointment.BusinessLayer.Data
             optionsBuilder.UseSqlite("Data Source = MyDocAppointmentManagement.db");
         }
 
+        public DbSet<Doctor> Doctors { get; set; }
+
         public DbSet<Medication> Medications { get; set; }
 
         public DbSet<Prescription> Prescriptions { get; set; }
