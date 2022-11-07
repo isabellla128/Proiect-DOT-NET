@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyDocAppointment.BusinessLayer.Entities;
 
 namespace MyDocAppointment.BusinessLayer.Data
 {
@@ -8,5 +9,7 @@ namespace MyDocAppointment.BusinessLayer.Data
         {
             optionsBuilder.UseSqlite("Data Source = MyDocAppointmentManagement.db");
         }
+
+        public DbSet<Doctor> Doctors { get; set; }
     }
 }

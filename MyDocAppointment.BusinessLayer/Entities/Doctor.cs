@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyDocAppointment.BusinessLayer.Entities
+﻿namespace MyDocAppointment.BusinessLayer.Entities
 {
-    internal class Doctor
+    public class Doctor
     {
+        public Doctor(int id)
+        {
+            Id = id;
+        }
+
+        public int Id { get; private set; }
+
+        public String FirstName { get; set; }
+        public String LastName { get; set; }
+
+        public String Specializtion { get; set; }
+
+        public Hospial Hospial { get; set; }
+
     }
 }
