@@ -2,17 +2,20 @@
 {
     public class Schedule
     {
-        public Schedule(int id, DateTime startDate, DateTime endDate, ICollection<Event> events)
+        public Schedule()
         {
-            Id = id;
+
+        }
+        public Schedule(DateTime startDate, DateTime endDate, ICollection<Event> events)
+        {
             StartDate = startDate;
             EndDate = endDate;
             Events = events;
         }
 
-        public int Id { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public int Id { get; private set; }
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
 
         public ICollection<Event> Events { get; set; }
 

@@ -2,17 +2,20 @@
 {
     public class Event
     {
-        public Event(int id, string name, DateTime startDate, DateTime endDate)
+        public Event()
         {
-            Id = id;
+
+        }
+        public Event(string name, DateTime startDate, DateTime endDate)
+        {
             Name = name;
             StartDate = startDate;
             EndDate = endDate;
         }
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
 
         public bool ValidateName()
         {

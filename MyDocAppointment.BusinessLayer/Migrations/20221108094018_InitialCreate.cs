@@ -46,7 +46,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false),
-                    Specializtion = table.Column<string>(type: "TEXT", nullable: false),
+                    Specialization = table.Column<string>(type: "TEXT", nullable: false),
                     HospialId = table.Column<int>(type: "INTEGER", nullable: false),
                     PatientId = table.Column<int>(type: "INTEGER", nullable: true)
                 },

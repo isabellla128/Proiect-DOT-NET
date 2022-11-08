@@ -2,20 +2,23 @@
 {
     public class History
     {
-        public History(int id, Medication medication, DateTime startDate, DateTime endDate)
+        public History()
         {
-            Id = id;
+
+        }
+        public History(Medication medication, DateTime startDate, DateTime endDate)
+        {
             Medication = medication;
             StartDate = startDate;
             EndDate = endDate;
         }
 
-        public int Id { get; set; }
-        public Medication Medication { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public int Id { get; private set; }
+        public Medication Medication { get; private set; }
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
 
-        public bool isStartDateValid() => DateTime.Now < StartDate;
+        public bool IsStartDateValid() => DateTime.Now < StartDate;
 
     }
 }

@@ -4,17 +4,23 @@
     {
         private const string SEPARATOR = ", ";
 
-        public Doctor(int id)
+        public Doctor()
         {
-            Id = id;
+
+        }
+        public Doctor(string firstName, string lastName, string specialization)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Specialization = specialization;
         }
 
         public int Id { get; private set; }
 
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
 
-        public String FullName
+        public string FullName
         {
             get
             {
@@ -22,7 +28,7 @@
             }
         }
 
-        public String Specializtion { get; set; }
+        public string Specialization { get; private set; }
 
         public Hospital Hospial { get; set; }
 

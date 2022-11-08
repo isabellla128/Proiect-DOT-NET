@@ -13,11 +13,11 @@
             Patient = patient;
             Medications = medications;
         }
-        public int Id { get; set; }
+        public int Id { get; private set; }
 
-        public Doctor Doctor { get; set; }
+        public Doctor Doctor { get; private set; }
 
-        public Patient Patient { get; set; }
+        public Patient Patient { get; private set; }
 
         public ICollection<Medication> Medications { get; set; }
     }

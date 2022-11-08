@@ -64,7 +64,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.Property<int?>("PatientId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Specializtion")
+                    b.Property<string>("Specialization")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
