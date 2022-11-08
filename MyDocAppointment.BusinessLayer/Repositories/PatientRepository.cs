@@ -1,5 +1,6 @@
 ﻿using MyDocAppointment.BusinessLayer.Data;
 using MyDocAppointment.BusinessLayer.Entities;
+using MyDocAppointment.BusinessLayer.Repositories.Interfaces;
 using System.Net.Sockets;
 
 namespace MyDocAppointment.BusinessLayer.Repositories

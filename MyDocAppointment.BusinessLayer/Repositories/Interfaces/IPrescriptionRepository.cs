@@ -1,6 +1,6 @@
 ﻿using MyDocAppointment.BusinessLayer.Entities;
 
-namespace MyDocAppointment.BusinessLayer.Repositories
+namespace MyDocAppointment.BusinessLayer.Repositories.Interfaces
 {
     public interface IPrescriptionRepository
     {
