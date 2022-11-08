@@ -39,5 +39,6 @@ namespace MyDocAppointment.BusinessLayer.Repositories
         {
             return context.Doctors.ToList();
         }
+
     }
 }
