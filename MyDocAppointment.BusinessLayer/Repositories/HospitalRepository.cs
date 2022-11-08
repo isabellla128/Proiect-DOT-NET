@@ -1,15 +1,10 @@
 ﻿using MyDocAppointment.BusinessLayer.Data;
 using MyDocAppointment.BusinessLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using MyDocAppointment.BusinessLayer.Repositories.Interfaces;
 
 namespace MyDocAppointment.BusinessLayer.Repositories
 {
-    public class HospitalRepository
+    public class HospitalRepository : IHospitalRepository
     {
         private readonly MyDocAppointmentDatabaseContext context;
         public HospitalRepository(MyDocAppointmentDatabaseContext context)
@@ -28,8 +23,14 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             context.Update(hospital);
             context.SaveChanges();
         }
-        public void Delete(Hospital hospital)
+        public void Delete(int id)
         {
+            var hospital = this.context.Hospitals.FirstOrDefault(d => d.Id == id);
+
+            if (hospital == null)
+            {
+                throw new ArgumentException($"There is no hospital with given id: {id}");
+            }
             context.Hospitals.Remove(hospital);
             context.SaveChanges();
         }

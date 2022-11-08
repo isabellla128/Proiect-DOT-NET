@@ -1,10 +1,7 @@
 ﻿using MyDocAppointment.BusinessLayer.Data;
 using MyDocAppointment.BusinessLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MyDocAppointment.BusinessLayer.Repositories.Interfaces;
+using System.Net.Sockets;
 
 namespace MyDocAppointment.BusinessLayer.Repositories
 {
@@ -41,8 +38,12 @@ namespace MyDocAppointment.BusinessLayer.Repositories
         public void Delete(int id)
         {
             var patient = this.context.Patients.FirstOrDefault(patient => patient.Id == id);
+            if (patient == null)
+            {
+                throw new ArgumentException($"There is no patient with given id: {id}");
+            }
             this.context.Patients.Remove(patient);
-            this.context.Patients.Remove(GetById(id));
+            this.context.SaveChanges();
         }
     }
 }

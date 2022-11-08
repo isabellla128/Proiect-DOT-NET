@@ -7,17 +7,17 @@
 
         }
 
-        public Prescription(int id_doctor, int id_pacient, ICollection<Medication> medications)
+        public Prescription(Doctor doctor, Patient patient, ICollection<Medication> medications)
         {
-            Id_doctor = id_doctor;
-            Id_pacient = id_pacient;
+            Doctor = doctor;
+            Patient = patient;
             Medications = medications;
         }
         public int Id { get; set; }
 
-        public int Id_doctor { get; set; }
+        public Doctor Doctor { get; set; }
 
-        public int Id_pacient { get; set; }
+        public Patient Patient { get; set; }
 
         public ICollection<Medication> Medications { get; set; }
     }
