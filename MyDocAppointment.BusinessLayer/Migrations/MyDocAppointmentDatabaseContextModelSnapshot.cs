@@ -148,13 +148,17 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Id_doctor")
+                    b.Property<int>("DoctorId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Id_pacient")
+                    b.Property<int>("PatientId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Prescriptions");
                 });
@@ -198,6 +202,25 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.Prescription", null)
                         .WithMany("Medications")
                         .HasForeignKey("PrescriptionId");
+                });
+
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Prescription", b =>
+                {
+                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Patient", b =>

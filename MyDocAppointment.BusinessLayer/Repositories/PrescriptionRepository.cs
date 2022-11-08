@@ -3,7 +3,7 @@ using MyDocAppointment.BusinessLayer.Entities;
 
 namespace MyDocAppointment.BusinessLayer.Repositories
 {
-    public class PrescriptionRepository
+    public class PrescriptionRepository : IPrescriptionRepository
     {
         private readonly MyDocAppointmentDatabaseContext context;
         public PrescriptionRepository(MyDocAppointmentDatabaseContext context)
@@ -39,6 +39,10 @@ namespace MyDocAppointment.BusinessLayer.Repositories
         public void Delete(int id)
         {
             var prescription = this.context.Prescriptions.FirstOrDefault(c => c.Id == id);
+            if (prescription == null)
+            {
+                throw new ArgumentException($"There is no prescription with given id: {id}");
+            }
             this.context.Prescriptions.Remove(prescription);
             this.context.SaveChanges();
         }
@@ -46,6 +50,10 @@ namespace MyDocAppointment.BusinessLayer.Repositories
         public void AddMedication(int id, Medication medication)
         {
             var prescription = this.context.Prescriptions.FirstOrDefault(c => c.Id == id);
+            if (prescription == null)
+            {
+                throw new ArgumentException($"There is no prescription with given id: {id}");
+            }
             prescription.Medications.Add(medication);
             this.context.Update(prescription);
             this.context.SaveChanges();

@@ -3,7 +3,7 @@ using MyDocAppointment.BusinessLayer.Entities;
 
 namespace MyDocAppointment.BusinessLayer.Repositories
 {
-    public class DoctorRepository
+    public class DoctorRepository : IDoctorRepository
     {
         private readonly MyDocAppointmentDatabaseContext context;
 
