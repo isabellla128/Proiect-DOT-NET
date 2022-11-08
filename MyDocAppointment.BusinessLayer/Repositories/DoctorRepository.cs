@@ -30,5 +30,14 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             this.context.Doctors.Remove(doctor);
             this.context.SaveChanges();
         }
+
+        public Doctor? GetById(int id)
+        {
+            return context.Doctors.FirstOrDefault(d => d.Id == id);
+        }
+        public IEnumerable<Doctor> GetAll()
+        {
+            return context.Doctors.ToList();
+        }
     }
 }
