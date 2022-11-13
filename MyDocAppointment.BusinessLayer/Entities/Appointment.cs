@@ -2,17 +2,13 @@
 {
     public class Appointment
     {
-        public Appointment()
-        {
-        }
 
-        public Appointment(Patient patient, Doctor doctor, DateTime startTime, DateTime endTime)
+        public Appointment(DateTime startTime, DateTime endTime)
         {
-            Doctor = doctor;
-            Patient = patient;
             StartTime = startTime;
             EndTime = endTime;
         }
+        //todo add doctor and patient
 
         public int Id { get; private set; }
         public Doctor Doctor { get; private set; }

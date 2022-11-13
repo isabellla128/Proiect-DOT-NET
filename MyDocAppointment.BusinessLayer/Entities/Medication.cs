@@ -2,10 +2,6 @@
 {
     public class Medication
     {
-        public Medication()
-        {
-
-        }
         public Medication(string name, int stock = 0)
         {
             Name = name;

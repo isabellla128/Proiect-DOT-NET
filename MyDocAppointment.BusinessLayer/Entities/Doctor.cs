@@ -4,11 +4,7 @@
     {
         private const string SEPARATOR = ", ";
 
-        public Doctor()
-        {
-
-        }
-        public Doctor(string firstName, string lastName, string specialization)
+        public Doctor(string firstName, string lastName, string specialization, string email, string phone)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -19,6 +15,8 @@
 
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
+        public string Specialization { get; private set; }
+
 
         public string FullName
         {
@@ -27,8 +25,6 @@
                 return FirstName + SEPARATOR + LastName;
             }
         }
-
-        public string Specialization { get; private set; }
 
         public Hospital Hospial { get; set; }
 

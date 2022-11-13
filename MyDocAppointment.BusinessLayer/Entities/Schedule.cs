@@ -2,10 +2,6 @@
 {
     public class Schedule
     {
-        public Schedule()
-        {
-
-        }
         public Schedule(DateTime startDate, DateTime endDate, ICollection<Event> events)
         {
             StartDate = startDate;

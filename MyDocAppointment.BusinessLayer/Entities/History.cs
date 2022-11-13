@@ -2,13 +2,8 @@
 {
     public class History
     {
-        public History()
+        public History(DateTime startDate, DateTime endDate)
         {
-
-        }
-        public History(Medication medication, DateTime startDate, DateTime endDate)
-        {
-            Medication = medication;
             StartDate = startDate;
             EndDate = endDate;
         }

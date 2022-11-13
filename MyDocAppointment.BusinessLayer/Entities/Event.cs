@@ -2,10 +2,6 @@
 {
     public class Event
     {
-        public Event()
-        {
-
-        }
         public Event(string name, DateTime startDate, DateTime endDate)
         {
             Name = name;

@@ -2,17 +2,13 @@
 {
     public class Prescription
     {
-        public Prescription()
-        {
 
-        }
-
-        public Prescription(Doctor doctor, Patient patient, ICollection<Medication> medications)
+        public Prescription(ICollection<Medication> medications)
         {
-            Doctor = doctor;
-            Patient = patient;
             Medications = medications;
         }
+
+        //todo add doctor and pacient
         public int Id { get; private set; }
 
         public Doctor Doctor { get; private set; }
