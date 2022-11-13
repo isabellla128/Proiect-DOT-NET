@@ -9,6 +9,8 @@
             FirstName = firstName;
             LastName = lastName;
             Specialization = specialization;
+            Email = email; 
+            Phone = phone;
         }
 
         public int Id { get; private set; }
@@ -17,6 +19,13 @@
         public string LastName { get; private set; }
         public string Specialization { get; private set; }
 
+        public string Email { get; private set; }
+
+        public string Phone { get; private set; }
+
+        public Hospital Hospial { get; set; }
+
+        public int HospitalId { get; set; }
 
         public string FullName
         {
@@ -26,7 +35,6 @@
             }
         }
 
-        public Hospital Hospial { get; set; }
 
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace MyDocAppointment.BusinessLayer.Entities
+﻿using System.Security.Principal;
+
+namespace MyDocAppointment.BusinessLayer.Entities
 {
     public class Hospital
     {
@@ -7,6 +9,7 @@
             Name = name;
             Address = address;
             Phone = phone;
+            Doctors = new List<Doctor>();
         }
 
         public int Id { get; private set; }
@@ -14,6 +17,7 @@
         public string Address { get; private set; }
         public string Phone { get; private set; }
 
+        public ICollection<Doctor> Doctors { get; set; }
         public bool Validate()
         {
             var isValid = true;

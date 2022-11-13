@@ -9,7 +9,8 @@
         }
 
         public int Id { get; private set; }
-        public Medication Medication { get; private set; }
+
+        public ICollection<Medication> Medications { get; set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
 

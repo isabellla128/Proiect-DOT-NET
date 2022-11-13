@@ -11,7 +11,7 @@ using MyDocAppointment.BusinessLayer.Data;
 namespace MyDocAppointment.BusinessLayer.Migrations
 {
     [DbContext(typeof(MyDocAppointmentDatabaseContext))]
-    [Migration("20221108094018_InitialCreate")]
+    [Migration("20221113213542_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,11 +52,15 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("HospialId")
+                    b.Property<int>("HospitalId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
@@ -66,13 +70,17 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.Property<int?>("PatientId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Specialization")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HospialId");
+                    b.HasIndex("HospitalId");
 
                     b.HasIndex("PatientId");
 
@@ -131,11 +139,19 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -187,8 +203,8 @@ namespace MyDocAppointment.BusinessLayer.Migrations
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Doctor", b =>
                 {
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.Hospital", "Hospial")
-                        .WithMany()
-                        .HasForeignKey("HospialId")
+                        .WithMany("Doctors")
+                        .HasForeignKey("HospitalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -223,6 +239,11 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Hospital", b =>
+                {
+                    b.Navigation("Doctors");
                 });
 
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Patient", b =>

@@ -31,7 +31,9 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
-                    LastName = table.Column<string>(type: "TEXT", nullable: false)
+                    LastName = table.Column<string>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
+                    Phone = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,15 +49,17 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false),
                     Specialization = table.Column<string>(type: "TEXT", nullable: false),
-                    HospialId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
+                    Phone = table.Column<string>(type: "TEXT", nullable: false),
+                    HospitalId = table.Column<int>(type: "INTEGER", nullable: false),
                     PatientId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Doctors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Doctors_Hospitals_HospialId",
-                        column: x => x.HospialId,
+                        name: "FK_Doctors_Hospitals_HospitalId",
+                        column: x => x.HospitalId,
                         principalTable: "Hospitals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -151,9 +155,9 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 column: "PatientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Doctors_HospialId",
+                name: "IX_Doctors_HospitalId",
                 table: "Doctors",
-                column: "HospialId");
+                column: "HospitalId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Doctors_PatientId",
