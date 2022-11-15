@@ -14,7 +14,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             this.context = context;
         }
 
-        public Patient? GetById(int id)
+        public Patient? GetById(Guid id)
         {
             return this.context.Patients.FirstOrDefault(patient => patient.Id == id);
         }
@@ -35,7 +35,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             this.context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var patient = this.context.Patients.FirstOrDefault(patient => patient.Id == id);
             if (patient == null)

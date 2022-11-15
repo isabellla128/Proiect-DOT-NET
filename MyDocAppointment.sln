@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyDocAppointment.BusinessLa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{28700E37-8FA0-4AC8-8C45-1B2F71F0AEAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDocAppointment.BusinessLayer.Tests", "MyDocAppointment.BusinessLayer.Tests\MyDocAppointment.BusinessLayer.Tests.csproj", "{FBB9B323-2173-466D-AA66-44D516DA9015}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyDocAppointment.BusinessLayer.Tests", "MyDocAppointment.BusinessLayer.Tests\MyDocAppointment.BusinessLayer.Tests.csproj", "{FBB9B323-2173-466D-AA66-44D516DA9015}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDocAppointement.API", "MyDocAppointement.API\MyDocAppointement.API.csproj", "{7E6F5947-7887-47B3-864D-46231689F7D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +25,17 @@ Global
 		{FBB9B323-2173-466D-AA66-44D516DA9015}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBB9B323-2173-466D-AA66-44D516DA9015}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBB9B323-2173-466D-AA66-44D516DA9015}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E6F5947-7887-47B3-864D-46231689F7D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E6F5947-7887-47B3-864D-46231689F7D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E6F5947-7887-47B3-864D-46231689F7D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E6F5947-7887-47B3-864D-46231689F7D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FBB9B323-2173-466D-AA66-44D516DA9015} = {28700E37-8FA0-4AC8-8C45-1B2F71F0AEAF}
+		{7E6F5947-7887-47B3-864D-46231689F7D7} = {28700E37-8FA0-4AC8-8C45-1B2F71F0AEAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {442B6AE6-454F-4C74-92A8-6106E582BACD}

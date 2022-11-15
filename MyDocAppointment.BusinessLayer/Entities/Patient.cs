@@ -5,13 +5,14 @@ namespace MyDocAppointment.BusinessLayer.Entities
     {
         public Patient(string firstName, string lastName, string email, string phone)
         {
+            Id = Guid.NewGuid();
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             Phone = phone;
         }
 
-        public int Id { get; private set; }
+        public Guid Id { get; private set; }
 
         public string FirstName { get; private set; }
 
@@ -21,7 +22,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
 
         public string Phone { get; private set; }
 
-        public ICollection<Doctor> Doctors { get; set; }
+        public ICollection<Doctor> Doctors { get; private set; }
 
     }
 

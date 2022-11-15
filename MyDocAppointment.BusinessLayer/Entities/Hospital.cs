@@ -1,4 +1,7 @@
-﻿using System.Security.Principal;
+﻿using System.Net.Http.Headers;
+using System.Reflection.Metadata.Ecma335;
+using System.Security.Principal;
+using ShelterManagement.Business.Helpers;
 
 namespace MyDocAppointment.BusinessLayer.Entities
 {
@@ -6,18 +9,19 @@ namespace MyDocAppointment.BusinessLayer.Entities
     {
         public Hospital(string name, string address, string phone)
         {
+            Id = Guid.NewGuid();
             Name = name;
             Address = address;
             Phone = phone;
             Doctors = new List<Doctor>();
         }
 
-        public int Id { get; private set; }
+        public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string Address { get; private set; }
         public string Phone { get; private set; }
 
-        public ICollection<Doctor> Doctors { get; set; }
+        public ICollection<Doctor> Doctors { get; private set; }
         public bool Validate()
         {
             var isValid = true;
@@ -34,6 +38,22 @@ namespace MyDocAppointment.BusinessLayer.Entities
                 isValid = false;
             }
             return isValid;
+        }
+
+        public Result AddDoctors(List<Doctor> doctors)
+        {
+            if (!doctors.Any())
+            {
+                return Result.Failure("you must add at least a doctor");
+            }
+            doctors.ForEach(d =>
+            {
+                if (!Doctors.Contains(d))
+                {
+                    Doctors.Add(d);
+                }
+            });
+            return Result.Success();
         }
 
     }

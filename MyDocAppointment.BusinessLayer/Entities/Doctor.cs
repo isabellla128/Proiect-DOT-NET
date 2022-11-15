@@ -6,6 +6,7 @@
 
         public Doctor(string firstName, string lastName, string specialization, string email, string phone)
         {
+            Id = Guid.NewGuid();
             FirstName = firstName;
             LastName = lastName;
             Specialization = specialization;
@@ -13,7 +14,7 @@
             Phone = phone;
         }
 
-        public int Id { get; private set; }
+        public Guid Id { get; private set; }
 
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
@@ -23,9 +24,9 @@
 
         public string Phone { get; private set; }
 
-        public Hospital Hospial { get; set; }
+        public Hospital Hospial { get; private set; }
 
-        public int HospitalId { get; set; }
+        public int HospitalId { get; private set; }
 
         public string FullName
         {

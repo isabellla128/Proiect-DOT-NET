@@ -20,7 +20,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             this.context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var doctor = this.context.Doctors.FirstOrDefault(d => d.Id == id);
 
@@ -32,7 +32,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             this.context.SaveChanges();
         }
 
-        public Doctor? GetById(int id)
+        public Doctor? GetById(Guid id)
         {
             return context.Doctors.FirstOrDefault(d => d.Id == id);
         }

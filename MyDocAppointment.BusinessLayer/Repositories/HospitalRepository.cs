@@ -23,7 +23,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             context.Update(hospital);
             context.SaveChanges();
         }
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var hospital = this.context.Hospitals.FirstOrDefault(d => d.Id == id);
 
@@ -34,7 +34,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             context.Hospitals.Remove(hospital);
             context.SaveChanges();
         }
-        public Hospital? GetById(int id)
+        public Hospital? GetById(Guid id)
         {
             return context.Hospitals.FirstOrDefault(c => c.Id == id);
         }

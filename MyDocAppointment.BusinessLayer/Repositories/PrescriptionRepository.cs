@@ -13,7 +13,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
         }
 
         //queries
-        public Prescription? GetById(int id)
+        public Prescription? GetById(Guid id)
         {
             return this.context.Prescriptions.FirstOrDefault(c => c.Id == id);
         }
@@ -37,7 +37,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             this.context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var prescription = this.context.Prescriptions.FirstOrDefault(c => c.Id == id);
             if (prescription == null)
@@ -48,7 +48,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             this.context.SaveChanges();
         }
 
-        public void AddMedication(int id, Medication medication)
+        public void AddMedication(Guid id, Medication medication)
         {
             var prescription = this.context.Prescriptions.FirstOrDefault(c => c.Id == id);
             if (prescription == null)

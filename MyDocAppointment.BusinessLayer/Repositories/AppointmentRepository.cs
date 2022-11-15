@@ -22,7 +22,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             context.Update(appointment);
             context.SaveChanges();
         }
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var appointment = this.context.Appointments.FirstOrDefault(appointment => appointment.Id == id);
             if (appointment == null)
@@ -32,13 +32,23 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             context.Appointments.Remove(appointment);
             context.SaveChanges();
         }
-        public Appointment? GetById(int id)
+        public Appointment? GetById(Guid id)
         {
             return context.Appointments.FirstOrDefault(c => c.Id == id);
         }
         public IEnumerable<Appointment> GetAll()
         {
             return context.Appointments.ToList();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Appointment? GetById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

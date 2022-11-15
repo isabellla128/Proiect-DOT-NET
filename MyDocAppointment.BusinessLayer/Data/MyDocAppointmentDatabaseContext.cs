@@ -5,11 +5,6 @@ namespace MyDocAppointment.BusinessLayer.Data
 {
     public class MyDocAppointmentDatabaseContext : DbContext
     {
-        public MyDocAppointmentDatabaseContext()
-        {
-            this.Database.EnsureCreated();
-        }
-
         public DbSet<Hospital> Hospitals { get; set; }
 
         public DbSet<Appointment> Appointments { get; set; }
