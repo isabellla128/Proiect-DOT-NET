@@ -9,10 +9,10 @@ namespace MyDocAppointment.BusinessLayer.Repositories
 {
     public interface IRepository<T>
     {
-        void Add(T entity);
-        void Delete(Guid id);
-        IEnumerable<Doctor> GetAll();
+        T Add(T entity);
+        T Delete(Guid id);
+        IEnumerable<T> GetAll();
         T? GetById(Guid id);
-        void Update(T entity);
+        T Update(T entity);
     }
 }

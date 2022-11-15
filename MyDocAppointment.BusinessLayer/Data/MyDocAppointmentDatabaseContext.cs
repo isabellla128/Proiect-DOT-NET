@@ -5,17 +5,17 @@ namespace MyDocAppointment.BusinessLayer.Data
 {
     public class MyDocAppointmentDatabaseContext : DbContext
     {
-        public DbSet<Hospital> Hospitals { get; set; }
+        public DbSet<Hospital> Hospitals => Set<Hospital>();
 
-        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Appointment> Appointments => Set<Appointment>();
 
-        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Patient> Patients => Set<Patient>();
 
-        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Doctor> Doctors => Set<Doctor>();
 
-        public DbSet<Medication> Medications { get; set; }
+        public DbSet<Medication> Medications => Set<Medication>();
 
-        public DbSet<Prescription> Prescriptions { get; set; }
+        public DbSet<Prescription> Prescriptions => Set<Prescription>();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

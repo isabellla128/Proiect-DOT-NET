@@ -17,29 +17,37 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             this.context = context;
         }
 
-        public void Add(T entity)
+        public virtual T Add(T entity)
         {
             context.Add(entity);
+            return entity;
         }
 
-        public void Delete(Guid id)
+        public virtual T Delete(Guid id)
         {
-            var t = context.;
+            var entity = context.Find<T>(id);
+            if (entity == null)
+            {
+                throw new ArgumentException($"There is no {typeof(T).Name} with id = {id}");
+            }
+            context.Remove(entity);
+            return entity;
         }
 
-        public IEnumerable<Doctor> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return context.Set<T>().ToList();
         }
 
-        public T? GetById(Guid id)
+        public virtual T? GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return context.Find<T>(id);
         }
 
-        public void Update(T entity)
+        public virtual T Update(T entity)
         {
-            throw new NotImplementedException();
+            context.Update(entity);
+            return entity;
         }
     }
 }
