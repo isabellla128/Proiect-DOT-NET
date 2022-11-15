@@ -1,7 +1,4 @@
-﻿using System.Net.Http.Headers;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Principal;
-using ShelterManagement.Business.Helpers;
+﻿using ShelterManagement.Business.Helpers;
 
 namespace MyDocAppointment.BusinessLayer.Entities
 {

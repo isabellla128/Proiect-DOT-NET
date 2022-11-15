@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{28700E37
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyDocAppointment.BusinessLayer.Tests", "MyDocAppointment.BusinessLayer.Tests\MyDocAppointment.BusinessLayer.Tests.csproj", "{FBB9B323-2173-466D-AA66-44D516DA9015}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDocAppointment.API", "MyDocAppointment.API\MyDocAppointment.API.csproj", "{3DC71596-D86D-407A-99B4-D56A22495F04}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,10 +23,6 @@ Global
 		{FBB9B323-2173-466D-AA66-44D516DA9015}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBB9B323-2173-466D-AA66-44D516DA9015}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBB9B323-2173-466D-AA66-44D516DA9015}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3DC71596-D86D-407A-99B4-D56A22495F04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3DC71596-D86D-407A-99B4-D56A22495F04}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3DC71596-D86D-407A-99B4-D56A22495F04}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3DC71596-D86D-407A-99B4-D56A22495F04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

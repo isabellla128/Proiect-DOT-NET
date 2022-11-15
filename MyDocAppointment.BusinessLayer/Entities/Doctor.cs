@@ -26,7 +26,7 @@
 
         public Hospital Hospial { get; private set; }
 
-        public int HospitalId { get; private set; }
+        public Guid HospitalId { get; private set; }
 
         public string FullName
         {

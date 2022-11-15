@@ -1,5 +1,4 @@
 ﻿using MyDocAppointment.BusinessLayer.Entities;
-using Xunit.Sdk;
 
 namespace MyDocAppointment.BusinessLayer.Tests
 {
