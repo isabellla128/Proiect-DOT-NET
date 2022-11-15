@@ -4,7 +4,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
 {
     public abstract class Repository<T> : IRepository<T> where T : class
     {
-        private readonly MyDocAppointmentDatabaseContext context;
+        protected MyDocAppointmentDatabaseContext context;
 
         public Repository(MyDocAppointmentDatabaseContext context)
         {
@@ -14,6 +14,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
         public virtual T Add(T entity)
         {
             context.Add(entity);
+            //context.SaveChanges();
             return entity;
         }
 
@@ -25,6 +26,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
                 throw new ArgumentException($"There is no {typeof(T).Name} with id = {id}");
             }
             context.Remove(entity);
+            //context.SaveChanges();
             return entity;
         }
 
@@ -38,9 +40,15 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             return context.Find<T>(id);
         }
 
+        public void SaveChanges()
+        {
+            context.SaveChanges();
+        }
+
         public virtual T Update(T entity)
         {
             context.Update(entity);
+            //context.SaveChanges();
             return entity;
         }
     }

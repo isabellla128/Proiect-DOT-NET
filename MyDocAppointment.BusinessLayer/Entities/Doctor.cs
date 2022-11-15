@@ -12,6 +12,7 @@
             Specialization = specialization;
             Email = email; 
             Phone = phone;
+            Patients = new List<Patient>();
         }
 
         public Guid Id { get; private set; }
@@ -24,9 +25,9 @@
 
         public string Phone { get; private set; }
 
-        public Hospital Hospial { get; private set; }
+        public Hospital? Hospial { get; private set; }
 
-        public Guid HospitalId { get; private set; }
+        public Guid? HospitalId { get; private set; }
 
         public ICollection<Patient> Patients { get; private set; }
 

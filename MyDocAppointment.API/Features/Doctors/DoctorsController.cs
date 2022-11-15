@@ -16,21 +16,22 @@ namespace MyDocAppointment.API.Features.Doctors
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetAllDoctors()
         {
-            var doctors = doctorRepository.GetAll().Select
-            (
-                d => new DoctorDto
-                {
-                    FirstName = d.FirstName,
-                    LastName = d.LastName,
-                    Specialization = d.Specialization,
-                    Email = d.Email,
-                    Phone = d.Phone,
-                    HospitalId = d.HospitalId
-                }
-             );
-            return Ok(doctors);
+            //var doctors = doctorRepository.GetAll().Select
+            //(
+            //    d => new DoctorDto
+            //    {
+            //        FirstName = d.FirstName,
+            //        LastName = d.LastName,
+            //        Specialization = d.Specialization,
+            //        Email = d.Email,
+            //        Phone = d.Phone,
+            //        HospitalId = d.HospitalId
+            //    }
+            // );
+            //return Ok(doctors);
+            return Ok(doctorRepository.GetAll());
         }
 
         [HttpPost]
@@ -39,7 +40,9 @@ namespace MyDocAppointment.API.Features.Doctors
             var doctor = new Doctor(doctorDto.FirstName, doctorDto.LastName, doctorDto.Specialization,
                 doctorDto.Email, doctorDto.Phone);
 
-            return Created(nameof(Get), doctor);
+            doctorRepository.Add(doctor);
+            doctorRepository.SaveChanges();
+            return Created(nameof(GetAllDoctors), doctor);
         }
 
     }

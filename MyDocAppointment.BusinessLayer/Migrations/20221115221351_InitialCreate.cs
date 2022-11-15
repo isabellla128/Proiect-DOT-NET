@@ -4,8 +4,10 @@
 
 namespace MyDocAppointment.BusinessLayer.Migrations
 {
+    /// <inheritdoc />
     public partial class InitialCreate : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -60,7 +62,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     Specialization = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Phone = table.Column<string>(type: "TEXT", nullable: false),
-                    HospitalId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    HospitalId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -69,8 +71,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         name: "FK_Doctors_Hospitals_HospitalId",
                         column: x => x.HospitalId,
                         principalTable: "Hospitals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -263,6 +264,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 column: "PatientId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

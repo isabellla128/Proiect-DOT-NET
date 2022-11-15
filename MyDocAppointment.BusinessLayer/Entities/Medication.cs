@@ -7,6 +7,8 @@
             Id = Guid.NewGuid();
             Name = name;
             Stock = stock;
+            Prescriptions = new List<Prescription>();
+            Historys = new List<History>();
         }
 
         public Guid Id { get; private set; }

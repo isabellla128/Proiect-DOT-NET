@@ -7,5 +7,6 @@
         IEnumerable<T> GetAll();
         T? GetById(Guid id);
         T Update(T entity);
+        void SaveChanges();
     }
 }

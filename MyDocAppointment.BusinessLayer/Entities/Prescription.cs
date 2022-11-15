@@ -5,6 +5,7 @@
         public Prescription()
         {
             Id = Guid.NewGuid();
+            Medications = new List<Medication>();
         }
         public Guid Id { get; private set; }
 
