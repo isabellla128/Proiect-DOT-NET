@@ -28,6 +28,8 @@
 
         public Guid HospitalId { get; private set; }
 
+        public ICollection<Patient> Patients { get; private set; }
+
         public string FullName
         {
             get
@@ -36,6 +38,16 @@
             }
         }
 
+        public void AddHospitalToDoctor(Hospital hospital)
+        {
+            this.Hospial = hospital;
+            HospitalId = hospital.Id;
+        }
+
+        public void AddRelatedPacient(Patient patient)
+        {
+            Patients.Add(patient);
+        }
 
     }
 }

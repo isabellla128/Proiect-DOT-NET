@@ -1,4 +1,7 @@
-﻿namespace MyDocAppointment.BusinessLayer.Entities
+﻿using System.Xml.Serialization;
+using ShelterManagement.Business.Helpers;
+
+namespace MyDocAppointment.BusinessLayer.Entities
 {
     public class Appointment
     {
@@ -18,6 +21,18 @@
         public Guid PatientId { get; private set; }
         public DateTime StartTime { get; private set; }
         public DateTime EndTime { get; private set; }
+
+        public void AddDoctorToPrescription(Doctor doctor)
+        {
+            Doctor = doctor;
+            DoctorId = doctor.Id;
+        }
+
+        public void AddPatientToPrescription(Patient patient)
+        {
+            Patient = patient;
+            PatientId = patient.Id;
+        }
 
     }
 }
