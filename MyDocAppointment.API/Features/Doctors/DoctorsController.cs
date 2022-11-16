@@ -18,20 +18,20 @@ namespace MyDocAppointment.API.Features.Doctors
         [HttpGet]
         public IActionResult GetAllDoctors()
         {
-            //var doctors = doctorRepository.GetAll().Select
-            //(
-            //    d => new DoctorDto
-            //    {
-            //        FirstName = d.FirstName,
-            //        LastName = d.LastName,
-            //        Specialization = d.Specialization,
-            //        Email = d.Email,
-            //        Phone = d.Phone,
-            //        HospitalId = d.HospitalId
-            //    }
-            // );
-            //return Ok(doctors);
-            return Ok(doctorRepository.GetAll());
+            var doctors = doctorRepository.GetAll().Select
+            (
+                d => new DoctorDto
+                {
+                    FirstName = d.FirstName,
+                    LastName = d.LastName,
+                    Specialization = d.Specialization,
+                    Email = d.Email,
+                    Phone = d.Phone,
+                   // HospitalId = d.HospitalId
+                }
+             );
+            return Ok(doctors);
+
         }
 
         [HttpPost]

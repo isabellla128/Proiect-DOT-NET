@@ -1,4 +1,5 @@
-﻿using MyDocAppointment.BusinessLayer.Data;
+﻿using System.Linq.Expressions;
+using MyDocAppointment.BusinessLayer.Data;
 
 namespace MyDocAppointment.BusinessLayer.Repositories
 {
@@ -28,6 +29,13 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             context.Remove(entity);
             //context.SaveChanges();
             return entity;
+        }
+
+        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+        {
+            return context.Set<T>()
+                .AsQueryable()
+                .Where(predicate).ToList();
         }
 
         public virtual IEnumerable<T> GetAll()

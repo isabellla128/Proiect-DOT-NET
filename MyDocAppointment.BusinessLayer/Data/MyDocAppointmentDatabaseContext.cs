@@ -19,7 +19,7 @@ namespace MyDocAppointment.BusinessLayer.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source = aMyDocAppointmentManagement.db");
+            optionsBuilder.UseSqlite("Data Source = dbMyDocAppointmentManagement.db");
         }
 
     }

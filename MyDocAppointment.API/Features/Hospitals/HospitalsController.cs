@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
@@ -9,10 +10,12 @@ namespace MyDocAppointment.API.Features.Hospitals
     public class HospitalsController : ControllerBase
     {
         private readonly IRepository<Hospital> hospitalRepository;
+        private readonly IRepository<Doctor> doctorRepository;
 
-        public HospitalsController(IRepository<Hospital> hospitalRepository)
+        public HospitalsController(IRepository<Hospital> hospitalRepository, IRepository<Doctor> doctorRepository)
         {
             this.hospitalRepository = hospitalRepository;
+            this.doctorRepository = doctorRepository;
         }
 
         [HttpGet]
@@ -38,6 +41,47 @@ namespace MyDocAppointment.API.Features.Hospitals
             hospitalRepository.Add(hospital);
             hospitalRepository.SaveChanges();
             return Created(nameof(GetAllHospitals), hospital);
+        }
+
+        [HttpPost("{hospitalId:Guid}/doctors")]
+        public IActionResult RegisterNewDoctorsToHospital(Guid hospitalId, [FromBody] List<DoctorDto> doctorsDtos)
+        {
+
+            var hospital = hospitalRepository.GetById(hospitalId);
+            if (hospital == null)
+            {
+                return NotFound("Hospital with given id not found");
+            }
+
+            var doctors = doctorsDtos.Select(d => new Doctor(d.FirstName, d.LastName, d.Specialization, d.Email, d.Phone)).ToList();
+
+            var result = hospital.AddDoctors(doctors);
+
+
+            doctors.ForEach(d =>
+            {
+                doctorRepository.Add(d);
+            });
+            doctorRepository.SaveChanges();
+
+            return result.IsSuccess ? NoContent() : BadRequest();
+        }
+
+        [HttpGet("{hospitalId:Guid}/dotrors")]
+        public IActionResult GetAllDoctorsFromHostpital(Guid hospitalId)
+        {
+            var doctors = doctorRepository.Find(doctor => doctor.HospitalId == hospitalId);
+            return Ok(doctors.Select(
+                d => new DoctorDto
+                {
+                    FirstName = d.FirstName,
+                    LastName = d.LastName,
+                    Specialization = d.Specialization,
+                    Email = d.Email,
+                    Phone = d.Phone,
+                    //HospitalId = d.HospitalId
+                }));
+            
         }
     }
 }
