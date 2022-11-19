@@ -34,6 +34,23 @@ namespace MyDocAppointment.API.Features.Hospitals
             return Ok(hospitals);
         }
 
+        [HttpGet("{hospitalId:Guid}/dotrors")]
+        public IActionResult GetAllDoctorsFromHostpital(Guid hospitalId)
+        {
+            var doctors = doctorRepository.Find(doctor => doctor.HospitalId == hospitalId);
+            return Ok(doctors.Select(
+                d => new DoctorDto
+                {
+                    FirstName = d.FirstName,
+                    LastName = d.LastName,
+                    Specialization = d.Specialization,
+                    Email = d.Email,
+                    Phone = d.Phone,
+                    //HospitalId = d.HospitalId
+                }));
+
+        }
+
         [HttpPost]
         public IActionResult CreateHospital([FromBody] CreateHospitalDto hospitalDto)
         {
@@ -44,7 +61,7 @@ namespace MyDocAppointment.API.Features.Hospitals
         }
 
         [HttpPost("{hospitalId:Guid}/doctors")]
-        public IActionResult RegisterNewDoctorsToHospital(Guid hospitalId, [FromBody] List<DoctorDto> doctorsDtos)
+        public IActionResult RegisterNewDoctorsToHospital(Guid hospitalId, [FromBody] List<CreateDoctorDto> doctorsDtos)
         {
 
             var hospital = hospitalRepository.GetById(hospitalId);
@@ -67,21 +84,16 @@ namespace MyDocAppointment.API.Features.Hospitals
             return result.IsSuccess ? NoContent() : BadRequest();
         }
 
-        [HttpGet("{hospitalId:Guid}/dotrors")]
-        public IActionResult GetAllDoctorsFromHostpital(Guid hospitalId)
+        [HttpDelete("{hospitalId:Guid}")]
+        public IActionResult DeleteHospital(Guid hospitalId)
         {
-            var doctors = doctorRepository.Find(doctor => doctor.HospitalId == hospitalId);
-            return Ok(doctors.Select(
-                d => new DoctorDto
-                {
-                    FirstName = d.FirstName,
-                    LastName = d.LastName,
-                    Specialization = d.Specialization,
-                    Email = d.Email,
-                    Phone = d.Phone,
-                    //HospitalId = d.HospitalId
-                }));
-            
+            hospitalRepository.Delete(hospitalId);
+            hospitalRepository.SaveChanges();
+
+            return NoContent();
         }
+
+        
+        
     }
 }

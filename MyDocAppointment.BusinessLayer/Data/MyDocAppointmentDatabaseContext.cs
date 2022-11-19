@@ -22,5 +22,15 @@ namespace MyDocAppointment.BusinessLayer.Data
             optionsBuilder.UseSqlite("Data Source = dbMyDocAppointmentManagement.db");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Doctor>()
+                .HasOne(d => d.Hospial)
+                .WithMany(h => h.Doctors)
+                .HasForeignKey(@"HospitalId")
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .IsRequired(false);
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

@@ -11,7 +11,7 @@ using MyDocAppointment.BusinessLayer.Data;
 namespace MyDocAppointment.BusinessLayer.Migrations
 {
     [DbContext(typeof(MyDocAppointmentDatabaseContext))]
-    [Migration("20221116115640_InitialCreate")]
+    [Migration("20221117190833_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -106,7 +106,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("HospitalId")
+                    b.Property<Guid>("HospitalId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")

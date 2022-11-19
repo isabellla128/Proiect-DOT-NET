@@ -22,12 +22,12 @@ namespace MyDocAppointment.API.Features.Doctors
             (
                 d => new DoctorDto
                 {
+                    Id = d.Id,
                     FirstName = d.FirstName,
                     LastName = d.LastName,
                     Specialization = d.Specialization,
                     Email = d.Email,
                     Phone = d.Phone,
-                   // HospitalId = d.HospitalId
                 }
              );
             return Ok(doctors);
@@ -45,5 +45,26 @@ namespace MyDocAppointment.API.Features.Doctors
             return Created(nameof(GetAllDoctors), doctor);
         }
 
+        [HttpDelete("{doctorId:Guid}")]
+        public IActionResult DeleteHospital(Guid doctorId)
+        {
+            try
+            {
+                doctorRepository.Delete(doctorId);
+            }
+            catch(ArgumentException e)
+            {
+                return NotFound(e.Message);
+            }
+            doctorRepository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPatch("{personId:Guid}")]
+        public IActionResult changeHospital()
+        {
+            return Ok();
+        }
     }
 }

@@ -103,7 +103,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("HospitalId")
+                    b.Property<Guid>("HospitalId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
