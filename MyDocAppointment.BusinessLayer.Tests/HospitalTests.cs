@@ -1,4 +1,5 @@
-﻿using MyDocAppointment.BusinessLayer.Entities;
+﻿using FluentAssertions;
+using MyDocAppointment.BusinessLayer.Entities;
 using ShelterManagement.Business.Helpers;
 
 namespace MyDocAppointment.BusinessLayer.Tests
@@ -15,8 +16,8 @@ namespace MyDocAppointment.BusinessLayer.Tests
             var result = hospital.AddDoctors(new List<Doctor>());
 
             //assert
-            Assert.True(result.IsFailure);
-            Assert.Equal("you must add at least a doctor", result.Error);
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("you must add at least a doctor");
         }
 
         [Fact]
@@ -31,7 +32,7 @@ namespace MyDocAppointment.BusinessLayer.Tests
             };
             var result = hospital.AddDoctors(doctors);
             //assert
-            Assert.True(result.IsSuccess);
+            result.IsSuccess.Should().BeTrue();
         }
     }
 }
