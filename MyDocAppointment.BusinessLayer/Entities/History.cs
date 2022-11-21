@@ -1,4 +1,6 @@
-﻿namespace MyDocAppointment.BusinessLayer.Entities
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace MyDocAppointment.BusinessLayer.Entities
 {
     public class History
     {
@@ -19,8 +21,13 @@
 
         public Guid PatientId { get; private set; }
 
-
         public bool IsStartDateValid() => DateTime.Now < StartDate;
+
+        public void AddPatientToHistory(Patient patient)
+        {
+            this.Patient = patient;
+            PatientId = patient.Id;
+        }
 
     }
 }

@@ -48,7 +48,6 @@ namespace MyDocAppointment.API.Features.Hospitals
                     Phone = d.Phone,
                     //HospitalId = d.HospitalId
                 }));
-
         }
 
         [HttpPost]
