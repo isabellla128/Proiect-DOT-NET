@@ -5,26 +5,32 @@ namespace MyDocAppointment.BusinessLayer.Data
 {
     public class MyDocAppointmentDatabaseContext : DbContext
     {
-        public MyDocAppointmentDatabaseContext()
-        {
-            this.Database.EnsureCreated();
-        }
+        public DbSet<Hospital> Hospitals => Set<Hospital>();
 
-        public DbSet<Hospital> Hospitals { get; set; }
-        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Appointment> Appointments => Set<Appointment>();
 
-        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Patient> Patients => Set<Patient>();
+
+        public DbSet<Doctor> Doctors => Set<Doctor>();
+
+        public DbSet<Medication> Medications => Set<Medication>();
+
+        public DbSet<Prescription> Prescriptions => Set<Prescription>();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source = MyDocAppointmentManagement.db");
+            optionsBuilder.UseSqlite("Data Source = dbMyDocAppointmentManagement.db");
         }
 
-        public DbSet<Doctor> Doctors { get; set; }
-
-        public DbSet<Medication> Medications { get; set; }
-
-        public DbSet<Prescription> Prescriptions { get; set; }
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Doctor>()
+                .HasOne(d => d.Hospial)
+                .WithMany(h => h.Doctors)
+                .HasForeignKey(@"HospitalId")
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .IsRequired(false);
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

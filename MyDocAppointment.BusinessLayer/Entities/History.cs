@@ -2,21 +2,23 @@
 {
     public class History
     {
-        public History()
+        public History(DateTime startDate, DateTime endDate)
         {
-
-        }
-        public History(Medication medication, DateTime startDate, DateTime endDate)
-        {
-            Medication = medication;
+            Id = Guid.NewGuid();
             StartDate = startDate;
             EndDate = endDate;
         }
 
-        public int Id { get; private set; }
-        public Medication Medication { get; private set; }
+        public Guid Id { get; private set; }
+
+        public ICollection<Medication> Medications { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
+
+        public Patient Patient { get; private set; }
+
+        public Guid PatientId { get; private set; }
+
 
         public bool IsStartDateValid() => DateTime.Now < StartDate;
 

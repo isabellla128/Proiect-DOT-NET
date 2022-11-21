@@ -4,21 +4,19 @@
     {
         public Prescription()
         {
-
+            Id = Guid.NewGuid();
+            Medications = new List<Medication>();
         }
-
-        public Prescription(Doctor doctor, Patient patient, ICollection<Medication> medications)
-        {
-            Doctor = doctor;
-            Patient = patient;
-            Medications = medications;
-        }
-        public int Id { get; private set; }
+        public Guid Id { get; private set; }
 
         public Doctor Doctor { get; private set; }
 
+        public Guid DoctorId { get; private set; }
+
         public Patient Patient { get; private set; }
 
-        public ICollection<Medication> Medications { get; set; }
+        public Guid PatientId { get; private set; }
+
+        public ICollection<Medication> Medications { get; private set; }
     }
 }

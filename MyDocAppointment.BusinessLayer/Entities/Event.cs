@@ -2,17 +2,14 @@
 {
     public class Event
     {
-        public Event()
-        {
-
-        }
         public Event(string name, DateTime startDate, DateTime endDate)
         {
+            Id = Guid.NewGuid();
             Name = name;
             StartDate = startDate;
             EndDate = endDate;
         }
-        public int Id { get; private set; }
+        public Guid Id { get; private set; }
         public string Name { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }

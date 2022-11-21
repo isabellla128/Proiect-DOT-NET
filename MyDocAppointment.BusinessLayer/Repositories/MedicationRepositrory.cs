@@ -3,9 +3,9 @@ using MyDocAppointment.BusinessLayer.Entities;
 
 namespace MyDocAppointment.BusinessLayer.Repositories
 {
-    public class AppointmentRepository : Repository<Appointment>
+    public class MedicationRepositrory : Repository<Medication>
     {
-        public AppointmentRepository(MyDocAppointmentDatabaseContext context) : base(context)
+        public MedicationRepositrory(MyDocAppointmentDatabaseContext context) : base(context)
         {
         }
     }

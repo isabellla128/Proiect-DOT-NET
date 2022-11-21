@@ -3,9 +3,9 @@ using MyDocAppointment.BusinessLayer.Entities;
 
 namespace MyDocAppointment.BusinessLayer.Repositories
 {
-    public class AppointmentRepository : Repository<Appointment>
+    public class EventRepositrory : Repository<Event>
     {
-        public AppointmentRepository(MyDocAppointmentDatabaseContext context) : base(context)
+        public EventRepositrory(MyDocAppointmentDatabaseContext context) : base(context)
         {
         }
     }
