@@ -18,7 +18,6 @@
         public int Stock { get; set; }
 
         public ICollection<Prescription> Prescriptions { get; private set; }
-
     
         public ICollection<History> Historys { get; private set; }
     }
