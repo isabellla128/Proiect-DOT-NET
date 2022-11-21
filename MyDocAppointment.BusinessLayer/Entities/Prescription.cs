@@ -18,5 +18,15 @@
         public Guid PatientId { get; private set; }
 
         public ICollection<Medication> Medications { get; private set; }
+
+        
+        public void AddDoctorToPrescription(Doctor doctor)
+        {
+            Doctor = doctor;
+        }
+        public void AddPatientToPrescription(Patient patient)
+        {
+            Patient = patient;
+        }
     }
 }
