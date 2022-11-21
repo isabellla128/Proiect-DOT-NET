@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using MyDocAppointment.BusinessLayer.Entities;
-using ShelterManagement.Business.Helpers;
 
 namespace MyDocAppointment.BusinessLayer.Tests
 {
