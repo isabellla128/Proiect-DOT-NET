@@ -12,6 +12,7 @@
             Specialization = specialization;
             Email = email; 
             Phone = phone;
+            Patients = new List<Patient>();
         }
 
         public Guid Id { get; private set; }

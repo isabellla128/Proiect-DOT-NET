@@ -15,7 +15,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
 
             modelBuilder.Entity("DoctorPatient", b =>
                 {
@@ -304,9 +304,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 {
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.Hospital", "Hospial")
                         .WithMany("Doctors")
-                        .HasForeignKey("HospitalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("HospitalId");
 
                     b.Navigation("Hospial");
                 });

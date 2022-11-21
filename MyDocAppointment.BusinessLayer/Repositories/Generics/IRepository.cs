@@ -1,4 +1,6 @@
-﻿namespace MyDocAppointment.BusinessLayer.Repositories
+﻿using System.Linq.Expressions;
+
+namespace MyDocAppointment.BusinessLayer.Repositories
 {
     public interface IRepository<T>
     {
@@ -7,5 +9,7 @@
         IEnumerable<T> GetAll();
         T? GetById(Guid id);
         T Update(T entity);
+        IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
+        void SaveChanges();
     }
 }

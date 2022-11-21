@@ -47,6 +47,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             {
                 if (!Doctors.Contains(d))
                 {
+                    d.AddHospitalToDoctor(this);
                     Doctors.Add(d);
                 }
             });

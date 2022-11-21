@@ -1,7 +1,4 @@
-﻿using System.Xml.Serialization;
-using ShelterManagement.Business.Helpers;
-
-namespace MyDocAppointment.BusinessLayer.Entities
+﻿namespace MyDocAppointment.BusinessLayer.Entities
 {
     public class Appointment
     {

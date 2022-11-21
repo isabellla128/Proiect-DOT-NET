@@ -10,6 +10,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             LastName = lastName;
             Email = email;
             Phone = phone;
+            Doctors = new List<Doctor>();
         }
 
         public Guid Id { get; private set; }
