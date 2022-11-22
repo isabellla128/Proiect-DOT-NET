@@ -1,4 +1,6 @@
-﻿namespace MyDocAppointment.BusinessLayer.Entities
+﻿using ShelterManagement.Business.Helpers;
+
+namespace MyDocAppointment.BusinessLayer.Entities
 {
     public class Prescription
     {
@@ -19,7 +21,7 @@
 
         public ICollection<Medication> Medications { get; private set; }
 
-        
+
         public void AddDoctorToPrescription(Doctor doctor)
         {
             Doctor = doctor;
@@ -27,6 +29,15 @@
         public void AddPatientToPrescription(Patient patient)
         {
             Patient = patient;
+        }
+        public Result AddMedications(List<Medication> medications)
+        {
+
+            medications.ForEach(d =>
+            {
+                Medications.Add(d);
+            });
+            return Result.Success();
         }
     }
 }

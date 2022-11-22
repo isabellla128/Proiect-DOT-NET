@@ -49,6 +49,10 @@
         {
             Patients.Add(patient);
         }
+	public void AddRelatedPacient(Patient patient)
+        {
+            Patients.Add(patient);
+        }
 
     }
 }
