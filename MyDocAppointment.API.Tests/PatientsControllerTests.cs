@@ -8,7 +8,7 @@ namespace MyDocAppointment.API.Tests
 
     public class PatientsControllerTests : BaseIntegrationTests<PatientsController>
     {
-        private const string ApiURL = "v1/api/Patients";
+        private const string ApiURL = "api/Patients";
 
         [Fact]
         public async void When_CreatedPatient_Then_ShouldReturnPatientInTheGetRequest()
