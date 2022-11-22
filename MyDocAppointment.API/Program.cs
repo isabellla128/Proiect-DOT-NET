@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using MyDocAppointment.BusinessLayer.Data;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
@@ -21,7 +22,6 @@ builder.Services.AddScoped<IRepository<History>, HistoryRepository>();
 builder.Services.AddScoped<IRepository<Medication>, MedicationRepositrory>();
 builder.Services.AddScoped<IRepository<Prescription>, PrescriptionRepository>();
 builder.Services.AddScoped<IRepository<Appointment>, AppointmentRepository>();
-
 
 
 var app = builder.Build();

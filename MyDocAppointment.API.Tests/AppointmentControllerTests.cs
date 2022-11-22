@@ -7,7 +7,7 @@ namespace MyDocAppointment.API.Tests
 {
     public class AppointmentControllerTests : BaseIntegrationTests<AppointmentsController>
     {
-        private const string ApiURL = "api/Appointments";
+        private const string ApiURL = "v1/api/Appointments";
 
         [Fact]
         public async void When_CreatedAppointment_Then_ShouldReturnAppointmentInTheGetRequest()
