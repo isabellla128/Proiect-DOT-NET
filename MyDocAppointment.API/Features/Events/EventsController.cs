@@ -6,7 +6,7 @@ using MyDocAppointment.BusinessLayer.Repositories;
 
 namespace MyDocAppointment.API.Features.Events
 {
-    [Route("api/[controller]")]
+    [Route("v1/api/[controller]")]
     [ApiController]
     public class EventsController : ControllerBase
     {

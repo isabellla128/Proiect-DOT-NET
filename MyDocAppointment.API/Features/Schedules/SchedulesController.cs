@@ -8,7 +8,7 @@ using MyDocAppointment.BusinessLayer.Repositories;
 
 namespace MyDocAppointment.API.Features.Schedules
 {
-    [Route("api/[controller]")]
+    [Route("v1/api/[controller]")]
     [ApiController]
     public class SchedulesController : ControllerBase
     {
