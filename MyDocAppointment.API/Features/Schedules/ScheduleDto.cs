@@ -1,6 +1,4 @@
-﻿using MyDocAppointment.BusinessLayer.Entities;
-
-namespace MyDocAppointment.API.Features.Schedules
+﻿namespace MyDocAppointment.API.Features.Schedules
 {
     public class ScheduleDto
     {

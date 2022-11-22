@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace MyDocAppointment.BusinessLayer.Entities
+﻿namespace MyDocAppointment.BusinessLayer.Entities
 {
     public class History
     {
