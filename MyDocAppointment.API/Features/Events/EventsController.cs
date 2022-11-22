@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
 namespace MyDocAppointment.API.Features.Events
 {
-    [Route("v1/api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class EventsController : ControllerBase
     {

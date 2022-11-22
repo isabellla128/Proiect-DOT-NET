@@ -1,4 +1,6 @@
-﻿namespace MyDocAppointment.API.Features.Appointments
+﻿using MyDocAppointment.BusinessLayer.Entities;
+
+namespace MyDocAppointment.API.Features.Appointments
 {
     public class AppointmentDto
     {

@@ -2,6 +2,7 @@
 using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyDocAppointment.API.Features.Histories
 {
@@ -19,7 +20,7 @@ namespace MyDocAppointment.API.Features.Histories
             this.patientRepository = patientRepository;
             this.medicationRepository = medicationRepository;
         }
-        
+
         [HttpGet]
         public IActionResult GetAllHistories()
         {
@@ -34,17 +35,7 @@ namespace MyDocAppointment.API.Features.Histories
              );
             return Ok(histories);
         }
-        [HttpGet("{patientId:Guid}/history")]
-        public IActionResult GetHistory(Guid patientId)
-        {
-            var patient = patientRepository.GetById(patientId);
-            if (patient == null)
-            {
-                return NotFound("Patient with given id not found");
-            }
-            var historyForPatientId = historyRepository.GetAll().Select(h => h.PatientId == patientId).ToList();
-            return Ok(historyForPatientId);
-        }
+
         [HttpGet("{historyId:Guid}/medications")]
         public IActionResult GetMedicationsFromHistory(Guid historyId)
         {
@@ -53,21 +44,7 @@ namespace MyDocAppointment.API.Features.Histories
             {
                 return NotFound("History with given id not found");
             }
-            var medications = history.Medications;
-            return Ok(medications);
-        }
-        [HttpGet("{patientId:Guid}/medications")]
-        public IActionResult GetMedicationsForPatient(Guid petientId)
-        {
-            var patient = patientRepository.GetById(petientId);
-            if (patient == null)
-            {
-                return NotFound("Patient with given id not found");
-            }
-            List<History> histories = (List<History>)GetHistory(petientId);
-            List<List<History>> medications = new List<List<History>>();
-            histories.ForEach(h => medications.Add((List<History>)h.Medications));
-            return Ok(medications);
+            return Ok(history.Medications);
         }
         
         [HttpPost]

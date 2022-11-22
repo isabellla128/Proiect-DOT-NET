@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
 namespace MyDocAppointment.API.Features.Patients
 {
-    [Route("v1/api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PatientsController : ControllerBase
     {
@@ -31,22 +32,17 @@ namespace MyDocAppointment.API.Features.Patients
             return Ok(patients);
         }
 
-        
         [HttpGet("{patientId:Guid}/doctors")]
         public IActionResult GetAllDoctorsFromPatient(Guid patientId)
         {
-            var doctors = doctorRepository.Find(doctor => doctor.Patients.Contains(patientRepository.GetById(patientId))).ToList();
+            var patient = patientRepository.GetById(patientId);
+            if (patient == null)
+            {
+                return NotFound("Patient with given id not found");
+            }
 
-            return Ok(doctors.Select(
-                d => new DoctorDto
-                {
-                    FirstName = d.FirstName,
-                    LastName = d.LastName,
-                    Specialization = d.Specialization,
-                    Email = d.Email,
-                    Phone = d.Phone,
-                }));
-
+            var doctors = patient.Doctors;
+            return Ok(doctors);
         }
 
         [HttpPost]
@@ -58,7 +54,7 @@ namespace MyDocAppointment.API.Features.Patients
             return Created(nameof(GetAllPatients), patient);
         }
 
-        
+
         [HttpPost("{patientId:Guid}/doctors")]
         public IActionResult RegisterNewDoctorsToPatient(Guid patientId, [FromBody] List<CreateDoctorDto> doctorsDtos)
         {
@@ -68,13 +64,17 @@ namespace MyDocAppointment.API.Features.Patients
             {
                 return NotFound("Patient with given id not found");
             }
-
             var doctors = doctorsDtos.Select(d => new Doctor(d.FirstName, d.LastName, d.Specialization, d.Email, d.Phone)).ToList();
             var result = patient.AddDoctors(doctors);
 
+            doctors.ForEach(d =>
+            {
+                doctorRepository.Add(d);
+            });
+            doctorRepository.SaveChanges();
 
             return Ok(doctors);
-           
+
         }
 
         [HttpDelete("{patientId:Guid}")]

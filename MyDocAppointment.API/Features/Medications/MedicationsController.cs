@@ -31,7 +31,7 @@ namespace MyDocAppointment.API.Features.Medications
             return Ok(medications);
         }
 
-        [HttpGet("{medicationId:Guid}/medication")]
+        [HttpGet("{medicationId:Guid}")]
         public IActionResult GetMedicationById(Guid medicationId)
         {
             var medication = medicationRepository.GetById(medicationId);
@@ -44,7 +44,7 @@ namespace MyDocAppointment.API.Features.Medications
             return Ok(m);
         }
 
-         [HttpGet("{medicationId:Guid}/history")]
+         [HttpGet("{medicationId:Guid}/histories")]
          public IActionResult GetHistoryById(Guid medicationId)
          {
             var medication = medicationRepository.GetById(medicationId);
@@ -52,7 +52,7 @@ namespace MyDocAppointment.API.Features.Medications
             {
                 return NotFound("Medication with given id not found");
             }
-            return Ok(medication.Historys);
+            return Ok(medication.Histories);
          }
 
         [HttpPost]
@@ -63,20 +63,7 @@ namespace MyDocAppointment.API.Features.Medications
             medicationRepository.SaveChanges();
             return Created(nameof(GetAllMedications), medication);
         }
-        /*[HttpPost("{medicamentId:guid}/prescriptions")]
-        public IActionResult RegisterQuotes(Guid medicamentId, [FromBody] List<CreatePresctiptionDto> dtos) //Quoted
-        {
-            var medicament = prescriptionRepository.Get(medicamentId);
-            if (samurai == null)
-            {
-                return NotFound();
-            }
-            List<Quote> quotes = dtos.Select(d => new Quote(d.Text)).ToList();
-            samurai.RegisterQuotesToSamurai(quotes);
-            quotes.ForEach(q => quoteRepository.Add(q));
-            quoteRepository.Save();
-            return NoContent(); //returnam NoContent cand facem operatii de update si delete
-        }*/
+
 
         [HttpDelete("{medicationId:Guid}")]
         public IActionResult DeleteMedication(Guid medicationId)
