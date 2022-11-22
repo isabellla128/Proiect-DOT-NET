@@ -8,7 +8,7 @@
             Name = name;
             Stock = stock;
             Prescriptions = new List<Prescription>();
-            Historys = new List<History>();
+            Histories = new List<History>();
         }
 
         public Guid Id { get; private set; }
@@ -19,6 +19,6 @@
 
         public ICollection<Prescription> Prescriptions { get; private set; }
     
-        public ICollection<History> Historys { get; private set; }
+        public ICollection<History> Histories { get; private set; }
     }
 }
