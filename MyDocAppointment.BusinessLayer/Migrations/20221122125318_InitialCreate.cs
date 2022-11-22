@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -62,7 +63,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     Specialization = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Phone = table.Column<string>(type: "TEXT", nullable: false),
-                    HospitalId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    HospitalId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -174,15 +175,15 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 name: "HistoryMedication",
                 columns: table => new
                 {
-                    HistorysId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    HistoriesId = table.Column<Guid>(type: "TEXT", nullable: false),
                     MedicationsId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HistoryMedication", x => new { x.HistorysId, x.MedicationsId });
+                    table.PrimaryKey("PK_HistoryMedication", x => new { x.HistoriesId, x.MedicationsId });
                     table.ForeignKey(
-                        name: "FK_HistoryMedication_History_HistorysId",
-                        column: x => x.HistorysId,
+                        name: "FK_HistoryMedication_History_HistoriesId",
+                        column: x => x.HistoriesId,
                         principalTable: "History",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);

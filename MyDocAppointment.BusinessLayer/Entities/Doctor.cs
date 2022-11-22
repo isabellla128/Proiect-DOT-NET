@@ -25,9 +25,9 @@
 
         public string Phone { get; private set; }
 
-        public Hospital Hospial { get; private set; }
+        public Hospital? Hospial { get; private set; }
 
-        public Guid HospitalId { get; private set; }
+        public Guid? HospitalId { get; private set; }
 
         public ICollection<Patient> Patients { get; private set; }
 

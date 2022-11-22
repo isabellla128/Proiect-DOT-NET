@@ -34,13 +34,13 @@ namespace MyDocAppointment.BusinessLayer.Migrations
 
             modelBuilder.Entity("HistoryMedication", b =>
                 {
-                    b.Property<Guid>("HistorysId")
+                    b.Property<Guid>("HistoriesId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("MedicationsId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("HistorysId", "MedicationsId");
+                    b.HasKey("HistoriesId", "MedicationsId");
 
                     b.HasIndex("MedicationsId");
 
@@ -103,7 +103,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("HospitalId")
+                    b.Property<Guid?>("HospitalId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
@@ -255,7 +255,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 {
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.History", null)
                         .WithMany()
-                        .HasForeignKey("HistorysId")
+                        .HasForeignKey("HistoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
