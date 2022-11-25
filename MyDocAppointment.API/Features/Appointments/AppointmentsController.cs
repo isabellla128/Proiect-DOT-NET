@@ -39,13 +39,25 @@ namespace MyDocAppointment.API.Features.Appointments
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateAppointmentDto appointmentDto)
+        public IActionResult Create(Guid doctorId, Guid patientId,[FromBody] CreateAppointmentDto appointmentDto)
         {
-            var a = new Appointment(appointmentDto.StartTime, appointmentDto.EndTime);
+            var appointment = new Appointment(appointmentDto.StartTime, appointmentDto.EndTime);
+            var doctor = doctorRepository.GetById(doctorId);
+            var patient = patientRepository.GetById(patientId);
+            if(doctor == null)
+            {
+                return BadRequest("Doctor with given id not found");
+            }
+            if(patient == null)
+            {
+                return BadRequest("Patient with given id not found");
+            }
+            appointment.AddDoctorToAppointment(doctor);
+            appointment.AddPatientToAppointment(patient);
 
-            appointmentRepository.Add(a);
+            appointmentRepository.Add(appointment);
             appointmentRepository.SaveChanges();
-            return Created(nameof(GetAllAppointments), a);
+            return Created(nameof(GetAllAppointments), appointment);
         }
 
         [HttpDelete("{appointmentId:Guid}")]

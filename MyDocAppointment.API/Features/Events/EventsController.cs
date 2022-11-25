@@ -45,7 +45,7 @@ namespace MyDocAppointment.API.Features.Events
         }
 
         [HttpDelete("{eventId:Guid}")]
-        public IActionResult DeleteHospital(Guid eventId)
+        public IActionResult DeleteEvent(Guid eventId)
         {
             try
             {

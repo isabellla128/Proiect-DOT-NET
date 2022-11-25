@@ -47,13 +47,22 @@ namespace MyDocAppointment.API.Features.Prescriptions
 
 
         [HttpPost]
-        public IActionResult CreatePrescription(Guid doctorId , Guid patientId, [FromBody] CreatePrescriptionDto prescriptionDto)
+        public IActionResult CreatePrescription(Guid doctorId , Guid patientId)
         {
 
             var prescription = new Prescription();
             
             var doctor = doctorRepository.GetById(doctorId);
             var patient = patientRepository.GetById(patientId);
+
+            if(doctor == null)
+            {
+                return BadRequest("There is no doctor with give id");
+            }
+            if(patient == null)
+            {
+                return BadRequest("There is no patient with given id");
+            }
 
             prescription.AddDoctorToPrescription(doctor);
             prescription.AddPatientToPrescription(patient);
