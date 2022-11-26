@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
@@ -32,7 +33,7 @@ namespace MyDocAppointment.API.Features.Patients
             return Ok(patients);
         }
 
-        [HttpGet("{patientId:Guid}/doctors")]
+        [HttpGet("{patientId:Guid}/appoinments")]
         public IActionResult GetAllDoctorsFromPatient(Guid patientId)
         {
             var patient = patientRepository.GetById(patientId);
@@ -41,8 +42,8 @@ namespace MyDocAppointment.API.Features.Patients
                 return NotFound("Patient with given id not found");
             }
 
-            var doctors = patient.Doctors;
-            return Ok(doctors);
+            var appointments = patient.Appointments;
+            return Ok(appointments);
         }
 
         [HttpPost]
@@ -55,28 +56,6 @@ namespace MyDocAppointment.API.Features.Patients
         }
 
 
-        [HttpPost("{patientId:Guid}/doctors")]
-        public IActionResult RegisterNewDoctorsToPatient(Guid patientId, [FromBody] List<CreateDoctorDto> doctorsDtos)
-        {
-
-            var patient = patientRepository.GetById(patientId);
-            if (patient == null)
-            {
-                return NotFound("Patient with given id not found");
-            }
-            var doctors = doctorsDtos.Select(d => new Doctor(d.FirstName, d.LastName, d.Specialization, d.Email, d.Phone)).ToList();
-            var result = patient.AddDoctors(doctors);
-
-            doctors.ForEach(d =>
-            {
-                doctorRepository.Add(d);
-            });
-            doctorRepository.SaveChanges();
-
-            return Ok(doctors);
-
-        }
-
         [HttpDelete("{patientId:Guid}")]
         public IActionResult DeletePatient(Guid patientId)
         {
@@ -84,5 +63,6 @@ namespace MyDocAppointment.API.Features.Patients
             patientRepository.SaveChanges();
             return NoContent();
         }
+
     }
 }

@@ -46,7 +46,7 @@ namespace MyDocAppointment.API.Features.Hospitals
                     Specialization = d.Specialization,
                     Email = d.Email,
                     Phone = d.Phone,
-                    //HospitalId = d.HospitalId
+                    Id = d.Id
                 }));
 
         }

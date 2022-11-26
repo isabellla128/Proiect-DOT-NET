@@ -30,8 +30,11 @@ namespace MyDocAppointment.API.Features.Appointments
                 a => new AppointmentDto
                 {
                     Id = a.Id,
+                    DoctorId = a.DoctorId,
+                    PatientId = a.PatientId,
                     StartTime = a.StartTime,
                     EndTime = a.EndTime
+
                 }
              );
             return Ok(appointments);
@@ -52,11 +55,22 @@ namespace MyDocAppointment.API.Features.Appointments
             {
                 return BadRequest("Patient with given id not found");
             }
+            var resultFromDoctor = doctor.AddAppointment(appointment);
+            if(resultFromDoctor.IsFailure)
+            {
+                return BadRequest(resultFromDoctor.Error);
+            }
+            var resultFromPatient =  patient.AddAppointment(appointment);
+            if(resultFromPatient.IsFailure)
+            {
+                return BadRequest(resultFromPatient.Error);
+            }
+
             appointment.AddDoctorToAppointment(doctor);
             appointment.AddPatientToAppointment(patient);
-
             appointmentRepository.Add(appointment);
             appointmentRepository.SaveChanges();
+
             return Created(nameof(GetAllAppointments), appointment);
         }
 

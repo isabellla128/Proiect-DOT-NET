@@ -1,4 +1,6 @@
-﻿namespace MyDocAppointment.BusinessLayer.Entities
+﻿using ShelterManagement.Business.Helpers;
+
+namespace MyDocAppointment.BusinessLayer.Entities
 {
     public class Doctor
     {
@@ -12,7 +14,7 @@
             Specialization = specialization;
             Email = email; 
             Phone = phone;
-            Patients = new List<Patient>();
+            Appointments = new List<Appointment>();
         }
 
         public Guid Id { get; private set; }
@@ -29,7 +31,11 @@
 
         public Guid? HospitalId { get; private set; }
 
-        public ICollection<Patient> Patients { get; private set; }
+        public ICollection<Appointment> Appointments { get; private set; }
+
+        //public ICollection<Patient> Patients { get; private set; }
+
+
 
         public string FullName
         {
@@ -45,9 +51,43 @@
             HospitalId = hospital.Id;
         }
 
-        public void AddRelatedPacient(Patient patient)
+        //public void AddRelatedPacient(Patient patient)
+        //{
+        //    Patients.Add(patient);
+        //}
+
+        //nu cred ca mai avem nevoie de relatia directa dintre doctor si pacient, din moment ce avem appointement (vedem)
+
+        public Result AddAppointment(Appointment appointment)
         {
-            Patients.Add(patient);
+            if(appointment == null)
+            {
+                return Result.Failure("Appoinment should not be null");
+            }
+
+            if(appointment.StartTime < DateTime.Now)
+            {
+                return Result.Failure("Appioinment should be in the furure");
+            }
+
+            if (appointment.StartTime > appointment.EndTime)
+            {
+                return Result.Failure("Start time should be before End time");
+            }
+
+            foreach (var existentAppointment in Appointments)
+            {
+                if (appointment.StartTime <= existentAppointment.EndTime && appointment.StartTime >= existentAppointment.StartTime ||
+                    appointment.EndTime >= existentAppointment.StartTime && appointment.EndTime <= existentAppointment.EndTime)
+                {
+                    return Result.Failure("A new appoinments shooul not intersect with a fixed appointment");
+                }
+            }
+
+            appointment.AddDoctorToAppointment(this);
+            Appointments.Add(appointment);
+            return Result.Success();
+            
         }
 
     }

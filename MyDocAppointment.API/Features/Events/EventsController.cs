@@ -6,15 +6,17 @@ using MyDocAppointment.BusinessLayer.Repositories;
 
 namespace MyDocAppointment.API.Features.Events
 {
-    [Route("api/[controller]")]
+    [Route("v1/api/[controller]")]
     [ApiController]
     public class EventsController : ControllerBase
     {
         private readonly IRepository<Event> eventRepository;
+        private readonly IRepository<Schedule> scheduleRepository;
 
-        public EventsController(IRepository<Event> eventRepository)
+        public EventsController(IRepository<Event> eventRepository, IRepository<Schedule> scheduleRepository)
         {
             this.eventRepository = eventRepository;
+            this.scheduleRepository = scheduleRepository;
         }
 
         [HttpGet]
@@ -35,10 +37,17 @@ namespace MyDocAppointment.API.Features.Events
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateEventDto eventDto)
+        public IActionResult Create(Guid scheduleId, [FromBody] CreateEventDto eventDto)
         {
             var e = new Event(eventDto.Name, eventDto.StartDate, eventDto.EndDate);
 
+            var schedule = scheduleRepository.GetById(scheduleId);
+            if(schedule == null)
+            {
+                return BadRequest("Schedule with given id not found");
+            }
+
+            e.AddScheduleToEvent(schedule);
             eventRepository.Add(e);
             eventRepository.SaveChanges();
             return Created(nameof(GetAllEvents), e);

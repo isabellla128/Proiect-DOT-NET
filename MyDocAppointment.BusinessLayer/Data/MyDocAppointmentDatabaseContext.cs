@@ -22,6 +22,8 @@ namespace MyDocAppointment.BusinessLayer.Data
 
         public DbSet<Prescription> Prescriptions => Set<Prescription>();
 
+        public DbSet<Event> Events => Set<Event>();
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source = dbMyDocAppointmentManagement.db");
