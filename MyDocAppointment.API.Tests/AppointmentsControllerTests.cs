@@ -1,19 +1,20 @@
 ﻿using FluentAssertions;
+using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.API.Features.Doctors;
 using System.Net.Http.Json;
 using Xunit;
 
 namespace MyDocAppointment.API.Tests
 {
-    public class DoctorsControllerTests : BaseIntegrationTests<DoctorsController>
+    public class AppointmentsControllerTests : BaseIntegrationTests<DoctorsController>
     {
         private const string ApiURL = "v1/api/Doctors";
 
-        [Fact]
-        public async void When_CreatedDoctor_Then_ShouldReturnDoctorInTheGetRequest()
+        /*[Fact]
+        public async void When_CreatedAppointment_Then_ShouldReturnAppointmentInTheGetRequest()
         {
             // Arrange
-            DoctorDto doctorDto = CreateSUT();
+            DoctorDto doctorDto = createSUT();
             // Act
             var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiURL, doctorDto);
             var getDoctorResult = await HttpClient.GetAsync(ApiURL);
@@ -27,9 +28,9 @@ namespace MyDocAppointment.API.Tests
             doctors.Should().NotBeNull();
         }
 
-        private static DoctorDto CreateSUT()
+        private static AppointmentDto CreateSUT()
         {
-            return new DoctorDto
+            return new AppointmentDto
             {
                 FirstName = "Doctor",
                 LastName = "Doctorescu",
@@ -37,6 +38,6 @@ namespace MyDocAppointment.API.Tests
                 Email = "diagn@st.ic",
                 Phone = "0712312312",
             };
-        }
+        }*/
     }
 }

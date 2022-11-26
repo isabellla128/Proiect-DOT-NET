@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
+using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.API.Features.Hospitals;
+using MyDocAppointment.BusinessLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,23 +19,83 @@ namespace MyDocAppointment.API.Tests
         [Fact]
         public async void When_CreatedHospital_Then_ShouldReturnHospitalInTheGetRequest()
         {
-            HospitalDto patientDto = createSUT();
+            // Arrange
+            HospitalDto hospitalDto = CreateSUT();
+
             // Act
-            var createHospitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, patientDto);
-            var getHospitalResponse = await HttpClient.GetAsync(ApiURL);
+            var createHospitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, hospitalDto);
+            var getHospitalResult = await HttpClient.GetAsync(ApiURL);
+
             // Assert
             createHospitalResponse.EnsureSuccessStatusCode();
             createHospitalResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
 
-            getHospitalResponse.EnsureSuccessStatusCode();
-            var patients = await getHospitalResponse.Content.ReadFromJsonAsync<List<HospitalDto>>();
-            patients.Should().HaveCount(1);
-            patients.Should().NotBeNull();
+            getHospitalResult.EnsureSuccessStatusCode();
+            var hospitals = await getHospitalResult.Content.ReadFromJsonAsync<List<HospitalDto>>();
+            hospitals.Should().HaveCount(1);
+            hospitals.Should().NotBeNull();
         }
 
-        private static HospitalDto createSUT()
+
+        [Fact]
+        public async void When_RegisterDoctorsToHospital_Then_ShouldReturnDoctorsInTheGetRequest()
         {
             // Arrange
+            HospitalDto hospitalDto = CreateSUT();
+            var createHospitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, hospitalDto);
+
+            var doctors = new List<DoctorDto>
+            {
+                new DoctorDto
+                {
+                    FirstName = "FirstName1",
+                    LastName = "LastName1",
+                    Specialization = "Dermatology",
+                    Email = "doctor@gmail.com",
+                    Phone = "1234567890"
+                },
+                new DoctorDto
+                {
+                    FirstName = "FirstName2",
+                    LastName = "LastName2",
+                    Specialization = "All",
+                    Email = "doctoooooor@gmail.com",
+                    Phone = "122222222"
+                }
+            };
+            var hospital = await createHospitalResponse.Content.ReadFromJsonAsync<HospitalDto>();
+
+            // Act
+            var resultResponse = await HttpClient.PostAsJsonAsync
+                ($"{ApiURL}/{hospital.Id}/doctors", doctors);
+
+            // Assert
+            resultResponse.EnsureSuccessStatusCode();
+            resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+        }
+
+
+
+        /*
+        [Fact]
+        public async void When_DeletedHospital_Then_ShouldReturnNoHospitalInTheGetRequest()
+        {
+            // Arrange
+            HospitalDto hospitalDto = CreateSUT();
+            var createHospitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, hospitalDto);
+
+            // Act
+            var resultResponse = await HttpClient.DeleteAsync 
+                ($"{ApiURL}/{hospitalDto.Id}");
+
+            // Assert
+            resultResponse.EnsureSuccessStatusCode();
+            //resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+        }
+        */
+
+        private static HospitalDto CreateSUT()
+        {
             return new HospitalDto
             {
                 Name = "Regina Maria",

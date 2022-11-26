@@ -8,28 +8,28 @@ namespace MyDocAppointment.API.Tests
 
     public class PatientsControllerTests : BaseIntegrationTests<PatientsController>
     {
-        private const string ApiURL = "api/Patients";
+        private const string ApiURL = "v1/api/Patients";
 
         [Fact]
         public async void When_CreatedPatient_Then_ShouldReturnPatientInTheGetRequest()
         {
-            PatientDto patientDto = createSUT();
+            // Arrange
+            PatientDto patientDto = CreateSUT();
             // Act
             var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, patientDto);
-            var getPatientResponse = await HttpClient.GetAsync(ApiURL);
+            var getPatientResult = await HttpClient.GetAsync(ApiURL);
             // Assert
             createPatientResponse.EnsureSuccessStatusCode();
             createPatientResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
 
-            getPatientResponse.EnsureSuccessStatusCode();
-            var patients = await getPatientResponse.Content.ReadFromJsonAsync<List<PatientDto>>();
+            getPatientResult.EnsureSuccessStatusCode();
+            var patients = await getPatientResult.Content.ReadFromJsonAsync<List<PatientDto>>();
             patients.Should().HaveCount(1);
             patients.Should().NotBeNull();
         }
 
-        private static PatientDto createSUT()
+        private static PatientDto CreateSUT()
         {
-            // Arrange
             return new PatientDto
             {
                 FirstName = "Eu",
