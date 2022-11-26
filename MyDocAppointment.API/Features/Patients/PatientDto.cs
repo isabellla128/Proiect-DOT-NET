@@ -7,5 +7,10 @@
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+
+        public static implicit operator Guid(PatientDto v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

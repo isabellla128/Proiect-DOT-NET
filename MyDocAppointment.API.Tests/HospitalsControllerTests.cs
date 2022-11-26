@@ -74,25 +74,22 @@ namespace MyDocAppointment.API.Tests
             resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
         }
 
-
-
-        /*
-        [Fact]
+        [Fact] 
         public async void When_DeletedHospital_Then_ShouldReturnNoHospitalInTheGetRequest()
         {
             // Arrange
-            HospitalDto hospitalDto = CreateSUT();
-            var createHospitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, hospitalDto);
+            HospitalDto hostpitalDto = CreateSUT();
+            var createHostpitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, hostpitalDto);
+            var hospital = await createHostpitalResponse.Content.ReadFromJsonAsync<DoctorDto>();
 
             // Act
             var resultResponse = await HttpClient.DeleteAsync 
-                ($"{ApiURL}/{hospitalDto.Id}");
+                ($"{ApiURL}/{hospital.Id}");
 
             // Assert
             resultResponse.EnsureSuccessStatusCode();
-            //resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+            resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
         }
-        */
 
         private static HospitalDto CreateSUT()
         {

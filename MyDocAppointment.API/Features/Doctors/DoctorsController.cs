@@ -36,7 +36,19 @@ namespace MyDocAppointment.API.Features.Doctors
                 }
              );
             return Ok(doctors);
+        }
 
+        [HttpGet("{doctorId:Guid}/appointments")]
+        public IActionResult GetAppointmentsFromDoctor(Guid doctorId)
+        {
+            var appointments = appointmentRepository.Find(appointment => appointment.DoctorId == doctorId);
+            return Ok(appointments.Select(
+                a => new AppointmentsDtoFromDoctor
+                {
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
+                    PatientId = a.PatientId,
+                })) ;
         }
 
         [HttpPost]
