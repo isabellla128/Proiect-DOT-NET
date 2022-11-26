@@ -66,8 +66,8 @@ namespace MyDocAppointment.API.Features.Appointments
                 return BadRequest(resultFromPatient.Error);
             }
 
-            appointment.AddDoctorToAppointment(doctor);
-            appointment.AddPatientToAppointment(patient);
+            doctor.AddAppointment(appointment);
+            patient.AddAppointment(appointment);
             appointmentRepository.Add(appointment);
             appointmentRepository.SaveChanges();
 
