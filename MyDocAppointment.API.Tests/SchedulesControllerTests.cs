@@ -15,14 +15,15 @@ namespace MyDocAppointment.API.Tests
     {
         private const string ApiURL = "v1/api/Schedules";
 
+        
         [Fact]
         public async void When_CreatedSchedule_Then_ShouldReturnScheduleInTheGetRequest()
         {
             //Arrange
-            CreateScheduleDto createScheduleDto = CreateSUT();
+            ScheduleDto scheduleDto = CreateSUT();
 
             //Act
-            var createScheduleResponse=await HttpClient.PostAsJsonAsync(ApiURL, createScheduleDto);
+            var createScheduleResponse=await HttpClient.PostAsJsonAsync(ApiURL, scheduleDto);
             var getScheduleResult=await HttpClient.GetAsync(ApiURL);
 
             //Assert
@@ -41,8 +42,8 @@ namespace MyDocAppointment.API.Tests
         public async void When_RegisterEventsToSchedule_Then_ShouldReturnEventsInTheGetRequest()
         {
             //Arrange
-            CreateScheduleDto createScheduleDto = CreateSUT();
-            var createScheduleResponse=await HttpClient.PatchAsJsonAsync(ApiURL, createScheduleDto);
+            ScheduleDto scheduleDto = CreateSUT();
+            var createScheduleResponse=await HttpClient.PatchAsJsonAsync(ApiURL, scheduleDto);
             var events = new List<EventDto>
             {
                 new EventDto
@@ -74,8 +75,8 @@ namespace MyDocAppointment.API.Tests
         public async void When_DeletedSchedule_Then_ShouldReturnNoScheduleInTheGetRequest()
         {
             //Arrange
-            CreateScheduleDto createScheduleDto = CreateSUT();
-            var createScheduleResponse=await HttpClient.PostAsJsonAsync(ApiURL, createScheduleDto);
+            ScheduleDto scheduleDto = CreateSUT();
+            var createScheduleResponse=await HttpClient.PostAsJsonAsync(ApiURL, scheduleDto);
             var schedule = await createScheduleResponse.Content.ReadFromJsonAsync<ScheduleDto>();
 
             //Act
@@ -86,9 +87,9 @@ namespace MyDocAppointment.API.Tests
             resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
         }
 
-        private static CreateScheduleDto CreateSUT()
+        private static ScheduleDto CreateSUT()
         {
-            return new CreateScheduleDto
+            return new ScheduleDto
             {
                 StartDate= DateTime.Now,
                 EndDate= DateTime.Now,

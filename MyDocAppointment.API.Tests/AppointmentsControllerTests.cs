@@ -32,14 +32,12 @@ namespace MyDocAppointment.API.Tests
 
             AppointmentDto appointmentDto = new AppointmentDto
             {
-                DoctorId = doctor.Id,
-                PatientId = patient.Id,
-                StartTime = DateTime.Now.AddDays(1),
-                EndTime = DateTime.Now.AddDays(1)
+                StartTime = new DateTime(2023, 11, 27, 00, 29, 00),
+                EndTime = new DateTime(2024, 11, 27, 00, 29, 00)
             };
 
             // Act
-            var createAppointmentResponse = await HttpClient.PostAsJsonAsync(ApiURL, appointmentDto);
+            var createAppointmentResponse = await HttpClient.PostAsJsonAsync($"{ApiURL}?doctorId={doctor.Id}&patientId={patient.Id}", appointmentDto);
             var getAppointmentResult = await HttpClient.GetAsync(ApiURL);
 
             // Assert
@@ -94,8 +92,8 @@ namespace MyDocAppointment.API.Tests
         {
             return new AppointmentDto
             {
-                StartTime = DateTime.Now.AddDays(1),
-                EndTime = DateTime.Now.AddDays(1),
+                StartTime = DateTime.Now,
+                EndTime = DateTime.Now,
             };
         }
     }

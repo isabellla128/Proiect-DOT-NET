@@ -21,7 +21,7 @@ namespace MyDocAppointment.API.Tests
         public async void When_CreatedMedication_Then_ShouldReturnMedicationInTheGetRequest()
         {
             // Arrange
-            CreateMedicationDto createMedicationDto = CreateSUT();
+            MedicationDto createMedicationDto = CreateSUT();
             // Act
             var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiURL, createMedicationDto);
             var getMedicationResult = await HttpClient.GetAsync(ApiURL);
@@ -52,9 +52,9 @@ namespace MyDocAppointment.API.Tests
             resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
         }
 
-        private static CreateMedicationDto CreateSUT()
+        private static MedicationDto CreateSUT()
         {
-            return new CreateMedicationDto
+            return new MedicationDto
             {
                 Name = "Paracetamol",
                 Stock = 21
