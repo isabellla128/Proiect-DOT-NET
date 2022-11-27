@@ -34,7 +34,6 @@ namespace MyDocAppointment.API.Features.Appointments
                     PatientId = a.PatientId,
                     StartTime = a.StartTime,
                     EndTime = a.EndTime
-
                 }
              );
             return Ok(appointments);

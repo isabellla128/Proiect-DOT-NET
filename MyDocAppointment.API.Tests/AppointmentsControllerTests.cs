@@ -12,7 +12,7 @@ namespace MyDocAppointment.API.Tests
     {
         private const string ApiURL = "v1/api/Appointments";
 
-        [Fact]  //BAD REQUEST!
+        [Fact]  //400 BAD REQUEST!
         public async void When_CreatedAppointment_Then_ShouldReturnAppointmentInTheGetRequest()
         {
 
@@ -22,8 +22,13 @@ namespace MyDocAppointment.API.Tests
 
             var createDoctorResponse = await HttpClient.PostAsJsonAsync("v1/api/Doctors", doctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
+            createDoctorResponse.EnsureSuccessStatusCode();
+            createDoctorResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+
             var createPatientResponse = await HttpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
+            createPatientResponse.EnsureSuccessStatusCode();
+            createPatientResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
 
             AppointmentDto appointmentDto = new AppointmentDto
             {

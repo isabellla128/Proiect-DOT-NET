@@ -34,25 +34,23 @@ namespace MyDocAppointment.API.Tests
         {
             // Arrange
             DoctorDto doctorDto = CreateSUT();
-            
             var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiURL, doctorDto);
-           
-            var appointments = new List<AppointmentDto>
-            {
-                new AppointmentDto
-                {
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Now
-      
-                },
-                new AppointmentDto
-                {
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Now
-                }
-            };
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
 
+            var appointments = new List<AppointmentsDtoFromDoctor>
+            {
+                new AppointmentsDtoFromDoctor
+                {
+                    StartTime = DateTime.Now,
+                    EndTime = DateTime.Now,
+                },
+                new AppointmentsDtoFromDoctor
+                {
+                    StartTime = DateTime.Now,
+                    EndTime = DateTime.Now,
+                }
+            };
+            
             // Act
             var resultResponse = await HttpClient.PostAsJsonAsync
                 ($"{ApiURL}/{doctor.Id}/appointments", appointments);
@@ -86,6 +84,16 @@ namespace MyDocAppointment.API.Tests
                 LastName = "Doctorescu",
                 Specialization = "Diagnostic radiology",
                 Email = "diagn@st.ic",
+                Phone = "0712312312",
+            };
+        }
+        private static PatientDto CreatePatientSUT()
+        {
+            return new PatientDto
+            {
+                FirstName = "Eu",
+                LastName = "Tot eu",
+                Email = "eu@datoteu.eu",
                 Phone = "0712312312",
             };
         }

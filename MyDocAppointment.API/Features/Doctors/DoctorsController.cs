@@ -65,7 +65,6 @@ namespace MyDocAppointment.API.Features.Doctors
         [HttpPost("{doctorId:Guid}/appointments")]
         public IActionResult RegisterNewDoctorsToPatient(Guid doctorId, [FromBody] List<AppointmentsDtoFromDoctor> appointmentDtos)
         {
-
             var doctor = doctorRepository.GetById(doctorId);
             if (doctor == null)
             {
@@ -100,9 +99,7 @@ namespace MyDocAppointment.API.Features.Doctors
                 appointmentRepository.Add(a);
             });
             appointmentRepository.SaveChanges();
-
             return Ok(appointments);
-
         }
 
         [HttpDelete("{doctorId:Guid}")]

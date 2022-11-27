@@ -13,10 +13,12 @@ namespace MyDocAppointment.API.Features.Patients
     {
         public readonly IRepository<Patient> patientRepository;
         public readonly IRepository<Doctor> doctorRepository;
-        public PatientsController(IRepository<Patient> patientRepository, IRepository<Doctor> doctorRepository)
+        public readonly IRepository<Appointment> appointmentRepository;
+        public PatientsController(IRepository<Patient> patientRepository, IRepository<Doctor> doctorRepository, IRepository<Appointment> appointmentRepository)
         {
             this.patientRepository = patientRepository;
             this.doctorRepository = doctorRepository;
+            this.appointmentRepository = appointmentRepository;
         }
         [HttpGet]
         public IActionResult GetAllPatients()
@@ -33,17 +35,25 @@ namespace MyDocAppointment.API.Features.Patients
             return Ok(patients);
         }
 
-        [HttpGet("{patientId:Guid}/appoinments")]
+        [HttpGet("{patientId:Guid}/appointments")]
         public IActionResult GetAllDoctorsFromPatient(Guid patientId)
         {
-            var patient = patientRepository.GetById(patientId);
+            /*var patient = patientRepository.GetById(patientId);
             if (patient == null)
             {
                 return NotFound("Patient with given id not found");
             }
 
             var appointments = patient.Appointments;
-            return Ok(appointments);
+            return Ok(appointments);*/
+            var appointments = appointmentRepository.Find(appointment => appointment.PatientId == patientId);
+            return Ok(appointments.Select(
+                a => new AppointmentsDtoFromPatient
+                {
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
+                    DoctorId = a.DoctorId,
+                }));
         }
 
         [HttpPost]
