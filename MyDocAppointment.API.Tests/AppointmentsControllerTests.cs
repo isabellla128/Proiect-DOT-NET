@@ -54,8 +54,28 @@ namespace MyDocAppointment.API.Tests
         public async void When_DeletedAppointment_Then_ShouldReturnNoAppointmentInTheGetRequest()
         {
             // Arrange
-            AppointmentDto appointmentDto = CreateSUT();
-            var createAppointmentResponse = await HttpClient.PostAsJsonAsync(ApiURL, appointmentDto);
+            PatientDto patientDto = CreatePatientSUT();
+            DoctorDto doctorDto = CreateDoctorSUT();
+
+            var createDoctorResponse = await HttpClient.PostAsJsonAsync("v1/api/Doctors", doctorDto);
+            var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
+            createDoctorResponse.EnsureSuccessStatusCode();
+            createDoctorResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+
+            var createPatientResponse = await HttpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
+            var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
+            createPatientResponse.EnsureSuccessStatusCode();
+            createPatientResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+
+
+
+            AppointmentDto appointmentDto = new AppointmentDto
+            {
+                StartTime = new DateTime(2023, 11, 27, 00, 29, 00),
+                EndTime = new DateTime(2024, 11, 27, 00, 29, 00)
+            };
+
+            var createAppointmentResponse = await HttpClient.PostAsJsonAsync($"{ApiURL}?doctorId={doctor.Id}&patientId={patient.Id}", appointmentDto);
             var appointment = await createAppointmentResponse.Content.ReadFromJsonAsync<AppointmentDto>();
 
             // Act

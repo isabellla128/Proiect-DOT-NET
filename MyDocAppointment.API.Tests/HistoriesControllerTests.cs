@@ -46,8 +46,15 @@ namespace MyDocAppointment.API.Tests
         public async void When_DeletedHistory_Then_ShouldReturnNoHistoryInTheGetRequest()
         {
             // Arrange
+
+            PatientDto patientDto = CreatePatientSUT();
+            var createPatientResponse = await HttpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
+            var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
+            createPatientResponse.EnsureSuccessStatusCode();
+            createPatientResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+
             HistoryDto historyDto = CreateSUT();
-            var createHistoryResponse = await HttpClient.PostAsJsonAsync(ApiURL, historyDto);
+            var createHistoryResponse = await HttpClient.PostAsJsonAsync($"{ApiURL}?patientId={patient.Id}", historyDto);
             var history = await createHistoryResponse.Content.ReadFromJsonAsync<HistoryDto>();
 
             // Act
