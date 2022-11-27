@@ -76,23 +76,23 @@ namespace MyDocAppointment.API.Tests
 
 
 
-        /*
-        [Fact]
-        public async void When_DeletedHospital_Then_ShouldReturnNoHospitalInTheGetRequest()
-        {
-            // Arrange
-            HospitalDto hospitalDto = CreateSUT();
-            var createHospitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, hospitalDto);
+        
+        //[Fact]
+        //public async void When_DeletedHospital_Then_ShouldReturnNoHospitalInTheGetRequest()
+        //{
+        //    // Arrange
+        //    HospitalDto hospitalDto = CreateSUT();
+        //    var createHospitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, hospitalDto);
 
-            // Act
-            var resultResponse = await HttpClient.DeleteAsync 
-                ($"{ApiURL}/{hospitalDto.Id}");
+        //    // Act
+        //    var resultResponse = await HttpClient.DeleteAsync 
+        //        ($"{ApiURL}/{hospitalDto.Id}");
 
-            // Assert
-            resultResponse.EnsureSuccessStatusCode();
-            //resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
-        }
-        */
+        //    // Assert
+        //    resultResponse.EnsureSuccessStatusCode();
+        //    //resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+        //}
+        
 
         private static HospitalDto CreateSUT()
         {

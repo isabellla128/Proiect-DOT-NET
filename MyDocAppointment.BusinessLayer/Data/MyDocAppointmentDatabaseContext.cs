@@ -34,10 +34,8 @@ namespace MyDocAppointment.BusinessLayer.Data
             modelBuilder.Entity<Doctor>()
                 .HasOne(d => d.Hospial)
                 .WithMany(h => h.Doctors)
-                .HasForeignKey(@"HospitalId")
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .IsRequired(false);
-            base.OnModelCreating(modelBuilder);
+                .HasForeignKey(d => d.HospitalId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

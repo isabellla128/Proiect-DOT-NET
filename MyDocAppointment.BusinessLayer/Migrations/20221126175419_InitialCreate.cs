@@ -76,8 +76,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     Specialization = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Phone = table.Column<string>(type: "TEXT", nullable: false),
-                    HospitalId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    PatientId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    HospitalId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,12 +85,8 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         name: "FK_Doctors_Hospitals_HospitalId",
                         column: x => x.HospitalId,
                         principalTable: "Hospitals",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Doctors_Patients_PatientId",
-                        column: x => x.PatientId,
-                        principalTable: "Patients",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -251,11 +246,6 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 column: "HospitalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Doctors_PatientId",
-                table: "Doctors",
-                column: "PatientId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Events_ScheduleId",
                 table: "Events",
                 column: "ScheduleId");
@@ -317,10 +307,10 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 name: "Doctors");
 
             migrationBuilder.DropTable(
-                name: "Hospitals");
+                name: "Patients");
 
             migrationBuilder.DropTable(
-                name: "Patients");
+                name: "Hospitals");
         }
     }
 }

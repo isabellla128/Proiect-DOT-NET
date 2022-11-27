@@ -38,6 +38,8 @@ namespace MyDocAppointment.API.Features.Hospitals
         public IActionResult GetAllDoctorsFromHostpital(Guid hospitalId)
         {
             var doctors = doctorRepository.Find(doctor => doctor.HospitalId == hospitalId);
+
+
             return Ok(doctors.Select(
                 d => new DoctorDto
                 {

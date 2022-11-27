@@ -11,7 +11,7 @@ using MyDocAppointment.BusinessLayer.Data;
 namespace MyDocAppointment.BusinessLayer.Migrations
 {
     [DbContext(typeof(MyDocAppointmentDatabaseContext))]
-    [Migration("20221126075132_InitialCreate")]
+    [Migration("20221126175419_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -98,9 +98,6 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("PatientId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -112,8 +109,6 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("HospitalId");
-
-                    b.HasIndex("PatientId");
 
                     b.ToTable("Doctors");
                 });
@@ -311,7 +306,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .IsRequired();
 
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.Patient", "Patient")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -325,11 +320,8 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 {
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.Hospital", "Hospial")
                         .WithMany("Doctors")
-                        .HasForeignKey("HospitalId");
-
-                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Patient", null)
-                        .WithMany("Doctors")
-                        .HasForeignKey("PatientId");
+                        .HasForeignKey("HospitalId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Hospial");
                 });
@@ -387,7 +379,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
 
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Patient", b =>
                 {
-                    b.Navigation("Doctors");
+                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Schedule", b =>
