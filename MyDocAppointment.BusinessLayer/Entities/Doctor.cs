@@ -15,6 +15,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             Email = email; 
             Phone = phone;
             Appointments = new List<Appointment>();
+            Prescriptions = new List<Prescription>();
         }
 
         public Guid Id { get; private set; }
@@ -32,9 +33,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
         public Guid? HospitalId { get; private set; }
 
         public ICollection<Appointment> Appointments { get; private set; }
-
-        //public ICollection<Patient> Patients { get; private set; }
-
+        public ICollection<Prescription> Prescriptions { get; private set; }
 
 
         public string FullName
@@ -50,13 +49,6 @@ namespace MyDocAppointment.BusinessLayer.Entities
             this.Hospial = hospital;
             HospitalId = hospital.Id;
         }
-
-        //public void AddRelatedPacient(Patient patient)
-        //{
-        //    Patients.Add(patient);
-        //}
-
-        //nu cred ca mai avem nevoie de relatia directa dintre doctor si pacient, din moment ce avem appointement (vedem)
 
         public Result AddAppointment(Appointment appointment)
         {
@@ -88,6 +80,18 @@ namespace MyDocAppointment.BusinessLayer.Entities
             Appointments.Add(appointment);
             return Result.Success();
             
+        }
+
+        public Result AddPrescription(Prescription prescription)
+        {
+            if (prescription == null)
+            {
+                return Result.Failure("Prescription should not be null");
+            }
+
+            prescription.AddDoctorToPrescription(this);
+            Prescriptions.Add(prescription);
+            return Result.Success();
         }
 
     }

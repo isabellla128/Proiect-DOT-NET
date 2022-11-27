@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.API.Features.Patients;
 using System.Net.Http.Json;
 using Xunit;
@@ -29,35 +28,35 @@ namespace MyDocAppointment.API.Tests
             patients.Should().NotBeNull();
         }
 
-        [Fact]
-        public async void When_RegisterAppointmentsToHospital_Then_ShouldReturnAppointmentsInTheGetRequest()
-        {
-            // Arrange
-            CreatePatientDto createPatientDto = CreateSUT();
-            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, createPatientDto);
-            var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
+        //[Fact]
+        //public async void When_RegisterAppointmentsToHospital_Then_ShouldReturnAppointmentsInTheGetRequest()
+        //{
+        //    // Arrange
+        //    CreatePatientDto createPatientDto = CreateSUT();
+        //    var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, createPatientDto);
+        //    var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
-            var appointments = new List<AppointmentsDtoFromPatient>
-            {
-                new AppointmentsDtoFromPatient
-                {
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Now,
-                },
-                new AppointmentsDtoFromPatient
-                {
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Now,
-                }
-            };
-            // Act
-            var resultResponse = await HttpClient.PostAsJsonAsync
-                ($"{ApiURL}/{patient.Id}/appointments", appointments);
+        //    var appointments = new List<AppointmentsDtoFromPatient>
+        //    {
+        //        new AppointmentsDtoFromPatient
+        //        {
+        //            StartTime = DateTime.Now,
+        //            EndTime = DateTime.Now,
+        //        },
+        //        new AppointmentsDtoFromPatient
+        //        {
+        //            StartTime = DateTime.Now,
+        //            EndTime = DateTime.Now,
+        //        }
+        //    };
+        //    // Act
+        //    var resultResponse = await HttpClient.PostAsJsonAsync
+        //        ($"{ApiURL}/{patient.Id}/appointments", appointments);
 
-            // Assert
-            resultResponse.EnsureSuccessStatusCode();
-            resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
-        }
+        //    // Assert
+        //    resultResponse.EnsureSuccessStatusCode();
+        //    resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+        //}
 
         [Fact]
         public async void When_DeletedPatient_Then_ShouldReturnNoPatientInTheGetRequest()

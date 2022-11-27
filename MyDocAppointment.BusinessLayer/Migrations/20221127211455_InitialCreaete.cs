@@ -5,7 +5,7 @@
 namespace MyDocAppointment.BusinessLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialCreaete : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -75,8 +75,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     Specialization = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Phone = table.Column<string>(type: "TEXT", nullable: false),
-                    HospitalId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    PatientId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    HospitalId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -85,11 +84,6 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         name: "FK_Doctors_Hospitals_HospitalId",
                         column: x => x.HospitalId,
                         principalTable: "Hospitals",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Doctors_Patients_PatientId",
-                        column: x => x.PatientId,
-                        principalTable: "Patients",
                         principalColumn: "Id");
                 });
 
@@ -211,24 +205,58 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MedicationPrescription",
+                name: "MedicationDosageHistories",
                 columns: table => new
                 {
-                    MedicationsId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PrescriptionsId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    HistoryId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    MedicationId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Quantity = table.Column<float>(type: "REAL", nullable: false),
+                    Frequency = table.Column<float>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicationPrescription", x => new { x.MedicationsId, x.PrescriptionsId });
+                    table.PrimaryKey("PK_MedicationDosageHistories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MedicationPrescription_Medications_MedicationsId",
-                        column: x => x.MedicationsId,
+                        name: "FK_MedicationDosageHistories_History_HistoryId",
+                        column: x => x.HistoryId,
+                        principalTable: "History",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MedicationDosageHistories_Medications_MedicationId",
+                        column: x => x.MedicationId,
+                        principalTable: "Medications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MedicationDosagePrescriptions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    PrescriptionId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    MedicationId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Quantity = table.Column<float>(type: "REAL", nullable: false),
+                    Frequency = table.Column<float>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MedicationDosagePrescriptions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MedicationDosagePrescriptions_Medications_MedicationId",
+                        column: x => x.MedicationId,
                         principalTable: "Medications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MedicationPrescription_Prescriptions_PrescriptionsId",
-                        column: x => x.PrescriptionsId,
+                        name: "FK_MedicationDosagePrescriptions_Prescriptions_PrescriptionId",
+                        column: x => x.PrescriptionId,
                         principalTable: "Prescriptions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -250,11 +278,6 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 column: "HospitalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Doctors_PatientId",
-                table: "Doctors",
-                column: "PatientId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Events_ScheduleId",
                 table: "Events",
                 column: "ScheduleId");
@@ -270,9 +293,24 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 column: "MedicationsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicationPrescription_PrescriptionsId",
-                table: "MedicationPrescription",
-                column: "PrescriptionsId");
+                name: "IX_MedicationDosageHistories_HistoryId",
+                table: "MedicationDosageHistories",
+                column: "HistoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MedicationDosageHistories_MedicationId",
+                table: "MedicationDosageHistories",
+                column: "MedicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MedicationDosagePrescriptions_MedicationId",
+                table: "MedicationDosagePrescriptions",
+                column: "MedicationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MedicationDosagePrescriptions_PrescriptionId",
+                table: "MedicationDosagePrescriptions",
+                column: "PrescriptionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Prescriptions_DoctorId",
@@ -298,7 +336,10 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 name: "HistoryMedication");
 
             migrationBuilder.DropTable(
-                name: "MedicationPrescription");
+                name: "MedicationDosageHistories");
+
+            migrationBuilder.DropTable(
+                name: "MedicationDosagePrescriptions");
 
             migrationBuilder.DropTable(
                 name: "Schedule");
@@ -316,10 +357,10 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 name: "Doctors");
 
             migrationBuilder.DropTable(
-                name: "Hospitals");
+                name: "Patients");
 
             migrationBuilder.DropTable(
-                name: "Patients");
+                name: "Hospitals");
         }
     }
 }

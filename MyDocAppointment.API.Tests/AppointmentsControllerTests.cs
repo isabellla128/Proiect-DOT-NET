@@ -94,8 +94,8 @@ namespace MyDocAppointment.API.Tests
             {
                 DoctorId= doctorId,
                 PatientId= patientId,
-                StartTime = new DateTime(2023, 11, 27, 00, 29, 00),
-                EndTime = new DateTime(2024, 11, 27, 00, 29, 00)
+                StartTime = DateTime.Now.AddDays(1),
+                EndTime = DateTime.Now.AddDays(1).AddHours(1)
             };
         }
     }

@@ -7,7 +7,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
         public Prescription()
         {
             Id = Guid.NewGuid();
-            Medications = new List<Medication>();
+            MedicationDosagePrescriptions = new List<MedicationDosagePrescription>();
         }
         public Guid Id { get; private set; }
 
@@ -19,23 +19,25 @@ namespace MyDocAppointment.BusinessLayer.Entities
 
         public Guid PatientId { get; private set; }
 
-        public ICollection<Medication> Medications { get; private set; }
+        public ICollection<MedicationDosagePrescription> MedicationDosagePrescriptions { get; private set; }
 
 
         public void AddDoctorToPrescription(Doctor doctor)
         {
             Doctor = doctor;
+            DoctorId = doctor.Id;
         }
         public void AddPatientToPrescription(Patient patient)
         {
             Patient = patient;
+            PatientId = patient.Id;
         }
-        public Result AddMedications(List<Medication> medications)
+        public Result AddMedications(List<MedicationDosagePrescription> medicationsDosages)
         {
-
-            medications.ForEach(d =>
+            medicationsDosages.ForEach(m =>
             {
-                Medications.Add(d);
+                m.RegisterMedicationInfoToPrescription(this);
+                MedicationDosagePrescriptions.Add(m);
             });
             return Result.Success();
         }

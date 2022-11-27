@@ -13,6 +13,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             Email = email;
             Phone = phone;
             Appointments = new List<Appointment>();
+            Prescriptions = new List<Prescription>();
         }
 
         public Guid Id { get; private set; }
@@ -26,7 +27,9 @@ namespace MyDocAppointment.BusinessLayer.Entities
         public string Phone { get; private set; }
 
         public ICollection<Appointment> Appointments { get; private set; }
-        
+
+        public ICollection<Prescription> Prescriptions { get; private set; }
+
         public Result AddAppointment(Appointment appointment)
         {
             if(appointment == null)
@@ -47,12 +50,24 @@ namespace MyDocAppointment.BusinessLayer.Entities
                 if (appointment.StartTime <= existentAppointment.EndTime && appointment.StartTime >= existentAppointment.StartTime ||
                     appointment.EndTime >= existentAppointment.StartTime && appointment.EndTime <= existentAppointment.EndTime)
                 {
-                    return Result.Failure("A new appoinments shooul not intersect with a fixed appointment");
+                    return Result.Failure("A new appoinments should not intersect with a fixed appointment");
                 }
             }
 
             appointment.AddPatientToAppointment(this);
             Appointments.Add(appointment);
+            return Result.Success();
+        }
+
+        public Result AddPrescription(Prescription prescription) 
+        {
+            if(prescription == null)
+            {
+                return Result.Failure("Prescription should not be null");
+            }
+            prescription.AddPatientToPrescription(this);
+            Prescriptions.Add(prescription);
+
             return Result.Success();
         }
 

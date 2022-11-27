@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyDocAppointment.API.Features.Medications;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
@@ -12,11 +11,16 @@ namespace MyDocAppointment.API.Features.Prescriptions
         public readonly IRepository<Prescription> prescriptionRepository;
         public readonly IRepository<Doctor> doctorRepository;
         public readonly IRepository<Patient> patientRepository;
-        public PrescriptionsController(IRepository<Prescription> prescriptionRepository, IRepository<Doctor> doctorRepository, IRepository<Patient> patientRepository)
+        private readonly IRepository<MedicationDosagePrescription> medicationDosageRepository;
+        private readonly IRepository<Medication> medicationRepository;
+
+        public PrescriptionsController(IRepository<Prescription> prescriptionRepository, IRepository<Doctor> doctorRepository, IRepository<Patient> patientRepository, IRepository<Medication> medicationRepository, IRepository<MedicationDosagePrescription> medicationDosageRepository)
         {
             this.prescriptionRepository=prescriptionRepository;
             this.doctorRepository=doctorRepository;
             this.patientRepository = patientRepository;
+            this.medicationDosageRepository = medicationDosageRepository;
+            this.medicationRepository = medicationRepository;
         }
 
         [HttpGet]
@@ -25,12 +29,15 @@ namespace MyDocAppointment.API.Features.Prescriptions
             var prescriptions = prescriptionRepository.GetAll().Select(
                 p => new PrescriptionDto
                 {
-                    Id = p.Id
+                    Id = p.Id,
+                    DoctorId = p.DoctorId,
+                    PacientId = p.PatientId,
+                    MedicationDosagePrescriptions = p.MedicationDosagePrescriptions
                 });
             return Ok(prescriptions);
         }
 
-        [HttpGet("{prescriptionId:Guid}/medications")]
+        [HttpGet("{prescriptionId:Guid}/medicationsDosages")]
         public IActionResult GetAllMedicationsFromPrescription(Guid prescriptionId)
         {
             var prescription = prescriptionRepository.GetById(prescriptionId);
@@ -39,7 +46,7 @@ namespace MyDocAppointment.API.Features.Prescriptions
                 return NotFound("Prescription with given id not found");
             }
 
-            var medications = prescription.Medications;
+            var medications = prescription.MedicationDosagePrescriptions;
             return Ok(medications);
         }
 
@@ -61,9 +68,27 @@ namespace MyDocAppointment.API.Features.Prescriptions
             {
                 return BadRequest("There is no patient with given id");
             }
+            doctor.AddPrescription(prescription);
+            patient.AddPrescription(prescription);
 
-            prescription.AddDoctorToPrescription(doctor);
-            prescription.AddPatientToPrescription(patient);
+            var medicationDosages = new List<MedicationDosagePrescription>();
+            foreach (var medicationDosageDto in prescriptionDto.MedicationDosages)
+            {
+                var medication = medicationRepository.GetById(medicationDosageDto.MedicationId);
+
+                if(medication == null)
+                {
+                    return BadRequest("Medication with given id not found");
+                }
+
+                var medicationDosage = new MedicationDosagePrescription(medicationDosageDto.StartDate, medicationDosageDto.EndDate, medicationDosageDto.Quantity, medicationDosageDto.Frequency);
+                medicationDosage.AddMedication(medication);
+                medicationDosages.Add(medicationDosage);
+                
+            }
+
+            prescription.AddMedications(medicationDosages);
+
             
             prescriptionRepository.Add(prescription);
             prescriptionRepository.SaveChanges();
@@ -71,25 +96,25 @@ namespace MyDocAppointment.API.Features.Prescriptions
         }
 
 
-        [HttpPost("{prescriptionId:Guid}/medications")]
-        public IActionResult RegisterNewMedicationsToPrescription(Guid prescriptionId, [FromBody] List<CreateMedicationDto> medicationDtos)
-        {
+        //[HttpPost("{prescriptionId:Guid}/medications")]
+        //public IActionResult RegisterNewMedicationsToPrescription(Guid prescriptionId, [FromBody] List<CreateMedicationDto> medicationDtos)
+        //{
 
-            var prescription = prescriptionRepository.GetById(prescriptionId);
-            if (prescription == null)
-            {
-                return NotFound("Prescription with given id not found");
-            }
+        //    var prescription = prescriptionRepository.GetById(prescriptionId);
+        //    if (prescription == null)
+        //    {
+        //        return NotFound("Prescription with given id not found");
+        //    }
 
-            var medications = medicationDtos.Select(d => new Medication(d.Name, d.Stock)).ToList();
-            var result = prescription.AddMedications(medications);
+        //    var medications = medicationDtos.Select(d => new Medication(d.Name, d.Stock)).ToList();
+        //    var result = prescription.AddMedications(medications);
 
 
-            prescriptionRepository.SaveChanges();
+        //    prescriptionRepository.SaveChanges();
 
-            return Ok(result);
+        //    return Ok(result);
 
-        }
+        //}
 
         [HttpDelete("{prescriptionId:Guid}")]
         public IActionResult DeletePrescription(Guid prescriptionId)

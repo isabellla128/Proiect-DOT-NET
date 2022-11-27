@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using MyDocAppointment.API.Features.Doctors;
+using MyDocAppointment.API.Features.MedicationDosage;
 using MyDocAppointment.API.Features.Medications;
 using MyDocAppointment.API.Features.Patients;
 using MyDocAppointment.API.Features.Prescriptions;
@@ -13,6 +14,8 @@ namespace MyDocAppointment.API.Tests
         private const string ApiURL = "v1/api/Prescriptions";
         private const string ApiDoctorsURL = "v1/api/Doctors";
         private const string ApiPatientsURL = "v1/api/Patients";
+        private const string ApiMedicationsURL = "v1/api/Medications";
+
 
         [Fact]
         public async void When_CreatedPrescription_Then_ShouldReturnPrescriptionInTheGetRequest()
@@ -27,7 +30,11 @@ namespace MyDocAppointment.API.Tests
             var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiPatientsURL, createPatientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
-            CreatePrescriptionDto prescriptionDto = CreateSUT(doctor.Id, patient.Id);
+            var createMedicationDto = CreateMedicationDto();
+            var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiMedicationsURL, createMedicationDto);
+            var medication = await createMedicationResponse.Content.ReadFromJsonAsync<MedicationDto>();
+
+            CreatePrescriptionDto prescriptionDto = CreateSUT(doctor.Id, patient.Id, medication.Id);
 
             // Act
             var createPrescriptionResponse = await HttpClient.PostAsJsonAsync(ApiURL, prescriptionDto);
@@ -42,6 +49,8 @@ namespace MyDocAppointment.API.Tests
             prescriptions.Should().HaveCount(1);
             prescriptions.Should().NotBeNull();
         }
+
+
         [Fact]
         public async void When_RegisterMedicationsToPrescription_Then_ShouldReturnMediactionsInTheGetRequest()
         {
@@ -53,9 +62,13 @@ namespace MyDocAppointment.API.Tests
 
             var createPatientDto = CreatePatientSUT();
             var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiPatientsURL, createPatientDto);
-            var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
+            var patient = await createPatientResponse.Content.ReadFromJsonAsync<MedicationDto>();
 
-            CreatePrescriptionDto prescriptionDto = CreateSUT(doctor.Id, patient.Id);
+            var createMedicationDto = CreateMedicationDto();
+            var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiMedicationsURL, createMedicationDto);
+            var medication = await createMedicationResponse.Content.ReadFromJsonAsync<PatientDto>();
+
+            CreatePrescriptionDto prescriptionDto = CreateSUT(doctor.Id, patient.Id, medication.Id);
             var createPrescriptionResponse = await HttpClient.PostAsJsonAsync(ApiURL, prescriptionDto);
 
             var medications = new List<CreateMedicationDto>
@@ -94,7 +107,12 @@ namespace MyDocAppointment.API.Tests
             var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiPatientsURL, createPatientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
-            CreatePrescriptionDto prescriptionDto = CreateSUT(doctor.Id, patient.Id);
+            var createMedicationDto = CreateMedicationDto();
+            var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiMedicationsURL, createMedicationDto);
+            var medication = await createMedicationResponse.Content.ReadFromJsonAsync<MedicationDto>();
+
+
+            CreatePrescriptionDto prescriptionDto = CreateSUT(doctor.Id, patient.Id, medication.Id);
             var createPrescriptionResponse = await HttpClient.PostAsJsonAsync(ApiURL, prescriptionDto);
 
             var prescription = await createPrescriptionResponse.Content.ReadFromJsonAsync<PrescriptionDto>();
@@ -109,12 +127,23 @@ namespace MyDocAppointment.API.Tests
         }
 
 
-        private static CreatePrescriptionDto CreateSUT(Guid doctorId, Guid pacientId)
+        private static CreatePrescriptionDto CreateSUT(Guid doctorId, Guid pacientId, Guid medicationId)
         {
             return new CreatePrescriptionDto
             {
                 DoctorId = doctorId,
-                PacientId = pacientId
+                PacientId = pacientId,
+                MedicationDosages = new List<MedicationDosagePrescriptionDto>()
+                {
+                    new MedicationDosagePrescriptionDto()
+                    {
+                        MedicationId = medicationId,
+                        StartDate = DateTime.UtcNow.AddDays(1),
+                        EndDate = DateTime.Now.AddDays(2),
+                        Quantity = 1,
+                        Frequency = 5
+                    }
+                }
             };
         }
 
@@ -138,6 +167,15 @@ namespace MyDocAppointment.API.Tests
                 LastName = "Tot eu",
                 Email = "eu@datoteu.eu",
                 Phone = "0712312312",
+            };
+        }
+
+        private CreateMedicationDto CreateMedicationDto()
+        {
+            return new CreateMedicationDto()
+            {
+                Name = "Aspirina",
+                Stock = 10000
             };
         }
     }
