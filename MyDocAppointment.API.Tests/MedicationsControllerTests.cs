@@ -21,9 +21,9 @@ namespace MyDocAppointment.API.Tests
         public async void When_CreatedMedication_Then_ShouldReturnMedicationInTheGetRequest()
         {
             // Arrange
-            MedicationDto medicationDto = CreateSUT();
+            CreateMedicationDto createMedicationDto = CreateSUT();
             // Act
-            var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiURL, medicationDto);
+            var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiURL, createMedicationDto);
             var getMedicationResult = await HttpClient.GetAsync(ApiURL);
             // Assert
             createMedicationResponse.EnsureSuccessStatusCode();
@@ -34,32 +34,13 @@ namespace MyDocAppointment.API.Tests
             doctors.Should().HaveCount(1);
             doctors.Should().NotBeNull();
         }
-        /*
-  
 
-
-        [HttpDelete("{medicationId:Guid}")]
-        public IActionResult DeleteMedication(Guid medicationId)
-        {
-            try
-            {
-                medicationRepository.Delete(medicationId);
-            }
-            catch(ArgumentException e)
-            {
-                return NotFound(e.Message);
-            }
-            medicationRepository.SaveChanges();
-
-            return NoContent();
-        }
-         */
         [Fact]
         public async void When_DeletedMedication_Then_ShouldReturnNoMedicationInTheGetRequest()
         {
             // Arrange
-            MedicationDto medicationDto = CreateSUT();
-            var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiURL, medicationDto);
+            MedicationDto createMedicationDto = CreateSUT();
+            var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiURL, createMedicationDto);
             var medication = await createMedicationResponse.Content.ReadFromJsonAsync<MedicationDto>();
 
             // Act
@@ -71,9 +52,9 @@ namespace MyDocAppointment.API.Tests
             resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
         }
 
-        private static MedicationDto CreateSUT()
+        private static CreateMedicationDto CreateSUT()
         {
-            return new MedicationDto
+            return new CreateMedicationDto
             {
                 Name = "Paracetamol",
                 Stock = 21

@@ -15,9 +15,9 @@ namespace MyDocAppointment.API.Tests
         public async void When_CreatedDoctor_Then_ShouldReturnDoctorInTheGetRequest()
         {
             // Arrange
-            DoctorDto doctorDto = CreateSUT();
+            CreateDoctorDto createDoctorDto = CreateSUT();
             // Act
-            var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiURL, doctorDto);
+            var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiURL, createDoctorDto);
             var getDoctorResult = await HttpClient.GetAsync(ApiURL);
             // Assert
             createDoctorResponse.EnsureSuccessStatusCode();
@@ -33,9 +33,13 @@ namespace MyDocAppointment.API.Tests
         public async void When_RegisterAppointmentsToDoctor_Then_ShouldReturnAppointmentsInTheGetRequest()
         {
             // Arrange
-            DoctorDto doctorDto = CreateSUT();
-            var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiURL, doctorDto);
+            CreateDoctorDto createCoctorDto = CreateSUT();
+            var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiURL, createCoctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
+
+            CreatePatientDto createPatientDto = CreatePatientSUT();
+            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, createPatientDto);
+            var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
             var appointments = new List<AppointmentsDtoFromDoctor>
             {
@@ -43,11 +47,13 @@ namespace MyDocAppointment.API.Tests
                 {
                     StartTime = DateTime.Now,
                     EndTime = DateTime.Now,
+                    PatientId = patient.Id 
                 },
                 new AppointmentsDtoFromDoctor
                 {
                     StartTime = DateTime.Now,
                     EndTime = DateTime.Now,
+                    PatientId = patient.Id
                 }
             };
             
@@ -64,8 +70,8 @@ namespace MyDocAppointment.API.Tests
         public async void When_DeletedDoctor_Then_ShouldReturnNoDoctorInTheGetRequest()
         {
             // Arrange
-            DoctorDto doctorDto = CreateSUT();
-            var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiURL, doctorDto);
+            CreateDoctorDto createDoctorDto = CreateSUT();
+            var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiURL, createDoctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
 
             // Act
@@ -76,9 +82,9 @@ namespace MyDocAppointment.API.Tests
             resultResponse.EnsureSuccessStatusCode();
             resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
         }
-        private static DoctorDto CreateSUT()
+        private static CreateDoctorDto CreateSUT()
         {
-            return new DoctorDto
+            return new CreateDoctorDto
             {
                 FirstName = "Doctor",
                 LastName = "Doctorescu",
@@ -87,9 +93,9 @@ namespace MyDocAppointment.API.Tests
                 Phone = "0712312312",
             };
         }
-        private static PatientDto CreatePatientSUT()
+        private static CreatePatientDto CreatePatientSUT()
         {
-            return new PatientDto
+            return new CreatePatientDto
             {
                 FirstName = "Eu",
                 LastName = "Tot eu",

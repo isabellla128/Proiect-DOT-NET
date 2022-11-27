@@ -19,9 +19,9 @@ namespace MyDocAppointment.API.Tests
         public async void When_CreatedPatient_Then_ShouldReturnPatientInTheGetRequest()
         {
             // Arrange
-            PatientDto patientDto = CreateSUT();
+            CreatePatientDto createPatientDto = CreateSUT();
             // Act
-            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, patientDto);
+            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, createPatientDto);
             var getPatientResult = await HttpClient.GetAsync(ApiURL);
             // Assert
             createPatientResponse.EnsureSuccessStatusCode();
@@ -37,8 +37,8 @@ namespace MyDocAppointment.API.Tests
         public async void When_RegisterAppointmentsToHospital_Then_ShouldReturnAppointmentsInTheGetRequest()
         {
             // Arrange
-            PatientDto patientDto = CreateSUT();
-            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, patientDto);
+            CreatePatientDto createPatientDto = CreateSUT();
+            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, createPatientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
             var appointments = new List<AppointmentsDtoFromPatient>
@@ -67,8 +67,8 @@ namespace MyDocAppointment.API.Tests
         public async void When_DeletedPatient_Then_ShouldReturnNoPatientInTheGetRequest()
         {
             // Arrange
-            PatientDto patientDto = CreateSUT();
-            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, patientDto);
+            CreatePatientDto createPatientDto = CreateSUT();
+            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, createPatientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
             // Act
@@ -80,9 +80,9 @@ namespace MyDocAppointment.API.Tests
             resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
         }
 
-        private static PatientDto CreateSUT()
+        private static CreatePatientDto CreateSUT()
         {
-            return new PatientDto
+            return new CreatePatientDto
             {
                 FirstName = "Eu",
                 LastName = "Tot eu",

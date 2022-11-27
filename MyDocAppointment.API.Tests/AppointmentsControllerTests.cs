@@ -34,8 +34,8 @@ namespace MyDocAppointment.API.Tests
             {
                 DoctorId = doctor.Id,
                 PatientId = patient.Id,
-                StartTime = DateTime.Now,
-                EndTime = DateTime.Now
+                StartTime = DateTime.Now.AddDays(1),
+                EndTime = DateTime.Now.AddDays(1)
             };
 
             // Act
@@ -94,8 +94,8 @@ namespace MyDocAppointment.API.Tests
         {
             return new AppointmentDto
             {
-                StartTime = DateTime.Now,
-                EndTime = DateTime.Now,
+                StartTime = DateTime.Now.AddDays(1),
+                EndTime = DateTime.Now.AddDays(1),
             };
         }
     }

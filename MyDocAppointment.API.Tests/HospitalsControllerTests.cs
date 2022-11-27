@@ -20,10 +20,10 @@ namespace MyDocAppointment.API.Tests
         public async void When_CreatedHospital_Then_ShouldReturnHospitalInTheGetRequest()
         {
             // Arrange
-            HospitalDto hospitalDto = CreateSUT();
+            CreateHospitalDto createHospitalDto = CreateSUT();
 
             // Act
-            var createHospitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, hospitalDto);
+            var createHospitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, createHospitalDto);
             var getHospitalResult = await HttpClient.GetAsync(ApiURL);
 
             // Assert
@@ -41,8 +41,8 @@ namespace MyDocAppointment.API.Tests
         public async void When_RegisterDoctorsToHospital_Then_ShouldReturnDoctorsInTheGetRequest()
         {
             // Arrange
-            HospitalDto hospitalDto = CreateSUT();
-            var createHospitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, hospitalDto);
+            CreateHospitalDto createHospitalDto = CreateSUT();
+            var createHospitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, createHospitalDto);
 
             var doctors = new List<DoctorDto>
             {
@@ -78,8 +78,8 @@ namespace MyDocAppointment.API.Tests
         public async void When_DeletedHospital_Then_ShouldReturnNoHospitalInTheGetRequest()
         {
             // Arrange
-            HospitalDto hostpitalDto = CreateSUT();
-            var createHostpitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, hostpitalDto);
+            CreateHospitalDto createHospitalDto = CreateSUT();
+            var createHostpitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, createHospitalDto);
             var hospital = await createHostpitalResponse.Content.ReadFromJsonAsync<DoctorDto>();
 
             // Act
@@ -91,9 +91,9 @@ namespace MyDocAppointment.API.Tests
             resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
         }
 
-        private static HospitalDto CreateSUT()
+        private static CreateHospitalDto CreateSUT()
         {
-            return new HospitalDto
+            return new CreateHospitalDto
             {
                 Name = "Regina Maria",
                 Address = "Iasi",
