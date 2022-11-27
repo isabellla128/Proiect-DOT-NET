@@ -1,11 +1,7 @@
 ﻿using FluentAssertions;
 using MyDocAppointment.API.Features.Appointments;
-using MyDocAppointment.API.Features.Doctors;
-using MyDocAppointment.API.Features.Hospitals;
 using MyDocAppointment.API.Features.Patients;
-using MyDocAppointment.BusinessLayer.Entities;
 using System.Net.Http.Json;
-using System.Numerics;
 using Xunit;
 
 namespace MyDocAppointment.API.Tests

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MyDocAppointment.API.Features.Events;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
@@ -41,11 +39,11 @@ namespace MyDocAppointment.API.Features.Appointments
         }
 
         [HttpPost]
-        public IActionResult Create(Guid doctorId, Guid patientId,[FromBody] CreateAppointmentDto appointmentDto)
+        public IActionResult Create([FromBody] CreateAppointmentDto appointmentDto)
         {
             var appointment = new Appointment(appointmentDto.StartTime, appointmentDto.EndTime);
-            var doctor = doctorRepository.GetById(doctorId);
-            var patient = patientRepository.GetById(patientId);
+            var doctor = doctorRepository.GetById(appointmentDto.DoctorId);
+            var patient = patientRepository.GetById(appointmentDto.PatientId);
             if(doctor == null)
             {
                 return BadRequest("Doctor with given id not found");
@@ -54,6 +52,7 @@ namespace MyDocAppointment.API.Features.Appointments
             {
                 return BadRequest("Patient with given id not found");
             }
+
             var resultFromDoctor = doctor.AddAppointment(appointment);
             if(resultFromDoctor.IsFailure)
             {
@@ -65,8 +64,9 @@ namespace MyDocAppointment.API.Features.Appointments
                 return BadRequest(resultFromPatient.Error);
             }
 
-            //doctor.AddAppointment(appointment);
-            //patient.AddAppointment(appointment);
+            appointment.AddPatientToAppointment(patient);
+            appointment.AddDoctorToAppointment(doctor);
+
             appointmentRepository.Add(appointment);
             appointmentRepository.SaveChanges();
 

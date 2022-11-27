@@ -1,15 +1,6 @@
 ﻿using FluentAssertions;
-using MyDocAppointment.API.Features.Doctors;
-using MyDocAppointment.API.Features.Histories;
 using MyDocAppointment.API.Features.Medications;
-using MyDocAppointment.API.Features.Patients;
-using MyDocAppointment.BusinessLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace MyDocAppointment.API.Tests
@@ -21,7 +12,7 @@ namespace MyDocAppointment.API.Tests
         public async void When_CreatedMedication_Then_ShouldReturnMedicationInTheGetRequest()
         {
             // Arrange
-            MedicationDto createMedicationDto = CreateSUT();
+            CreateMedicationDto createMedicationDto = CreateSUT();
             // Act
             var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiURL, createMedicationDto);
             var getMedicationResult = await HttpClient.GetAsync(ApiURL);
@@ -39,7 +30,7 @@ namespace MyDocAppointment.API.Tests
         public async void When_DeletedMedication_Then_ShouldReturnNoMedicationInTheGetRequest()
         {
             // Arrange
-            MedicationDto createMedicationDto = CreateSUT();
+            CreateMedicationDto createMedicationDto = CreateSUT();
             var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiURL, createMedicationDto);
             var medication = await createMedicationResponse.Content.ReadFromJsonAsync<MedicationDto>();
 
@@ -52,9 +43,9 @@ namespace MyDocAppointment.API.Tests
             resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
         }
 
-        private static MedicationDto CreateSUT()
+        private static CreateMedicationDto CreateSUT()
         {
-            return new MedicationDto
+            return new CreateMedicationDto
             {
                 Name = "Paracetamol",
                 Stock = 21

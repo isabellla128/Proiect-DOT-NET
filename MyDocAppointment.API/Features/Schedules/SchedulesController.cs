@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MyDocAppointment.API.Features.Doctors;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.API.Features.Events;
-using MyDocAppointment.API.Features.Hospitals;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 

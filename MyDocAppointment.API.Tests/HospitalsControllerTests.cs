@@ -1,13 +1,7 @@
 ﻿using FluentAssertions;
 using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.API.Features.Hospitals;
-using MyDocAppointment.BusinessLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace MyDocAppointment.API.Tests
@@ -44,9 +38,9 @@ namespace MyDocAppointment.API.Tests
             CreateHospitalDto createHospitalDto = CreateSUT();
             var createHospitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, createHospitalDto);
 
-            var doctors = new List<DoctorDto>
+            var doctors = new List<CreateDoctorDto>
             {
-                new DoctorDto
+                new CreateDoctorDto
                 {
                     FirstName = "FirstName1",
                     LastName = "LastName1",
@@ -54,7 +48,7 @@ namespace MyDocAppointment.API.Tests
                     Email = "doctor@gmail.com",
                     Phone = "1234567890"
                 },
-                new DoctorDto
+                new CreateDoctorDto
                 {
                     FirstName = "FirstName2",
                     LastName = "LastName2",

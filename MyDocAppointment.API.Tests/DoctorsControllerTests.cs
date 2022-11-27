@@ -33,8 +33,8 @@ namespace MyDocAppointment.API.Tests
         public async void When_RegisterAppointmentsToDoctor_Then_ShouldReturnAppointmentsInTheGetRequest()
         {
             // Arrange
-            CreateDoctorDto createCoctorDto = CreateSUT();
-            var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiURL, createCoctorDto);
+            CreateDoctorDto createDoctorDto = CreateSUT();
+            var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiURL, createDoctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
 
             CreatePatientDto createPatientDto = CreatePatientSUT();

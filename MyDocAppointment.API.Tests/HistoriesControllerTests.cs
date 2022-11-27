@@ -1,14 +1,7 @@
-﻿using FluentAssertions;
-using MyDocAppointment.API.Features.Appointments;
+using FluentAssertions;
 using MyDocAppointment.API.Features.Histories;
 using MyDocAppointment.API.Features.Patients;
-using MyDocAppointment.BusinessLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace MyDocAppointment.API.Tests

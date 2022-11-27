@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MyDocAppointment.API.Features.Doctors;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.API.Features.Medications;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
@@ -47,17 +45,17 @@ namespace MyDocAppointment.API.Features.Prescriptions
 
 
         [HttpPost]
-        public IActionResult CreatePrescription(Guid doctorId , Guid patientId)
+        public IActionResult CreatePrescription([FromBody] CreatePrescriptionDto prescriptionDto)
         {
 
             var prescription = new Prescription();
             
-            var doctor = doctorRepository.GetById(doctorId);
-            var patient = patientRepository.GetById(patientId);
+            var doctor = doctorRepository.GetById(prescriptionDto.DoctorId);
+            var patient = patientRepository.GetById(prescriptionDto.PacientId);
 
             if(doctor == null)
             {
-                return BadRequest("There is no doctor with give id");
+                return BadRequest("There is no doctor with given id");
             }
             if(patient == null)
             {

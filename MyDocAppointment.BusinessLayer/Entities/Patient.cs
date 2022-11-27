@@ -1,6 +1,5 @@
 ﻿
 using ShelterManagement.Business.Helpers;
-using System.Net.Security;
 
 namespace MyDocAppointment.BusinessLayer.Entities
 {

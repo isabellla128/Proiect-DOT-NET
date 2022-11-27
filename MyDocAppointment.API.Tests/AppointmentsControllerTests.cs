@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.API.Features.Doctors;
-using MyDocAppointment.API.Features.Hospitals;
 using MyDocAppointment.API.Features.Patients;
 using System.Net.Http.Json;
 using Xunit;
@@ -12,32 +11,24 @@ namespace MyDocAppointment.API.Tests
     {
         private const string ApiURL = "v1/api/Appointments";
 
-        [Fact]  //400 BAD REQUEST!
+        [Fact]
         public async void When_CreatedAppointment_Then_ShouldReturnAppointmentInTheGetRequest()
         {
 
             // Arrange
-            PatientDto patientDto = CreatePatientSUT();
-            DoctorDto doctorDto = CreateDoctorSUT();
+            CreatePatientDto patientDto = CreatePatientSUT();
+            CreateDoctorDto doctorDto = CreateDoctorSUT();
 
             var createDoctorResponse = await HttpClient.PostAsJsonAsync("v1/api/Doctors", doctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
-            createDoctorResponse.EnsureSuccessStatusCode();
-            createDoctorResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
-
+            
             var createPatientResponse = await HttpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
-            createPatientResponse.EnsureSuccessStatusCode();
-            createPatientResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
-
-            AppointmentDto appointmentDto = new AppointmentDto
-            {
-                StartTime = new DateTime(2023, 11, 27, 00, 29, 00),
-                EndTime = new DateTime(2024, 11, 27, 00, 29, 00)
-            };
+            
+            CreateAppointmentDto appointmentDto = CreateSUT(patient.Id, doctor.Id);
 
             // Act
-            var createAppointmentResponse = await HttpClient.PostAsJsonAsync($"{ApiURL}?doctorId={doctor.Id}&patientId={patient.Id}", appointmentDto);
+            var createAppointmentResponse = await HttpClient.PostAsJsonAsync(ApiURL, appointmentDto);
             var getAppointmentResult = await HttpClient.GetAsync(ApiURL);
 
             // Assert
@@ -54,28 +45,17 @@ namespace MyDocAppointment.API.Tests
         public async void When_DeletedAppointment_Then_ShouldReturnNoAppointmentInTheGetRequest()
         {
             // Arrange
-            PatientDto patientDto = CreatePatientSUT();
-            DoctorDto doctorDto = CreateDoctorSUT();
+            CreatePatientDto patientDto = CreatePatientSUT();
+            CreateDoctorDto doctorDto = CreateDoctorSUT();
 
             var createDoctorResponse = await HttpClient.PostAsJsonAsync("v1/api/Doctors", doctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
-            createDoctorResponse.EnsureSuccessStatusCode();
-            createDoctorResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
-
+            
             var createPatientResponse = await HttpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
-            createPatientResponse.EnsureSuccessStatusCode();
-            createPatientResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
 
-
-
-            AppointmentDto appointmentDto = new AppointmentDto
-            {
-                StartTime = new DateTime(2023, 11, 27, 00, 29, 00),
-                EndTime = new DateTime(2024, 11, 27, 00, 29, 00)
-            };
-
-            var createAppointmentResponse = await HttpClient.PostAsJsonAsync($"{ApiURL}?doctorId={doctor.Id}&patientId={patient.Id}", appointmentDto);
+            CreateAppointmentDto appointmentDto = CreateSUT(patient.Id, doctor.Id);
+            var createAppointmentResponse = await HttpClient.PostAsJsonAsync(ApiURL, appointmentDto);
             var appointment = await createAppointmentResponse.Content.ReadFromJsonAsync<AppointmentDto>();
 
             // Act
@@ -87,19 +67,19 @@ namespace MyDocAppointment.API.Tests
             resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
         }
         
-        private static PatientDto CreatePatientSUT()
+        private static CreatePatientDto CreatePatientSUT()
         {
-            return new PatientDto
+            return new CreatePatientDto
             {
                 FirstName = "Eu",
                 LastName = "Tot eu",
                 Email = "eu@datoteu.eu",
-                Phone = "0712312312",
+                Phone = "0712312312"
             };
         }
-        private static DoctorDto CreateDoctorSUT()
+        private static CreateDoctorDto CreateDoctorSUT()
         {
-            return new DoctorDto
+            return new CreateDoctorDto
             {
                 FirstName = "FirstName1",
                 LastName = "LastName1",
@@ -108,12 +88,14 @@ namespace MyDocAppointment.API.Tests
                 Phone = "1234567890"
             };
         }
-        private static AppointmentDto CreateSUT()
+        private static CreateAppointmentDto CreateSUT(Guid patientId, Guid doctorId)
         {
-            return new AppointmentDto
+            return new CreateAppointmentDto
             {
-                StartTime = DateTime.Now,
-                EndTime = DateTime.Now,
+                DoctorId= doctorId,
+                PatientId= patientId,
+                StartTime = new DateTime(2023, 11, 27, 00, 29, 00),
+                EndTime = new DateTime(2024, 11, 27, 00, 29, 00)
             };
         }
     }
