@@ -6,16 +6,17 @@
   width: 200px;
   display: flex;
   flex-direction: column;
+  direction: rtl;
 }
 
 .sidenav .mat-toolbar {
   background: inherit;
-  flex:0 1 auto ;
+  flex: 0 1 auto;
 }
 
 .mat-toolbar.mat-primary {
   position: sticky;
-  top: 0; 
+  top: 0;
   z-index: 1;
   border-bottom: 1px gray solid;
 }
@@ -24,6 +25,10 @@
   display: block;
   aspect-ratio: 1/1;
   width: 90%;
+}
+
+.logo-container {
+  margin: 10px 0px;
 }
 
 .button-row {
@@ -46,7 +51,6 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .mat-toolbar {
@@ -58,6 +62,6 @@ p {
   transform: scale(1.5);
 }
 
-.button-header{
+.button-header {
   display: block;
 }
