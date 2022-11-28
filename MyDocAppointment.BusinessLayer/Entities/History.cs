@@ -1,4 +1,6 @@
-﻿namespace MyDocAppointment.BusinessLayer.Entities
+﻿using ShelterManagement.Business.Helpers;
+
+namespace MyDocAppointment.BusinessLayer.Entities
 {
     public class History
     {
@@ -11,7 +13,7 @@
 
         public Guid Id { get; private set; }
 
-        public ICollection<Medication> Medications { get; private set; }
+        public ICollection<MedicationDosageHistory> MedicationDosageHistories { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
 
@@ -25,6 +27,16 @@
         {
             this.Patient = patient;
             PatientId = patient.Id;
+        }
+
+        public Result AddMedications(List<MedicationDosageHistory> medicationsDosages)
+        {
+            medicationsDosages.ForEach(m =>
+            {
+                m.RegisterMedicationInfoToHistory(this);
+                MedicationDosageHistories.Add(m);
+            });
+            return Result.Success();
         }
 
     }

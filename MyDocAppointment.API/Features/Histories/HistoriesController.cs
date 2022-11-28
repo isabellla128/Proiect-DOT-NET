@@ -42,7 +42,7 @@ namespace MyDocAppointment.API.Features.Histories
             {
                 return NotFound("History with given id not found");
             }
-            return Ok(history.Medications);
+            return Ok(history.MedicationDosageHistories);
         }
         
         [HttpPost]

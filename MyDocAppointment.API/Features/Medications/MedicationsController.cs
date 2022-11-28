@@ -43,16 +43,16 @@ namespace MyDocAppointment.API.Features.Medications
             return Ok(m);
         }
 
-         [HttpGet("{medicationId:Guid}/histories")]
-         public IActionResult GetHistoryById(Guid medicationId)
-         {
-            var medication = medicationRepository.GetById(medicationId);
-            if (medication == null)
-            {
-                return NotFound("Medication with given id not found");
-            }
-            return Ok(medication.Histories);
-         }
+         //[HttpGet("{medicationId:Guid}/histories")]
+         //public IActionResult GetHistoryById(Guid medicationId)
+         //{
+         //   var medication = medicationRepository.GetById(medicationId);
+         //   if (medication == null)
+         //   {
+         //       return NotFound("Medication with given id not found");
+         //   }
+         //   return Ok(medication.Histories);
+         //}
 
         [HttpPost]
         public IActionResult Create([FromBody] CreateMedicationDto medicationDto)

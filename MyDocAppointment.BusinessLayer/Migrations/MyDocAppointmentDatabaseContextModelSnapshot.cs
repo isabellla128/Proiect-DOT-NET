@@ -17,21 +17,6 @@ namespace MyDocAppointment.BusinessLayer.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
 
-            modelBuilder.Entity("HistoryMedication", b =>
-                {
-                    b.Property<Guid>("HistoriesId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("MedicationsId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("HistoriesId", "MedicationsId");
-
-                    b.HasIndex("MedicationsId");
-
-                    b.ToTable("HistoryMedication");
-                });
-
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Appointment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -315,21 +300,6 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.ToTable("Schedule");
                 });
 
-            modelBuilder.Entity("HistoryMedication", b =>
-                {
-                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.History", null)
-                        .WithMany()
-                        .HasForeignKey("HistoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Medication", null)
-                        .WithMany()
-                        .HasForeignKey("MedicationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Appointment", b =>
                 {
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.Doctor", "Doctor")
@@ -383,7 +353,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.MedicationDosageHistory", b =>
                 {
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.History", "History")
-                        .WithMany()
+                        .WithMany("MedicationDosageHistories")
                         .HasForeignKey("HistoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -442,6 +412,11 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.Navigation("Appointments");
 
                     b.Navigation("Prescriptions");
+                });
+
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.History", b =>
+                {
+                    b.Navigation("MedicationDosageHistories");
                 });
 
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Hospital", b =>

@@ -12,7 +12,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
 
         public Guid HistoryId { get; private set; }
 
-        public Result RegisterMedicationToHistory(History history)
+        public Result RegisterMedicationInfoToHistory(History history)
         {
             if(history == null)
             {

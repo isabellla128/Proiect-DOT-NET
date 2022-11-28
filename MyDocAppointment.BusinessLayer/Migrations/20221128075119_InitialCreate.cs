@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace MyDocAppointment.BusinessLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreaete : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -181,30 +182,6 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HistoryMedication",
-                columns: table => new
-                {
-                    HistoriesId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    MedicationsId = table.Column<Guid>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HistoryMedication", x => new { x.HistoriesId, x.MedicationsId });
-                    table.ForeignKey(
-                        name: "FK_HistoryMedication_History_HistoriesId",
-                        column: x => x.HistoriesId,
-                        principalTable: "History",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_HistoryMedication_Medications_MedicationsId",
-                        column: x => x.MedicationsId,
-                        principalTable: "Medications",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MedicationDosageHistories",
                 columns: table => new
                 {
@@ -288,11 +265,6 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 column: "PatientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HistoryMedication_MedicationsId",
-                table: "HistoryMedication",
-                column: "MedicationsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_MedicationDosageHistories_HistoryId",
                 table: "MedicationDosageHistories",
                 column: "HistoryId");
@@ -331,9 +303,6 @@ namespace MyDocAppointment.BusinessLayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Events");
-
-            migrationBuilder.DropTable(
-                name: "HistoryMedication");
 
             migrationBuilder.DropTable(
                 name: "MedicationDosageHistories");
