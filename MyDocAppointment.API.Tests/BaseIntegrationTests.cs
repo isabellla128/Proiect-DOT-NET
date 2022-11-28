@@ -22,7 +22,7 @@ namespace MyDocAppointment.API.Tests
             databaseContext.Doctors.RemoveRange(databaseContext.Doctors.ToList());
             databaseContext.Medications.RemoveRange(databaseContext.Medications.ToList());
             databaseContext.Prescriptions.RemoveRange(databaseContext.Prescriptions.ToList());
-            databaseContext.MedicationDosagePrescriptions.RemoveRange(databaseContext.MedicationDosagePrescriptions.ToList());
+            //databaseContext.MedicationDosagePrescriptions.RemoveRange(databaseContext.MedicationDosagePrescriptions.ToList());
             //databaseContext.Schedules.RemoveRange(databaseContext.Schedules.ToList());
             databaseContext.SaveChanges();
         }
