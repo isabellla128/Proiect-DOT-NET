@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MyDocAppointment.BusinessLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -63,6 +63,11 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     Specialization = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Phone = table.Column<string>(type: "TEXT", nullable: false),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Profession = table.Column<string>(type: "TEXT", nullable: false),
+                    Location = table.Column<string>(type: "TEXT", nullable: false),
+                    Grade = table.Column<double>(type: "REAL", nullable: false),
+                    Reviews = table.Column<int>(type: "INTEGER", nullable: false),
                     HospitalId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>

@@ -64,7 +64,7 @@ namespace MyDocAppointment.API.Features.Patients
             {
                 return NotFound("Patient with given id not found");
             }
-            var doctors = doctorsDtos.Select(d => new Doctor(d.FirstName, d.LastName, d.Specialization, d.Email, d.Phone)).ToList();
+            var doctors = doctorsDtos.Select(d => new Doctor(d.FirstName, d.LastName, d.Specialization, d.Email, d.Phone, d.Title, d.Profession, d.Location, d.Grade, d.Reviews)).ToList();
             var result = patient.AddDoctors(doctors);
 
             doctors.ForEach(d =>

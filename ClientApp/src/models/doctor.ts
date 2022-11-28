@@ -7,6 +7,6 @@ export interface Doctor {
   email: string;
   phone: string;
   grade: number;
-  locations: string[];
+  location: string;
   reviews: number;
 }
