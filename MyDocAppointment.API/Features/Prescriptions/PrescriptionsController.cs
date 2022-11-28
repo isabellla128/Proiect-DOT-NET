@@ -74,7 +74,7 @@ namespace MyDocAppointment.API.Features.Prescriptions
                 return NotFound("Prescription with given id not found");
             }
 
-            var medications = medicationDtos.Select(d => new Medication(d.Name, d.Stock)).ToList();
+            var medications = medicationDtos.Select(d => new Medication(d.Name, d.Stock, d.Unit, d.Capacity, d.Price)).ToList();
             var result = prescription.AddMedications(medications);
 
 
