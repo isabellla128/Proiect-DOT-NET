@@ -27,7 +27,7 @@ namespace MyDocAppointment.BusinessLayer.Tests
             //act
             var doctors = new List<Doctor>()
             {
-                new Doctor("John", "Murray", "chirurg", "efsd.sdf@com", "07777777") 
+                new Doctor("John", "Murray", "chirurg", "efsd.sdf@com", "07777777", "Dr.", "Medic Specialist", "Iasi", 9.10, 117) 
             };
             var result = hospital.AddDoctors(doctors);
             //assert
