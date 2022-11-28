@@ -1,0 +1,58 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <mat-toolbar>
+      <img src="assets/logo.png" alt="logo" class="logo" />
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <div class="nav-button-section">
+      <a class="nav-button" mat-button routerLink="." color="primary">
+        <mat-icon color="primary">home</mat-icon>
+        <p>Home</p></a
+      >
+      <a class="nav-button" mat-button routerLink="." color="primary">
+        <mat-icon color="primary">calendar_today</mat-icon>
+        <p>Appointments</p></a
+      >
+      <a class="nav-button" mat-button routerLink="." color="primary">
+        <mat-icon color="primary">group</mat-icon>
+        <p>Medics</p></a
+      >
+      <a class="nav-button" mat-button routerLink="." color="primary">
+        <mat-icon color="primary">local_library</mat-icon>
+        <p>Medications</p></a
+      >
+      <a class="nav-button" mat-button routerLink="." color="primary">
+        <mat-icon color="primary">track_changes</mat-icon>
+        <p>Vital Informations</p></a
+      >
+      <a class="nav-button" mat-button routerLink="." color="primary">
+        <mat-icon color="primary">chrome_reader_mode</mat-icon>
+        <p>History</p></a
+      >
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>MyDocAppointment</span>
+    </mat-toolbar>
+    <app-home></app-home>
+    <!-- Add Content Here -->
+  </mat-sidenav-content>
+</mat-sidenav-container>
