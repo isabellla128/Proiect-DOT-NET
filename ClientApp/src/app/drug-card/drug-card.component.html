@@ -13,6 +13,7 @@
       color="warn"
       class="delete-icon"
       (click)="onDelete($event)"
+      *ngIf="editable"
     >
       <mat-icon>delete_forever</mat-icon>
     </button>

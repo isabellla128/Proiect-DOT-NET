@@ -13,21 +13,12 @@ export class MedicationsComponent implements OnInit {
   constructor(private medicationService: MedicationService) {}
 
   ngOnInit() {
-    this.medicationService.getAllMedications().subscribe(
-      (response) => {
-        this.drugs = response;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    this.medicationService.medications$.subscribe((medications) => {
+      this.drugs = medications;
+    });
   }
 
   onDelete(id: string) {
-    this.drugs = this.drugs.filter((medication) => medication.id !== id);
-    this.drugs.forEach((drug) => console.log(drug.name));
-    this.medicationService.deleteMedication(id).subscribe((response) => {
-      console.log(response);
-    });
+    this.medicationService.deleteMedication(id);
   }
 }

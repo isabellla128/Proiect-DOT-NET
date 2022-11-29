@@ -31,13 +31,9 @@ export class HomeComponent implements OnInit {
       }
     );
 
-    this.medicationService.getAllMedications().subscribe(
-      (response) => {
-        this.drugs = this.getRandomFromArray(response, 3);
-      },
-      (error) => {
-        console.error(error);
-      }
+    this.medicationService.getAllMedications();
+    this.medicationService.medications$.subscribe(
+      (result) => (this.drugs = this.getRandomFromArray(result, 3))
     );
   }
 

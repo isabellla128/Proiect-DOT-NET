@@ -24,13 +24,6 @@ export class AddMedicationFormComponent {
 
   onSubmit(): void {
     const formValues = this.addressForm.getRawValue() as unknown as Medication;
-    this.medicationService.postMedication(formValues).subscribe(
-      (result) => {
-        console.log(result);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.medicationService.postMedication(formValues);
   }
 }
