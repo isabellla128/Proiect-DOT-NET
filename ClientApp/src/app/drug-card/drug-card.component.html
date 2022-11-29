@@ -1,11 +1,21 @@
 <div class="container">
-  <mat-card class="example-card">
+  <mat-card class="example-card card">
     <img
       mat-card-image
       src="assets/drug-placeholder.png"
       alt="Drug image"
       class="drug-img"
     />
+
+    <button
+      mat-icon-button
+      aria-label="Delete this drug"
+      color="warn"
+      class="delete-icon"
+      (click)="onDelete($event)"
+    >
+      <mat-icon>delete_forever</mat-icon>
+    </button>
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>

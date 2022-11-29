@@ -18,4 +18,8 @@ export class MedicationService {
   postMedication(medication: Medication): Observable<Medication> {
     return this.http.post<Medication>(this.url, medication);
   }
+
+  deleteMedication(medicationId: string) {
+    return this.http.delete(this.url + '/' + medicationId);
+  }
 }

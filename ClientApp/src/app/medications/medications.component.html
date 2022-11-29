@@ -6,6 +6,10 @@
 </mat-toolbar>
 <div class="container centered">
   <div *ngFor="let drug of drugs">
-    <app-drug-card [drug]="drug"></app-drug-card>
+    <app-drug-card
+      [drug]="drug"
+      [editable]="true"
+      (delete)="onDelete($event)"
+    ></app-drug-card>
   </div>
 </div>

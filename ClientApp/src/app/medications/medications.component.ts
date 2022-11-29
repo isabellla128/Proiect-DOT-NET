@@ -22,4 +22,12 @@ export class MedicationsComponent implements OnInit {
       }
     );
   }
+
+  onDelete(id: string) {
+    this.drugs = this.drugs.filter((medication) => medication.id !== id);
+    this.drugs.forEach((drug) => console.log(drug.name));
+    this.medicationService.deleteMedication(id).subscribe((response) => {
+      console.log(response);
+    });
+  }
 }
