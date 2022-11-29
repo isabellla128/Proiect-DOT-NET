@@ -33,7 +33,6 @@ export class HomeComponent implements OnInit {
 
     this.medicationService.getAllMedications().subscribe(
       (response) => {
-        console.log(response);
         this.drugs = this.getRandomFromArray(response, 3);
       },
       (error) => {
@@ -43,8 +42,8 @@ export class HomeComponent implements OnInit {
   }
 
   getRandomFromArray(array: any[], n: number): any[] {
-    const shuffledResponse = array.sort(() => 0.5 * Math.random());
-    const returnArray = shuffledResponse.slice(0, n);
-    return returnArray;
+    const shuffled = [...array].sort(() => 0.5 - Math.random());
+
+    return shuffled.slice(0, n);
   }
 }

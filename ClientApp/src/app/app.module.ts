@@ -19,6 +19,11 @@ import { MedicCardComponent } from './medic-card/medic-card.component';
 import { DrugCardComponent } from './drug-card/drug-card.component';
 import { MedicsComponent } from './medics/medics.component';
 import { MedicationsComponent } from './medications/medications.component';
+import { AddMedicationFormComponent } from './medications/add-medication-form/add-medication-form.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,6 +34,7 @@ import { MedicationsComponent } from './medications/medications.component';
     DrugCardComponent,
     MedicsComponent,
     MedicationsComponent,
+    AddMedicationFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +49,10 @@ import { MedicationsComponent } from './medications/medications.component';
     MatListModule,
     MatGridListModule,
     MatCardModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

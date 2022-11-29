@@ -1,1 +1,11 @@
-<p>medications works!</p>
+<app-add-medication-form></app-add-medication-form>
+
+<mat-toolbar>
+  <h1 class="title">Drugs List</h1>
+  <mat-icon color="primary">info</mat-icon>
+</mat-toolbar>
+<div class="container centered">
+  <div *ngFor="let drug of drugs">
+    <app-drug-card [drug]="drug"></app-drug-card>
+  </div>
+</div>

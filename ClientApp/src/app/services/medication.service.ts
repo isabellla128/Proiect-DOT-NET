@@ -14,4 +14,8 @@ export class MedicationService {
   getAllMedications(): Observable<Medication[]> {
     return this.http.get<Medication[]>(this.url);
   }
+
+  postMedication(medication: Medication): Observable<Medication> {
+    return this.http.post<Medication>(this.url, medication);
+  }
 }
