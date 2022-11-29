@@ -27,6 +27,22 @@ body {
   border-radius: 100px;
 }
 
+.primary-background {
+  background-color: #673ab7;
+}
+
+.accent {
+  color: #ffd740;
+}
+
+.section-active {
+  background-color: #683ab746;
+}
+
+.accent-background {
+  background-color: #ffd740;
+}
+
 .name {
   margin: 0px;
   color: #673ab7;

@@ -12,27 +12,63 @@
     </mat-toolbar>
     <mat-divider></mat-divider>
     <div class="nav-button-section">
-      <a class="nav-button" mat-button routerLink="." color="primary">
+      <a
+        class="nav-button"
+        mat-button
+        routerLink="/home"
+        routerLinkActive="section-active"
+        color="primary"
+      >
         <mat-icon color="primary">home</mat-icon>
         <p>Home</p></a
       >
-      <a class="nav-button" mat-button routerLink="." color="primary">
+      <a
+        class="nav-button"
+        mat-button
+        routerLink="/appointments"
+        routerLinkActive="section-active"
+        color="primary"
+      >
         <mat-icon color="primary">calendar_today</mat-icon>
         <p>Appointments</p></a
       >
-      <a class="nav-button" mat-button routerLink="." color="primary">
+      <a
+        class="nav-button"
+        mat-button
+        routerLink="/medics"
+        routerLinkActive="section-active"
+        color="primary"
+      >
         <mat-icon color="primary">group</mat-icon>
         <p>Medics</p></a
       >
-      <a class="nav-button" mat-button routerLink="." color="primary">
+      <a
+        class="nav-button"
+        mat-button
+        routerLink="/medications"
+        routerLinkActive="section-active"
+        color="primary"
+      >
         <mat-icon color="primary">local_library</mat-icon>
         <p>Medications</p></a
       >
-      <a class="nav-button" mat-button routerLink="." color="primary">
+      <a
+        class="nav-button"
+        mat-button
+        routerLink="/vital-informations"
+        color="primary"
+        routerLinkActive="section-active"
+      >
         <mat-icon color="primary">track_changes</mat-icon>
         <p>Vital Informations</p></a
       >
-      <a class="nav-button" mat-button routerLink="." color="primary">
+      <a
+        class="nav-button"
+        mat-button
+        routerLink="/history"
+        routerLinkActive="section-active"
+        color="primary"
+      >
         <mat-icon color="primary">chrome_reader_mode</mat-icon>
         <p>History</p></a
       >
@@ -52,7 +88,8 @@
       </button>
       <span>MyDocAppointment</span>
     </mat-toolbar>
-    <app-home></app-home>
+    <!-- <app-home></app-home> -->
+    <router-outlet></router-outlet>
     <!-- Add Content Here -->
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -17,6 +17,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { HomeComponent } from './home/home.component';
 import { MedicCardComponent } from './medic-card/medic-card.component';
 import { DrugCardComponent } from './drug-card/drug-card.component';
+import { MedicsComponent } from './medics/medics.component';
+import { MedicationsComponent } from './medications/medications.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { DrugCardComponent } from './drug-card/drug-card.component';
     HomeComponent,
     MedicCardComponent,
     DrugCardComponent,
+    MedicsComponent,
+    MedicationsComponent,
   ],
   imports: [
     BrowserModule,
