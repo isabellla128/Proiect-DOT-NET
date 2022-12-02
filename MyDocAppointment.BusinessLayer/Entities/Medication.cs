@@ -7,6 +7,7 @@
             Id = Guid.NewGuid();
             Name = name;
             Stock = stock;
+            //ramane de vazut daca pastram prescriptions si histories
             Prescriptions = new List<Prescription>();
             Histories = new List<History>();
             Unit = unit;

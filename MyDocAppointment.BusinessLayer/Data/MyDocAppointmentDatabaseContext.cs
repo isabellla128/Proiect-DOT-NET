@@ -22,6 +22,12 @@ namespace MyDocAppointment.BusinessLayer.Data
 
         public DbSet<Prescription> Prescriptions => Set<Prescription>();
 
+        public DbSet<Event> Events => Set<Event>();
+        public DbSet<MedicationDosagePrescription> MedicationDosagePrescriptions => Set<MedicationDosagePrescription>();
+        public DbSet<MedicationDosageHistory> MedicationDosageHistories  => Set<MedicationDosageHistory>();
+
+        //public DbSet<Schedule> Schedules => Set<Schedule>();
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source = dbMyDocAppointmentManagement.db");
@@ -29,6 +35,7 @@ namespace MyDocAppointment.BusinessLayer.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //set null hospitalId on doctor when delete hospital
             modelBuilder.Entity<Doctor>()
                 .HasOne(d => d.Hospial)
                 .WithMany(h => h.Doctors)
@@ -36,6 +43,8 @@ namespace MyDocAppointment.BusinessLayer.Data
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .IsRequired(false);
             base.OnModelCreating(modelBuilder);
+
+
         }
     }
 }

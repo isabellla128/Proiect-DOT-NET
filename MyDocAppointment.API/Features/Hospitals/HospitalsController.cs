@@ -34,7 +34,7 @@ namespace MyDocAppointment.API.Features.Hospitals
             return Ok(hospitals);
         }
 
-        [HttpGet("{hospitalId:Guid}/dotrors")]
+        [HttpGet("{hospitalId:Guid}/doctors")]
         public IActionResult GetAllDoctorsFromHostpital(Guid hospitalId)
         {
             var doctors = doctorRepository.Find(doctor => doctor.HospitalId == hospitalId);
@@ -46,9 +46,8 @@ namespace MyDocAppointment.API.Features.Hospitals
                     Specialization = d.Specialization,
                     Email = d.Email,
                     Phone = d.Phone,
-                    //HospitalId = d.HospitalId
+                    Id = d.Id
                 }));
-
         }
 
         [HttpPost]

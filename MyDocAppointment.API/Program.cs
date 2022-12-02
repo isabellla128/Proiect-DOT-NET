@@ -11,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers().AddNewtonsoftJson(x => { x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; });
 
 builder.Services.AddScoped<MyDocAppointmentDatabaseContext>();
 
@@ -21,6 +22,14 @@ builder.Services.AddScoped<IRepository<History>, HistoryRepository>();
 builder.Services.AddScoped<IRepository<Medication>, MedicationRepositrory>();
 builder.Services.AddScoped<IRepository<Prescription>, PrescriptionRepository>();
 builder.Services.AddScoped<IRepository<Appointment>, AppointmentRepository>();
+builder.Services.AddScoped<IRepository<Event>, EventRepositrory>();
+builder.Services.AddScoped<IRepository<Schedule>, ScheduleRepository>();
+builder.Services.AddScoped<IRepository<MedicationDosageHistory>, MedicationDosageHistoryRepository>();
+builder.Services.AddScoped<IRepository<MedicationDosagePrescription>, MedicationDosagePrescriptionRepository>();
+
+
+
+var config = new ConfigurationBuilder();
 
 
 

@@ -17,51 +17,6 @@ namespace MyDocAppointment.BusinessLayer.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
 
-            modelBuilder.Entity("DoctorPatient", b =>
-                {
-                    b.Property<Guid>("DoctorsId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("PatientsId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("DoctorsId", "PatientsId");
-
-                    b.HasIndex("PatientsId");
-
-                    b.ToTable("DoctorPatient");
-                });
-
-            modelBuilder.Entity("HistoryMedication", b =>
-                {
-                    b.Property<Guid>("HistoriesId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("MedicationsId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("HistoriesId", "MedicationsId");
-
-                    b.HasIndex("MedicationsId");
-
-                    b.ToTable("HistoryMedication");
-                });
-
-            modelBuilder.Entity("MedicationPrescription", b =>
-                {
-                    b.Property<Guid>("MedicationsId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("PrescriptionsId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("MedicationsId", "PrescriptionsId");
-
-                    b.HasIndex("PrescriptionsId");
-
-                    b.ToTable("MedicationPrescription");
-                });
-
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Appointment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -143,6 +98,32 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.ToTable("Doctors");
                 });
 
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Event", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ScheduleId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScheduleId");
+
+                    b.ToTable("Events");
+                });
+
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.History", b =>
                 {
                     b.Property<Guid>("Id")
@@ -216,6 +197,72 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.ToTable("Medications");
                 });
 
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.MedicationDosageHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("Frequency")
+                        .HasColumnType("REAL");
+
+                    b.Property<Guid>("HistoryId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("MedicationId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("Quantity")
+                        .HasColumnType("REAL");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("MedicationId");
+
+                    b.ToTable("MedicationDosageHistories");
+                });
+
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.MedicationDosagePrescription", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("Frequency")
+                        .HasColumnType("REAL");
+
+                    b.Property<Guid>("MedicationId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("PrescriptionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("Quantity")
+                        .HasColumnType("REAL");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicationId");
+
+                    b.HasIndex("PrescriptionId");
+
+                    b.ToTable("MedicationDosagePrescriptions");
+                });
+
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Patient", b =>
                 {
                     b.Property<Guid>("Id")
@@ -264,61 +311,33 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.ToTable("Prescriptions");
                 });
 
-            modelBuilder.Entity("DoctorPatient", b =>
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Schedule", b =>
                 {
-                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Doctor", null)
-                        .WithMany()
-                        .HasForeignKey("DoctorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
 
-                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Patient", null)
-                        .WithMany()
-                        .HasForeignKey("PatientsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("TEXT");
 
-            modelBuilder.Entity("HistoryMedication", b =>
-                {
-                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.History", null)
-                        .WithMany()
-                        .HasForeignKey("HistoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
 
-                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Medication", null)
-                        .WithMany()
-                        .HasForeignKey("MedicationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                    b.HasKey("Id");
 
-            modelBuilder.Entity("MedicationPrescription", b =>
-                {
-                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Medication", null)
-                        .WithMany()
-                        .HasForeignKey("MedicationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Prescription", null)
-                        .WithMany()
-                        .HasForeignKey("PrescriptionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.ToTable("Schedule");
                 });
 
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Appointment", b =>
                 {
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.Doctor", "Doctor")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.Patient", "Patient")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -337,6 +356,17 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.Navigation("Hospial");
                 });
 
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Event", b =>
+                {
+                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Schedule", "Schedule")
+                        .WithMany("Events")
+                        .HasForeignKey("ScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Schedule");
+                });
+
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.History", b =>
                 {
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.Patient", "Patient")
@@ -348,16 +378,54 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.MedicationDosageHistory", b =>
+                {
+                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.History", "History")
+                        .WithMany("MedicationDosageHistories")
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Medication", "Medication")
+                        .WithMany()
+                        .HasForeignKey("MedicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("Medication");
+                });
+
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.MedicationDosagePrescription", b =>
+                {
+                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Medication", "Medication")
+                        .WithMany()
+                        .HasForeignKey("MedicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Prescription", "Prescription")
+                        .WithMany("MedicationDosagePrescriptions")
+                        .HasForeignKey("PrescriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Medication");
+
+                    b.Navigation("Prescription");
+                });
+
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Prescription", b =>
                 {
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.Doctor", "Doctor")
-                        .WithMany()
+                        .WithMany("Prescriptions")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.Patient", "Patient")
-                        .WithMany()
+                        .WithMany("Prescriptions")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -367,9 +435,38 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Doctor", b =>
+                {
+                    b.Navigation("Appointments");
+
+                    b.Navigation("Prescriptions");
+                });
+
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.History", b =>
+                {
+                    b.Navigation("MedicationDosageHistories");
+                });
+
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Hospital", b =>
                 {
                     b.Navigation("Doctors");
+                });
+
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Patient", b =>
+                {
+                    b.Navigation("Appointments");
+
+                    b.Navigation("Prescriptions");
+                });
+
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Prescription", b =>
+                {
+                    b.Navigation("MedicationDosagePrescriptions");
+                });
+
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Schedule", b =>
+                {
+                    b.Navigation("Events");
                 });
 #pragma warning restore 612, 618
         }

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyDocAppointment.BusinessLa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyDocAppointment.API", "MyDocAppointment.API\MyDocAppointment.API.csproj", "{522AAAB4-C65B-4DB7-83D5-3C982C50241F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDocAppointment.API.Tests", "MyDocAppointment.API.Tests\MyDocAppointment.API.Tests.csproj", "{7F9C6D8B-282C-4EF6-AF1E-D782EB6F8655}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyDocAppointment.API.Tests", "MyDocAppointment.API.Tests\MyDocAppointment.API.Tests.csproj", "{7F9C6D8B-282C-4EF6-AF1E-D782EB6F8655}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MyDocAppointment.API.Features.Events;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
@@ -30,6 +28,8 @@ namespace MyDocAppointment.API.Features.Appointments
                 a => new AppointmentDto
                 {
                     Id = a.Id,
+                    DoctorId = a.DoctorId,
+                    PatientId = a.PatientId,
                     StartTime = a.StartTime,
                     EndTime = a.EndTime
                 }
@@ -41,11 +41,36 @@ namespace MyDocAppointment.API.Features.Appointments
         [HttpPost]
         public IActionResult Create([FromBody] CreateAppointmentDto appointmentDto)
         {
-            var a = new Appointment(appointmentDto.StartTime, appointmentDto.EndTime);
+            var appointment = new Appointment(appointmentDto.StartTime, appointmentDto.EndTime);
+            var doctor = doctorRepository.GetById(appointmentDto.DoctorId);
+            var patient = patientRepository.GetById(appointmentDto.PatientId);
+            if(doctor == null)
+            {
+                return BadRequest("Doctor with given id not found");
+            }
+            if(patient == null)
+            {
+                return BadRequest("Patient with given id not found");
+            }
 
-            appointmentRepository.Add(a);
+            var resultFromDoctor = doctor.AddAppointment(appointment);
+            if(resultFromDoctor.IsFailure)
+            {
+                return BadRequest(resultFromDoctor.Error);
+            }
+            var resultFromPatient =  patient.AddAppointment(appointment);
+            if(resultFromPatient.IsFailure)
+            {
+                return BadRequest(resultFromPatient.Error);
+            }
+
+            appointment.AddPatientToAppointment(patient);
+            appointment.AddDoctorToAppointment(doctor);
+
+            appointmentRepository.Add(appointment);
             appointmentRepository.SaveChanges();
-            return Created(nameof(GetAllAppointments), a);
+
+            return Created(nameof(GetAllAppointments), appointment);
         }
 
         [HttpDelete("{appointmentId:Guid}")]

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
-using System.ComponentModel.DataAnnotations;
 
 namespace MyDocAppointment.API.Features.Histories
 {
@@ -44,13 +42,21 @@ namespace MyDocAppointment.API.Features.Histories
             {
                 return NotFound("History with given id not found");
             }
-            return Ok(history.Medications);
+            return Ok(history.MedicationDosageHistories);
         }
         
         [HttpPost]
-        public IActionResult Create([FromBody] CreateHistoryDto historyDto)
+        public IActionResult Create(Guid patientId, [FromBody] CreateHistoryDto historyDto)
         {
             var history = new History(historyDto.StartDate, historyDto.EndDate);
+
+            var patient = patientRepository.GetById(patientId);
+            if(patient == null)
+            {
+                return BadRequest("Patient with given id not found");
+            }
+            history.AddPatientToHistory(patient);
+
             historyRepository.Add(history);
             historyRepository.SaveChanges();
             return Created(nameof(GetAllHistories), history);
