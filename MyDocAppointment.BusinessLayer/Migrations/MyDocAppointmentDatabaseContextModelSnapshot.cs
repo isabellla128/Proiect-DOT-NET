@@ -58,6 +58,9 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<double>("Grade")
+                        .HasColumnType("REAL");
+
                     b.Property<Guid?>("HospitalId")
                         .HasColumnType("TEXT");
 
@@ -65,11 +68,26 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Profession")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Reviews")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Specialization")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -157,12 +175,22 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Capacity")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<double>("Price")
+                        .HasColumnType("REAL");
+
                     b.Property<int>("Stock")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

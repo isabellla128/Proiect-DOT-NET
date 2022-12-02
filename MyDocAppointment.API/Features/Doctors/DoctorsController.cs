@@ -33,6 +33,11 @@ namespace MyDocAppointment.API.Features.Doctors
                     Specialization = d.Specialization,
                     Email = d.Email,
                     Phone = d.Phone,
+                    Title = d.Title,
+                    Profession = d.Profession,
+                    Location= d.Location,
+                    Grade= d.Grade,
+                    Reviews= d.Reviews,
                 }
              );
             return Ok(doctors);
@@ -55,7 +60,7 @@ namespace MyDocAppointment.API.Features.Doctors
         public IActionResult Create([FromBody] CreateDoctorDto doctorDto)
         {
             var doctor = new Doctor(doctorDto.FirstName, doctorDto.LastName, doctorDto.Specialization,
-                doctorDto.Email, doctorDto.Phone);
+                doctorDto.Email, doctorDto.Phone, doctorDto.Title, doctorDto.Profession, doctorDto.Location, doctorDto.Grade,doctorDto.Reviews);
 
             doctorRepository.Add(doctor);
             doctorRepository.SaveChanges();

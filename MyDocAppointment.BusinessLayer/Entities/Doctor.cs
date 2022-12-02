@@ -6,7 +6,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
     {
         private const string SEPARATOR = ", ";
 
-        public Doctor(string firstName, string lastName, string specialization, string email, string phone)
+        public Doctor(string firstName, string lastName, string specialization, string email, string phone, string title, string profession, string location, double grade, int reviews)
         {
             Id = Guid.NewGuid();
             FirstName = firstName;
@@ -14,6 +14,11 @@ namespace MyDocAppointment.BusinessLayer.Entities
             Specialization = specialization;
             Email = email; 
             Phone = phone;
+            Title = title;
+            Profession = profession;
+            Location = location;
+            Grade = grade;
+            Reviews = reviews;
             Appointments = new List<Appointment>();
             Prescriptions = new List<Prescription>();
         }
@@ -27,6 +32,14 @@ namespace MyDocAppointment.BusinessLayer.Entities
         public string Email { get; private set; }
 
         public string Phone { get; private set; }
+        public string Title { get; private set; }
+        public string Profession { get; private set; }
+        public string Location { get; private set; }
+        public double Grade { get; private set; }
+
+        public int Reviews { get; private set; }
+
+
 
         public Hospital? Hospial { get; private set; }
 

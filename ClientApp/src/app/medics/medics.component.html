@@ -1,0 +1,9 @@
+<mat-toolbar>
+  <h1 class="title">Medics</h1>
+  <mat-icon color="primary">info</mat-icon>
+</mat-toolbar>
+<div class="container">
+  <div *ngFor="let doctor of doctors">
+    <app-medic-card [doctor]="doctor"></app-medic-card>
+  </div>
+</div>

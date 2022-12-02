@@ -24,7 +24,10 @@ namespace MyDocAppointment.API.Features.Medications
                 {
                     Id = m.Id,
                     Name = m.Name,
-                    Stock = m.Stock
+                    Stock = m.Stock,
+                    Unit = m.Unit,
+                    Capacity = m.Capacity,
+                    Price = m.Price,
                 }
              );
             return Ok(medications);
@@ -38,7 +41,10 @@ namespace MyDocAppointment.API.Features.Medications
             {
                 Id = medication.Id,
                 Name = medication.Name,
-                Stock = medication.Stock
+                Stock = medication.Stock,
+                Unit = medication.Unit,
+                Capacity = medication.Capacity,
+                Price = medication.Price,   
             };
             return Ok(m);
         }
@@ -57,7 +63,7 @@ namespace MyDocAppointment.API.Features.Medications
         [HttpPost]
         public IActionResult Create([FromBody] CreateMedicationDto medicationDto)
         {
-            var medication = new Medication(medicationDto.Name, medicationDto.Stock);
+            var medication = new Medication(medicationDto.Name, medicationDto.Stock, medicationDto.Unit, medicationDto.Capacity, medicationDto.Price);
             medicationRepository.Add(medication);
             medicationRepository.SaveChanges();
             return Created(nameof(GetAllMedications), medication);
