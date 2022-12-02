@@ -46,15 +46,25 @@ namespace MyDocAppointment.API.Tests
                     LastName = "LastName1",
                     Specialization = "Dermatology",
                     Email = "doctor@gmail.com",
-                    Phone = "1234567890"
+                    Phone = "1234567890",
+                    Title = "doctor  docent",
+                    Profession = "--",
+                    Location = "Bosnia",
+                    Grade = 9,
+                    Reviews = 10
                 },
                 new CreateDoctorDto
                 {
                     FirstName = "FirstName2",
                     LastName = "LastName2",
-                    Specialization = "All",
-                    Email = "doctoooooor@gmail.com",
-                    Phone = "122222222"
+                    Specialization = "Dermatology",
+                    Email = "doctor@gmail.com",
+                    Phone = "1234567890",
+                    Title = "doctor  docent",
+                    Profession = "--",
+                    Location = "Bosnia",
+                    Grade = 9,
+                    Reviews = 10
                 }
             };
             var hospital = await createHospitalResponse.Content.ReadFromJsonAsync<HospitalDto>();

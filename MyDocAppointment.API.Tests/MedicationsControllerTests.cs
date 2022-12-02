@@ -48,7 +48,10 @@ namespace MyDocAppointment.API.Tests
             return new CreateMedicationDto
             {
                 Name = "Paracetamol",
-                Stock = 21
+                Stock = 21,
+                Unit = "capsule",
+                Capacity= 1,
+                Price= 1
             };
         }
 

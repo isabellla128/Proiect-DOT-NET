@@ -52,49 +52,6 @@ namespace MyDocAppointment.API.Tests
 
 
         [Fact]
-        public async void When_RegisterMedicationsToPrescription_Then_ShouldReturnMediactionsInTheGetRequest()
-        {
-            // Arrange
-            var createDoctorDto = CreateDoctorSUT();
-            var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiDoctorsURL, createDoctorDto);
-            var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
-
-
-            var createPatientDto = CreatePatientSUT();
-            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiPatientsURL, createPatientDto);
-            var patient = await createPatientResponse.Content.ReadFromJsonAsync<MedicationDto>();
-
-            var createMedicationDto = CreateMedicationDto();
-            var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiMedicationsURL, createMedicationDto);
-            var medication = await createMedicationResponse.Content.ReadFromJsonAsync<PatientDto>();
-
-            CreatePrescriptionDto prescriptionDto = CreateSUT(doctor.Id, patient.Id, medication.Id);
-            var createPrescriptionResponse = await HttpClient.PostAsJsonAsync(ApiURL, prescriptionDto);
-
-            var medications = new List<CreateMedicationDto>
-            {
-                new CreateMedicationDto
-                {
-                    Name = "Paracetamol",
-                    Stock = 10
-                },
-                new CreateMedicationDto
-                {
-                    Name = "Nurofen",
-                    Stock = 15
-                }
-            };
-            var prescription = await createPrescriptionResponse.Content.ReadFromJsonAsync<PrescriptionDto>();
-
-            // Act
-            var resultResponse = await HttpClient.PostAsJsonAsync
-                ($"{ApiURL}/{prescription.Id}/medications", medications);
-
-            // Assert
-            resultResponse.EnsureSuccessStatusCode();
-            resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
-        }
-        [Fact]
         public async void When_DeletedPrescription_Then_ShouldReturnNoPrescriptionInTheGetRequest()
         {
             // Arrange
@@ -156,6 +113,11 @@ namespace MyDocAppointment.API.Tests
                 Specialization = "Diagnostic radiology",
                 Email = "diagn@st.ic",
                 Phone = "0712312312",
+                Title = "doctor  docent",
+                Profession = "--",
+                Location = "Bosnia",
+                Grade = 9,
+                Reviews = 10
             };
         }
 
@@ -175,7 +137,10 @@ namespace MyDocAppointment.API.Tests
             return new CreateMedicationDto()
             {
                 Name = "Aspirina",
-                Stock = 10000
+                Stock = 10000,
+                Unit = "capsule",
+                Capacity = 1,
+                Price = 1
             };
         }
     }

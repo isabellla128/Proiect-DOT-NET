@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MyDocAppointment.BusinessLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -103,11 +103,17 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    PatientId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    PatientId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    MedicationId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_History", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_History_Medications_MedicationId",
+                        column: x => x.MedicationId,
+                        principalTable: "Medications",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_History_Patients_PatientId",
                         column: x => x.PatientId,
@@ -170,7 +176,8 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     DoctorId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PatientId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    PatientId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    MedicationId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -181,6 +188,11 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         principalTable: "Doctors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Prescriptions_Medications_MedicationId",
+                        column: x => x.MedicationId,
+                        principalTable: "Medications",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Prescriptions_Patients_PatientId",
                         column: x => x.PatientId,
@@ -268,6 +280,11 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 column: "ScheduleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_History_MedicationId",
+                table: "History",
+                column: "MedicationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_History_PatientId",
                 table: "History",
                 column: "PatientId");
@@ -298,6 +315,11 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 column: "DoctorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Prescriptions_MedicationId",
+                table: "Prescriptions",
+                column: "MedicationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Prescriptions_PatientId",
                 table: "Prescriptions",
                 column: "PatientId");
@@ -325,13 +347,13 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 name: "History");
 
             migrationBuilder.DropTable(
-                name: "Medications");
-
-            migrationBuilder.DropTable(
                 name: "Prescriptions");
 
             migrationBuilder.DropTable(
                 name: "Doctors");
+
+            migrationBuilder.DropTable(
+                name: "Medications");
 
             migrationBuilder.DropTable(
                 name: "Patients");

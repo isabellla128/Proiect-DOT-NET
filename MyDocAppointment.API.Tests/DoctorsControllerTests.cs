@@ -87,11 +87,16 @@ namespace MyDocAppointment.API.Tests
         {
             return new CreateDoctorDto
             {
-                FirstName = "Doctor",
-                LastName = "Doctorescu",
-                Specialization = "Diagnostic radiology",
-                Email = "diagn@st.ic",
-                Phone = "0712312312",
+                FirstName = "FirstName1",
+                LastName = "LastName1",
+                Specialization = "Dermatology",
+                Email = "doctor@gmail.com",
+                Phone = "1234567890",
+                Title = "doctor  docent",
+                Profession = "--",
+                Location = "Bosnia",
+                Grade = 9,
+                Reviews = 10
             };
         }
         private static CreatePatientDto CreatePatientSUT()

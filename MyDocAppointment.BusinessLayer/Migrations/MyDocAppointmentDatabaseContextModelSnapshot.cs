@@ -133,6 +133,9 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("MedicationId")
+                        .HasColumnType("TEXT");
+
                     b.Property<Guid>("PatientId")
                         .HasColumnType("TEXT");
 
@@ -140,6 +143,8 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MedicationId");
 
                     b.HasIndex("PatientId");
 
@@ -299,12 +304,17 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                     b.Property<Guid>("DoctorId")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("MedicationId")
+                        .HasColumnType("TEXT");
+
                     b.Property<Guid>("PatientId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("MedicationId");
 
                     b.HasIndex("PatientId");
 
@@ -369,6 +379,10 @@ namespace MyDocAppointment.BusinessLayer.Migrations
 
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.History", b =>
                 {
+                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Medication", null)
+                        .WithMany("Histories")
+                        .HasForeignKey("MedicationId");
+
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
@@ -424,6 +438,10 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MyDocAppointment.BusinessLayer.Entities.Medication", null)
+                        .WithMany("Prescriptions")
+                        .HasForeignKey("MedicationId");
+
                     b.HasOne("MyDocAppointment.BusinessLayer.Entities.Patient", "Patient")
                         .WithMany("Prescriptions")
                         .HasForeignKey("PatientId")
@@ -450,6 +468,13 @@ namespace MyDocAppointment.BusinessLayer.Migrations
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Hospital", b =>
                 {
                     b.Navigation("Doctors");
+                });
+
+            modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Medication", b =>
+                {
+                    b.Navigation("Histories");
+
+                    b.Navigation("Prescriptions");
                 });
 
             modelBuilder.Entity("MyDocAppointment.BusinessLayer.Entities.Patient", b =>

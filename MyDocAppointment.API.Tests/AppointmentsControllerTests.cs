@@ -85,7 +85,12 @@ namespace MyDocAppointment.API.Tests
                 LastName = "LastName1",
                 Specialization = "Dermatology",
                 Email = "doctor@gmail.com",
-                Phone = "1234567890"
+                Phone = "1234567890",
+                Title = "doctor  docent",
+                Profession = "--",
+                Location = "Bosnia",
+                Grade = 9,
+                Reviews = 10
             };
         }
         private static CreateAppointmentDto CreateSUT(Guid patientId, Guid doctorId)
