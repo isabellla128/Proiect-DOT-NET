@@ -57,30 +57,22 @@ namespace MyDocAppointment.BusinessLayer.Entities
             }
         }
 
-        public Result AddHospitalToDoctor(Hospital hospital)
+        public void AddHospitalToDoctor(Hospital hospital)
         {
-            if (hospital == null)
-            {
-                return Result.Failure("Hospital should not be null");
-            }
-            else
-            {
-                this.Hospial = hospital;
-                HospitalId = hospital.Id;
-                return Result.Success();
-            }
+            this.Hospial = hospital;
+            HospitalId = hospital.Id;
         }
 
         public Result AddAppointment(Appointment appointment)
         {
             if(appointment == null)
             {
-                return Result.Failure("Appointment should not be null");
+                return Result.Failure("Appoinment should not be null");
             }
 
             if(appointment.StartTime < DateTime.Now)
             {
-                return Result.Failure("Appointment should be in the future");
+                return Result.Failure("Appioinment should be in the furure");
             }
 
             if (appointment.StartTime > appointment.EndTime)
@@ -93,7 +85,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
                 if (appointment.StartTime <= existentAppointment.EndTime && appointment.StartTime >= existentAppointment.StartTime ||
                     appointment.EndTime >= existentAppointment.StartTime && appointment.EndTime <= existentAppointment.EndTime)
                 {
-                    return Result.Failure("A new appoinments should not intersect with a fixed appointment");
+                    return Result.Failure("A new appoinments shooul not intersect with a fixed appointment");
                 }
             }
 
@@ -115,5 +107,18 @@ namespace MyDocAppointment.BusinessLayer.Entities
             return Result.Success();
         }
 
+        public void UpdateDoctor(Doctor doctor)
+        {
+            FirstName= doctor.FirstName;
+            LastName= doctor.LastName;
+            Specialization= doctor.Specialization;
+            Email= doctor.Email;
+            Phone= doctor.Phone;
+            Title= doctor.Title;
+            Profession= doctor.Profession;
+            Location=doctor.Location;
+            Grade= doctor.Grade;
+            Reviews= doctor.Reviews;
+        }
     }
 }
