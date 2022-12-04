@@ -38,7 +38,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             }    
             if(appointment.StartTime < DateTime.Now)
             {
-                return Result.Failure("Appointment should be in future");
+                return Result.Failure("Appointment should be in the future");
             }
             if(appointment.StartTime > appointment.EndTime)
             {

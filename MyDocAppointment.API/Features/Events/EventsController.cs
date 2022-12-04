@@ -45,7 +45,11 @@ namespace MyDocAppointment.API.Features.Events
                 return BadRequest("Schedule with given id not found");
             }
 
-            e.AddScheduleToEvent(schedule);
+            var resultAddSchedule = e.AddScheduleToEvent(schedule);
+            if (resultAddSchedule.IsFailure) 
+            {
+                return BadRequest(resultAddSchedule.Error);
+            }
             eventRepository.Add(e);
             eventRepository.SaveChanges();
             return Created(nameof(GetAllEvents), e);

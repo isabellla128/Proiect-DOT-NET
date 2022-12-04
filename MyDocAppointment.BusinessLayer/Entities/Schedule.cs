@@ -24,7 +24,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
         {
             if (!events.Any())
             {
-                return Result.Failure("you must add at least an event");
+                return Result.Failure("You must add at least an event");
             }
             events.ForEach(e =>
             {

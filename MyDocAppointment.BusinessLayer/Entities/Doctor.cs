@@ -57,22 +57,30 @@ namespace MyDocAppointment.BusinessLayer.Entities
             }
         }
 
-        public void AddHospitalToDoctor(Hospital hospital)
+        public Result AddHospitalToDoctor(Hospital hospital)
         {
-            this.Hospial = hospital;
-            HospitalId = hospital.Id;
+            if (hospital == null)
+            {
+                return Result.Failure("Hospital should not be null");
+            }
+            else
+            {
+                this.Hospial = hospital;
+                HospitalId = hospital.Id;
+                return Result.Success();
+            }
         }
 
         public Result AddAppointment(Appointment appointment)
         {
             if(appointment == null)
             {
-                return Result.Failure("Appoinment should not be null");
+                return Result.Failure("Appointment should not be null");
             }
 
             if(appointment.StartTime < DateTime.Now)
             {
-                return Result.Failure("Appioinment should be in the furure");
+                return Result.Failure("Appointment should be in the future");
             }
 
             if (appointment.StartTime > appointment.EndTime)
@@ -85,7 +93,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
                 if (appointment.StartTime <= existentAppointment.EndTime && appointment.StartTime >= existentAppointment.StartTime ||
                     appointment.EndTime >= existentAppointment.StartTime && appointment.EndTime <= existentAppointment.EndTime)
                 {
-                    return Result.Failure("A new appoinments shooul not intersect with a fixed appointment");
+                    return Result.Failure("A new appoinments should not intersect with a fixed appointment");
                 }
             }
 
