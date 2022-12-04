@@ -1,3 +1,5 @@
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using MyDocAppointment.BusinessLayer.Data;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
@@ -28,6 +30,10 @@ builder.Services.AddScoped<IRepository<MedicationDosageHistory>, MedicationDosag
 builder.Services.AddScoped<IRepository<MedicationDosagePrescription>, MedicationDosagePrescriptionRepository>();
 
 
+//var conn = new SqliteConnection("Filename=:memory:");
+//conn.Open();
+//builder.Services.AddDbContext<TestsDatabaseContext>(c => c.UseSqlite(conn));
+
 
 var config = new ConfigurationBuilder();
 
@@ -51,3 +57,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

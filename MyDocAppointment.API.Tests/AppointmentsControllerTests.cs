@@ -1,4 +1,6 @@
 ﻿using FluentAssertions;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.API.Features.Patients;
@@ -7,14 +9,15 @@ using Xunit;
 
 namespace MyDocAppointment.API.Tests
 {
-    public class AppointmentsControllerTests : BaseIntegrationTests<DoctorsController>
+    public class AppointmentsControllerTests : BaseIntegrationTests<AppointmentsController>
     {
         private const string ApiURL = "v1/api/Appointments";
+
 
         [Fact]
         public async void When_CreatedAppointment_Then_ShouldReturnAppointmentInTheGetRequest()
         {
-
+            
             // Arrange
             CreatePatientDto patientDto = CreatePatientSUT();
             CreateDoctorDto doctorDto = CreateDoctorSUT();
@@ -65,6 +68,7 @@ namespace MyDocAppointment.API.Tests
             // Assert
             resultResponse.EnsureSuccessStatusCode();
             resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+
         }
         
         private static CreatePatientDto CreatePatientSUT()

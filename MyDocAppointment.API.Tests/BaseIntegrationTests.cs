@@ -1,16 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using MyDocAppointment.BusinessLayer.Data;
+using System.Data.Common;
+using Xunit;
 
 namespace MyDocAppointment.API.Tests
 {
-    public class BaseIntegrationTests <T> where T : class
+    public class BaseIntegrationTests<T> : IClassFixture<CustomWebApplicationFactory<Program>> where T : class
     {
         protected HttpClient  HttpClient { get;private set; }
+        protected CustomWebApplicationFactory<Program> Factory { get; private set; } 
+
         protected BaseIntegrationTests()
         {
-            var application = new WebApplicationFactory<T>().WithWebHostBuilder(builder => { });
-            HttpClient = application.CreateClient();
-            CleanDatabases();
+            Factory = new CustomWebApplicationFactory<Program>();
+            HttpClient = Factory.CreateClient();
         }
 
         private void CleanDatabases()
