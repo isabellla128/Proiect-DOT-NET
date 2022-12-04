@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Sqlite.Diagnostics.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using MyDocAppointment.BusinessLayer.Data;
 using System;
@@ -54,6 +55,7 @@ namespace MyDocAppointment.API.Tests
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+            connection.Close();
             connection.Dispose();
         }
     }
