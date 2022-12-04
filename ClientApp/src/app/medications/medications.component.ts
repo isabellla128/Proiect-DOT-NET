@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Medication } from 'src/models/medication';
-import { MedicationService } from '../services/medication.service';
+import { MedicationService } from '../../shared/services/medication.service';
 
 @Component({
   selector: 'app-medications',
@@ -13,12 +13,12 @@ export class MedicationsComponent implements OnInit {
   constructor(private medicationService: MedicationService) {}
 
   ngOnInit() {
-    this.medicationService.medications$.subscribe((medications) => {
+    this.medicationService.collection$.subscribe((medications) => {
       this.drugs = medications;
     });
   }
 
   onDelete(id: string) {
-    this.medicationService.deleteMedication(id);
+    this.medicationService.delete(id);
   }
 }

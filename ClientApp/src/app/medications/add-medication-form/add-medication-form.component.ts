@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MedicationService } from 'src/app/services/medication.service';
+import { MedicationService } from 'src/shared/services/medication.service';
 import { Medication } from 'src/models/medication';
 
 @Component({
@@ -24,6 +24,6 @@ export class AddMedicationFormComponent {
 
   onSubmit(): void {
     const formValues = this.addressForm.getRawValue() as unknown as Medication;
-    this.medicationService.postMedication(formValues);
+    this.medicationService.post(formValues);
   }
 }
