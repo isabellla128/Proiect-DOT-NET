@@ -1,4 +1,6 @@
-﻿namespace MyDocAppointment.BusinessLayer.Entities
+﻿using ShelterManagement.Business.Helpers;
+
+namespace MyDocAppointment.BusinessLayer.Entities
 {
     public class Appointment
     {
@@ -18,16 +20,29 @@
         public DateTime StartTime { get; private set; }
         public DateTime EndTime { get; private set; }
 
-        public void AddDoctorToAppointment(Doctor doctor)
+        public Result AddDoctorToAppointment(Doctor doctor)
         {
+            if (doctor == null)
+            {
+                return Result.Failure("Doctor should not be null");
+            }
+
             Doctor = doctor;
             DoctorId = doctor.Id;
+            return Result.Success();
         }
 
-        public void AddPatientToAppointment(Patient patient)
+        public Result AddPatientToAppointment(Patient patient)
         {
+            if (patient == null)
+            {
+                return Result.Failure("Patient should not be null");
+
+            }
+
             Patient = patient;
             PatientId = patient.Id;
+            return Result.Success();
         }
 
     }
