@@ -1,24 +1,45 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.API.Features.Patients;
+using MyDocAppointment.BusinessLayer.Data;
 using System.Net.Http.Json;
 using Xunit;
 
 namespace MyDocAppointment.API.Tests
 {
-    public class AppointmentsControllerTests : BaseIntegrationTests<AppointmentsController>
+    public class AppointmentsControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>
     {
         private const string ApiURL = "v1/api/Appointments";
 
+        public HttpClient HttpClient { get; private set; }
+
+        public CustomWebApplicationFactory<Program> Factory { get; private set; }
+
+        public AppointmentsControllerTests(CustomWebApplicationFactory<Program> factory)
+        {
+            Factory = factory;
+            HttpClient = factory.CreateClient();
+        }
 
         [Fact]
         public async void When_CreatedAppointment_Then_ShouldReturnAppointmentInTheGetRequest()
         {
-            
+
             // Arrange
+            using (var scope = Factory.Services.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+                var databasaeContext = scopedServices.GetRequiredService<TestsDatabaseContext>();
+
+                databasaeContext.Doctors.RemoveRange(databasaeContext.Doctors.ToList());
+                databasaeContext.Patients.RemoveRange(databasaeContext.Patients.ToList());
+                databasaeContext.Appointments.RemoveRange(databasaeContext.Appointments.ToList());
+                
+            }
             CreatePatientDto patientDto = CreatePatientSUT();
             CreateDoctorDto doctorDto = CreateDoctorSUT();
 

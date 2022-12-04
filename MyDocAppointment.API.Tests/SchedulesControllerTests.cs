@@ -10,7 +10,10 @@ namespace MyDocAppointment.API.Tests
     {
         private const string ApiURL = "v1/api/Schedules";
 
-        
+        protected SchedulesControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        {
+        }
+
         [Fact]
         public async void When_CreatedSchedule_Then_ShouldReturnScheduleInTheGetRequest()
         {

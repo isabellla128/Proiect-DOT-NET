@@ -12,24 +12,31 @@ namespace MyDocAppointment.API.Tests
         protected HttpClient  HttpClient { get;private set; }
         protected CustomWebApplicationFactory<Program> Factory { get; private set; } 
 
-        protected BaseIntegrationTests()
+        protected BaseIntegrationTests(CustomWebApplicationFactory<Program> factory)
         {
-            Factory = new CustomWebApplicationFactory<Program>();
-            HttpClient = Factory.CreateClient();
+            Factory = factory;
+            HttpClient = factory.CreateClient();
+            CleanDatabases();
         }
 
         private void CleanDatabases()
         {
-            var databaseContext = new MyDocAppointmentDatabaseContext();
-            databaseContext.Hospitals.RemoveRange(databaseContext.Hospitals.ToList());
-            databaseContext.Patients.RemoveRange(databaseContext.Patients.ToList());
-            databaseContext.Appointments.RemoveRange(databaseContext.Appointments.ToList());
-            databaseContext.Doctors.RemoveRange(databaseContext.Doctors.ToList());
-            databaseContext.Medications.RemoveRange(databaseContext.Medications.ToList());
-            databaseContext.Prescriptions.RemoveRange(databaseContext.Prescriptions.ToList());
-            databaseContext.MedicationDosagePrescriptions.RemoveRange(databaseContext.MedicationDosagePrescriptions.ToList());
-            //databaseContext.Schedules.RemoveRange(databaseContext.Schedules.ToList());
-            databaseContext.SaveChanges();
+            using (var scope = Factory.Services.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+                var databaseContext = scopedServices.GetRequiredService<TestsDatabaseContext>();
+
+
+                databaseContext.Hospitals.RemoveRange(databaseContext.Hospitals);
+                databaseContext.Patients.RemoveRange(databaseContext.Patients.ToList());
+                databaseContext.Appointments.RemoveRange(databaseContext.Appointments.ToList());
+                databaseContext.Doctors.RemoveRange(databaseContext.Doctors.ToList());
+                databaseContext.Medications.RemoveRange(databaseContext.Medications.ToList());
+                databaseContext.Prescriptions.RemoveRange(databaseContext.Prescriptions.ToList());
+                databaseContext.MedicationDosagePrescriptions.RemoveRange(databaseContext.MedicationDosagePrescriptions.ToList());
+                //databaseContext.Schedules.RemoveRange(databaseContext.Schedules.ToList());
+                databaseContext.SaveChanges();
+            }
         }
     }
 }

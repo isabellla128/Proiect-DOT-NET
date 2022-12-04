@@ -31,11 +31,7 @@ namespace MyDocAppointment.BusinessLayer.Data
 
         //public DbSet<Schedule> Schedules => Set<Schedule>();
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Data Source = dbMyDocAppointmentManagement.db");
-        }
-
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //set null hospitalId on doctor when delete hospital

@@ -10,6 +10,10 @@ namespace MyDocAppointment.API.Tests
     {
         private const string ApiURL = "v1/api/Histories";
 
+        protected HistoriesControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        {
+        }
+
         [Fact]
         public async void When_CreatedHistories_Then_ShouldReturnHistoryInTheGetRequest()
         {

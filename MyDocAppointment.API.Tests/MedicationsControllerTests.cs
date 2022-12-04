@@ -8,6 +8,11 @@ namespace MyDocAppointment.API.Tests
     public class MedicationsControllerTests : BaseIntegrationTests<MedicationsController>
     {
         private const string ApiURL = "v1/api/Medications";
+
+        protected MedicationsControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        {
+        }
+
         [Fact]
         public async void When_CreatedMedication_Then_ShouldReturnMedicationInTheGetRequest()
         {

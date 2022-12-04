@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MyDocAppointment.BusinessLayer.Data;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
+using System.Data.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,21 @@ builder.Services.AddScoped<IRepository<Event>, EventRepositrory>();
 builder.Services.AddScoped<IRepository<Schedule>, ScheduleRepository>();
 builder.Services.AddScoped<IRepository<MedicationDosageHistory>, MedicationDosageHistoryRepository>();
 builder.Services.AddScoped<IRepository<MedicationDosagePrescription>, MedicationDosagePrescriptionRepository>();
+
+// Create open SqliteConnection so EF won't automatically close it.
+builder.Services.AddSingleton<DbConnection>(container =>
+{
+    var connection = new SqliteConnection("DataSource=:memory:");
+    connection.Open();
+
+    return connection;
+});
+
+builder.Services.AddDbContext<TestsDatabaseContext>((container, options) =>
+{
+    var connection = container.GetRequiredService<DbConnection>();
+    options.UseSqlite(connection);
+});
 
 
 //var conn = new SqliteConnection("Filename=:memory:");
