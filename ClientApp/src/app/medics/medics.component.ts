@@ -13,6 +13,7 @@ export class MedicsComponent implements OnInit {
   constructor(private doctorService: DoctorService) {}
 
   ngOnInit() {
+    this.doctorService.getAll();
     this.doctorService.collection$.subscribe(
       (response) => {
         this.doctors = response;
