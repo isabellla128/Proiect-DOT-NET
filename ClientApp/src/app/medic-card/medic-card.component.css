@@ -65,3 +65,9 @@ p {
   width: 100%;
   display: block;
 }
+
+.delete-icon {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}

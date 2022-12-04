@@ -23,4 +23,8 @@ export class MedicsComponent implements OnInit {
       }
     );
   }
+
+  onDelete(id: string) {
+    this.doctorService.delete(id);
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Doctor } from 'src/models/doctor';
 
 @Component({
@@ -8,4 +8,10 @@ import { Doctor } from 'src/models/doctor';
 })
 export class MedicCardComponent {
   @Input() doctor: Doctor = {} as Doctor;
+  @Input() editable = false;
+  @Output() delete = new EventEmitter<string>();
+
+  onDelete(event: any) {
+    this.delete.emit(this.doctor.id);
+  }
 }
