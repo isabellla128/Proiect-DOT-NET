@@ -68,6 +68,7 @@ p {
 
 .delete-icon {
   position: absolute;
+  z-index: 3;
   top: 5px;
   right: 0px;
 }

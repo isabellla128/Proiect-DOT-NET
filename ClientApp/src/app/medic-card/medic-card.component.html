@@ -36,18 +36,18 @@
       </div>
     </mat-grid-tile>
   </mat-grid-list>
-  <button
-    mat-icon-button
-    aria-label="Delete this drug"
-    color="warn"
-    class="delete-icon"
-    (click)="onDelete($event)"
-    *ngIf="editable"
-  >
-    <mat-icon>delete_forever</mat-icon>
-  </button>
   <div class="overlap-container">
     <div class="inner-overlap-comntainer">
+      <button
+        mat-icon-button
+        aria-label="Delete this drug"
+        color="accent"
+        class="delete-icon"
+        (click)="onDelete($event)"
+        *ngIf="editable"
+      >
+        <mat-icon>delete_forever</mat-icon>
+      </button>
       <div class="row">
         <a class="overlap-link" mat-button routerLink="/home">
           <mat-icon class="overlap-icon">event</mat-icon>
