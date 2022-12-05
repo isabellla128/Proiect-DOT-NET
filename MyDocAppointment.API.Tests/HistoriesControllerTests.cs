@@ -10,7 +10,7 @@ namespace MyDocAppointment.API.Tests
     {
         private const string ApiURL = "v1/api/Histories";
 
-        protected HistoriesControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        public HistoriesControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
         {
         }
 

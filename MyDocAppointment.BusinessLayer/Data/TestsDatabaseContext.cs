@@ -1,16 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyDocAppointment.BusinessLayer.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyDocAppointment.BusinessLayer.Data
 {
     public class TestsDatabaseContext : DbContext
     {
-        public TestsDatabaseContext(DbContextOptions<TestsDatabaseContext> options) : base(options) { }
+        public TestsDatabaseContext(DbContextOptions<TestsDatabaseContext> options) : base(options) 
+        {
+            this.Database.EnsureCreated();
+        }
 
 
         public DbSet<Hospital> Hospitals => Set<Hospital>();

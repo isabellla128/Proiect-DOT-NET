@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
+﻿using Microsoft.Extensions.DependencyInjection;
 using MyDocAppointment.BusinessLayer.Data;
-using System.Data.Common;
 using Xunit;
 
 namespace MyDocAppointment.API.Tests
@@ -27,7 +24,7 @@ namespace MyDocAppointment.API.Tests
                 var databaseContext = scopedServices.GetRequiredService<TestsDatabaseContext>();
 
 
-                databaseContext.Hospitals.RemoveRange(databaseContext.Hospitals);
+                databaseContext.Hospitals.RemoveRange(databaseContext.Hospitals.ToList());
                 databaseContext.Patients.RemoveRange(databaseContext.Patients.ToList());
                 databaseContext.Appointments.RemoveRange(databaseContext.Appointments.ToList());
                 databaseContext.Doctors.RemoveRange(databaseContext.Doctors.ToList());

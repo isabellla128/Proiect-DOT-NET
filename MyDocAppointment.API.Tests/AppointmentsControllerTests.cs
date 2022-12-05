@@ -1,11 +1,10 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.API.Features.Patients;
 using MyDocAppointment.BusinessLayer.Data;
+using System.Data.Common;
 using System.Net.Http.Json;
 using Xunit;
 
@@ -30,16 +29,16 @@ namespace MyDocAppointment.API.Tests
         {
 
             // Arrange
-            using (var scope = Factory.Services.CreateScope())
-            {
-                var scopedServices = scope.ServiceProvider;
-                var databasaeContext = scopedServices.GetRequiredService<TestsDatabaseContext>();
+            #region
+            var scope = (Factory.Services.GetRequiredService<IServiceScopeFactory>()).CreateScope();
 
-                databasaeContext.Doctors.RemoveRange(databasaeContext.Doctors.ToList());
-                databasaeContext.Patients.RemoveRange(databasaeContext.Patients.ToList());
-                databasaeContext.Appointments.RemoveRange(databasaeContext.Appointments.ToList());
-                
-            }
+            var databasaeContext = scope.ServiceProvider.GetRequiredService<TestsDatabaseContext>();
+
+            databasaeContext.Doctors.RemoveRange(databasaeContext.Doctors.ToList());
+            databasaeContext.Patients.RemoveRange(databasaeContext.Patients.ToList());
+            databasaeContext.Appointments.RemoveRange(databasaeContext.Appointments.ToList());
+            #endregion
+
             CreatePatientDto patientDto = CreatePatientSUT();
             CreateDoctorDto doctorDto = CreateDoctorSUT();
 

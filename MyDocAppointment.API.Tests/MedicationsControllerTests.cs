@@ -9,7 +9,7 @@ namespace MyDocAppointment.API.Tests
     {
         private const string ApiURL = "v1/api/Medications";
 
-        protected MedicationsControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        public MedicationsControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
         {
         }
 

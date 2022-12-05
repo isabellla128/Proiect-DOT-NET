@@ -16,7 +16,7 @@ namespace MyDocAppointment.API.Tests
         private const string ApiPatientsURL = "v1/api/Patients";
         private const string ApiMedicationsURL = "v1/api/Medications";
 
-        protected PrescriptionsControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        public PrescriptionsControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
         {
         }
 
