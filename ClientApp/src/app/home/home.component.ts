@@ -20,12 +20,9 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.doctorService.getAll();
     this.doctorService.collection$.subscribe(
       (result) => (this.doctors = this.getRandomFromArray(result, 5))
     );
-
-    this.medicationService.getAll();
     this.medicationService.collection$.subscribe(
       (result) => (this.drugs = this.getRandomFromArray(result, 3))
     );

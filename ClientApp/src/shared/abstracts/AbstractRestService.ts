@@ -19,6 +19,10 @@ export default abstract class AbstractRestService<T> {
     );
   }
 
+  getOne(id: string) {
+    return this._http.get<T>(this._url + '/' + id);
+  }
+
   post(entity: T) {
     this._http.post<T>(this._url, entity).subscribe(
       (result) => this.collection$.next(this.addLocaly(entity)),

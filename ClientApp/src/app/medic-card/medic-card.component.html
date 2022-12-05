@@ -55,7 +55,11 @@
         >
       </div>
       <div class="row">
-        <a class="overlap-link" mat-button routerLink="/home">
+        <a
+          class="overlap-link"
+          mat-button
+          [routerLink]="['/medics', doctor.id]"
+        >
           <mat-icon class="overlap-icon">perm_identity</mat-icon>
           <p>See Profile</p></a
         >

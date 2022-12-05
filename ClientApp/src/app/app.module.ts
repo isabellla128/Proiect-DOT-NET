@@ -25,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddMedicFormComponent } from './medics/add-medic-form/add-medic-form.component';
+import { MedicPageComponent } from './medic-page/medic-page.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { AddMedicFormComponent } from './medics/add-medic-form/add-medic-form.co
     MedicationsComponent,
     AddMedicationFormComponent,
     AddMedicFormComponent,
+    MedicPageComponent,
   ],
   imports: [
     BrowserModule,
