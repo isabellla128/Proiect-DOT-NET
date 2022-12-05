@@ -1,4 +1,7 @@
-<app-add-medic-form></app-add-medic-form>
+<app-medic-form
+  (submitEmitter)="onSubmit($event)"
+  title="Add Medic"
+></app-medic-form>
 <mat-divider></mat-divider>
 <mat-toolbar>
   <h1 class="title">Medics</h1>

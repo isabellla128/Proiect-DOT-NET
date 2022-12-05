@@ -10,7 +10,7 @@ import { DoctorService } from '../../shared/services/doctor.service';
 export class MedicsComponent implements OnInit {
   doctors: Doctor[] = [];
 
-  constructor(private doctorService: DoctorService) {}
+  constructor(public doctorService: DoctorService) {}
 
   ngOnInit() {
     this.doctorService.collection$.subscribe(
@@ -25,5 +25,9 @@ export class MedicsComponent implements OnInit {
 
   onDelete(id: string) {
     this.doctorService.delete(id);
+  }
+
+  onSubmit(event: Doctor) {
+    this.doctorService.post(event);
   }
 }

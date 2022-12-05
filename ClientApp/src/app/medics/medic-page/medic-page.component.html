@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="col centered">
+    <div class="header">
+      <div class="breadcrumb">
+        <a mat-button routerLink="/home" color="primary"> Home </a> >
+        <a mat-button routerLink="/medics" color="primary"> Medics </a> >
+
+        <a mat-button>
+          {{ doctor.title }}
+          {{ doctor.firstName }}
+          {{ doctor.lastName }}
+        </a>
+      </div>
+      <p class="medic-title">
+        {{ doctor.title }} {{ doctor.firstName }} {{ doctor.lastName }}
+      </p>
+    </div>
+  </div>
+  <div class="main-container">
+    <div class="menu">
+      <a mat-button [routerLink]="'/medics/' + doctor.id" color="primary"
+        >Medic Profile</a
+      >
+      <a mat-button routerLink="/schedule" color="primary">Schedule</a>
+      <a mat-button routerLink="/location" color="primary">Location</a>
+    </div>
+    <div>
+      <div class="description">
+        <h2>{{ doctor.profession }}</h2>
+        <h3>Specialization:</h3>
+        <p>{{ doctor.specialization }}</p>
+        <h3>Location:</h3>
+        <div class="chip">{{ doctor.location }}</div>
+      </div>
+      <div class="appointment primary-background">
+        <p>
+          Appointments at {{ doctor.title }} {{ doctor.firstName }}
+          {{ doctor.lastName }}
+        </p>
+
+        <div class="buttons-section">
+          <button mat-flat-button>See Schedule</button>
+          <button mat-flat-button>Appointment</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <mat-card class="demo-inline-calendar-card">
+        <mat-calendar [(selected)]="selectedDate"></mat-calendar>
+      </mat-card>
+    </div>
+  </div>
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    role="navigation"
+    mode="over"
+    opened="false"
+    position="end"
+  >
+    <div class="form-container">
+      <app-medic-form
+        [doctor]="doctor"
+        title="Edit Medic"
+        (submitEmitter)="onFormSubmit($event)"
+      ></app-medic-form>
+    </div>
+  </mat-sidenav>
+  <button
+    type="button"
+    aria-label="Toggle sidenav"
+    mat-fab
+    color="accent"
+    class="edit-button"
+    (click)="drawer.toggle()"
+  >
+    <mat-icon aria-label="Side nav toggle icon">edit</mat-icon>
+  </button>
+</div>

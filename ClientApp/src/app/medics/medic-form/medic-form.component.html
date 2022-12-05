@@ -1,6 +1,8 @@
-<form [formGroup]="addMedicForm" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="medicForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="shipping-card">
-    <mat-card-header> </mat-card-header>
+    <mat-card-header>
+      <h2>{{ title }}</h2>
+    </mat-card-header>
     <mat-card-content>
       <div class="row">
         <div class="col">
@@ -82,7 +84,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="accent" type="submit">Add Medic</button>
+      <button mat-raised-button color="accent" type="submit">Submit</button>
     </mat-card-actions>
   </mat-card>
 </form>
