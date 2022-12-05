@@ -1,4 +1,6 @@
-﻿namespace MyDocAppointment.BusinessLayer.Entities
+﻿using Microsoft.EntityFrameworkCore.Update.Internal;
+
+namespace MyDocAppointment.BusinessLayer.Entities
 {
     public class Medication
     {
@@ -19,7 +21,7 @@
 
         public string Name { get; private set; }
 
-        public int Stock { get; set; }
+        public int Stock { get; private set; }
 
         public string Unit { get; private set; }
         public int Capacity { get; private set; }
@@ -28,5 +30,14 @@
         public ICollection<Prescription> Prescriptions { get; private set; }
     
         public ICollection<History> Histories { get; private set; }
+
+        public void UpdateMedication(Medication medication)
+        {
+            Name= medication.Name;
+            Stock= medication.Stock;
+            Unit= medication.Unit;
+            Capacity= medication.Capacity;
+            Price = medication.Price;
+        }
     }
 }

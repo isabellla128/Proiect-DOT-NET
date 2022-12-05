@@ -2,6 +2,7 @@
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
+using System.Numerics;
 
 namespace MyDocAppointment.API.Features.Doctors
 {
@@ -128,5 +129,17 @@ namespace MyDocAppointment.API.Features.Doctors
         {
             return Ok();
         }
+
+        [HttpPut("{doctorId:Guid}")]
+        public IActionResult UpdateDoctor(Guid doctorId, [FromBody] Doctor doctor)
+        {
+            var doctorToChange = doctorRepository.GetById(doctorId);
+
+            doctorToChange.UpdateDoctor(doctor);
+
+            doctorRepository.SaveChanges();
+            return Ok(doctorToChange);
+        }
+
     }
 }

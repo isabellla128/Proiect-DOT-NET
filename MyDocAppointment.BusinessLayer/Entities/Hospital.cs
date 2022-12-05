@@ -41,13 +41,13 @@ namespace MyDocAppointment.BusinessLayer.Entities
         {
             if (!doctors.Any())
             {
-                return Result.Failure("you must add at least a doctor");
+                return Result.Failure("You must add at least a doctor");
             }
             doctors.ForEach(d =>
             {
                 if (!Doctors.Contains(d))
                 {
-                    d.AddHospitalToDoctor(this);
+                    var result = d.AddHospitalToDoctor(this);
                     Doctors.Add(d);
                 }
             });

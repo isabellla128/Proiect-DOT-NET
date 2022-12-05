@@ -22,18 +22,34 @@ namespace MyDocAppointment.BusinessLayer.Entities
         public ICollection<MedicationDosagePrescription> MedicationDosagePrescriptions { get; private set; }
 
 
-        public void AddDoctorToPrescription(Doctor doctor)
+        public Result AddDoctorToPrescription(Doctor doctor)
         {
+            if (doctor == null)
+            {
+                return Result.Failure("Doctor should not be null");
+            }
+
             Doctor = doctor;
             DoctorId = doctor.Id;
+            return Result.Success();
         }
-        public void AddPatientToPrescription(Patient patient)
+        public Result AddPatientToPrescription(Patient patient)
         {
+            if (patient == null)
+            {
+                return Result.Failure("Patient should not be null");
+            }
+
             Patient = patient;
             PatientId = patient.Id;
+            return Result.Success();
         }
         public Result AddMedications(List<MedicationDosagePrescription> medicationsDosages)
         {
+            if (!medicationsDosages.Any())
+            {
+                return Result.Failure("You must add at least one medication dosage");
+            }
             medicationsDosages.ForEach(m =>
             {
                 m.RegisterMedicationInfoToPrescription(this);

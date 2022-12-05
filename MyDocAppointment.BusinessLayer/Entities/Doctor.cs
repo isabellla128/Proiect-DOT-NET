@@ -57,10 +57,18 @@ namespace MyDocAppointment.BusinessLayer.Entities
             }
         }
 
-        public void AddHospitalToDoctor(Hospital hospital)
+        public Result AddHospitalToDoctor(Hospital hospital)
         {
-            this.Hospial = hospital;
-            HospitalId = hospital.Id;
+            if (hospital == null)
+            {
+                return Result.Failure("Hospital should not be null");
+            }
+            else
+            {
+                this.Hospial = hospital;
+                HospitalId = hospital.Id;
+                return Result.Success();
+            }
         }
 
         public Result AddAppointment(Appointment appointment)
@@ -107,5 +115,18 @@ namespace MyDocAppointment.BusinessLayer.Entities
             return Result.Success();
         }
 
+        public void UpdateDoctor(Doctor doctor)
+        {
+            FirstName= doctor.FirstName;
+            LastName= doctor.LastName;
+            Specialization= doctor.Specialization;
+            Email= doctor.Email;
+            Phone= doctor.Phone;
+            Title= doctor.Title;
+            Profession= doctor.Profession;
+            Location=doctor.Location;
+            Grade= doctor.Grade;
+            Reviews= doctor.Reviews;
+        }
     }
 }
