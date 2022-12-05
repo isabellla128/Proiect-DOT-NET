@@ -5,7 +5,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
 {
     public class HistoryRepository : Repository<History>
     {
-        public HistoryRepository(MyDocAppointmentDatabaseContext context) : base(context)
+        public HistoryRepository(TestsDatabaseContext context) : base(context)
         {
         }
     }

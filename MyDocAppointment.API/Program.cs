@@ -1,6 +1,10 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using MyDocAppointment.BusinessLayer.Data;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
+using System.Data.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddControllers().AddNewtonsoftJson(x => { x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; });
 
-builder.Services.AddScoped<MyDocAppointmentDatabaseContext>();
+//builder.Services.AddScoped<MyDocAppointmentDatabaseContext>();
 
 builder.Services.AddScoped<IRepository<Doctor>, DoctorRepository>();
 builder.Services.AddScoped<IRepository<Hospital>, HospitalRepository>();
@@ -28,6 +32,22 @@ builder.Services.AddScoped<IRepository<MedicationDosageHistory>, MedicationDosag
 builder.Services.AddScoped<IRepository<MedicationDosagePrescription>, MedicationDosagePrescriptionRepository>();
 
 
+builder.Services.AddSingleton<DbConnection>(container =>
+{
+    var connection = new SqliteConnection("DataSource=:memory:");
+    connection.Open();
+
+    return connection;
+});
+
+builder.Services.AddDbContext<MyDocAppointmentDatabaseContext>((container, options) =>
+{
+    var connection = container.GetRequiredService<DbConnection>();
+    options.UseSqlite(connection);
+});
+
+//builder.Services.AddDefaultIdentity<IdentityUser>()
+//    .AddEntityFrameworkStores<TestsDatabaseContext>();
 
 var config = new ConfigurationBuilder();
 
@@ -50,4 +70,16 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using (var scope = app.Services.CreateScope())
+{
+    var container = scope.ServiceProvider;
+    var db = container.GetRequiredService<MyDocAppointmentDatabaseContext>();
+
+    db.Database.EnsureCreated();
+
+}
+
+
 app.Run();
+
+public partial class Program { }

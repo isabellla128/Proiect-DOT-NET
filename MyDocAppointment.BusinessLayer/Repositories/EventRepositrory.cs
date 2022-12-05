@@ -5,7 +5,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
 {
     public class EventRepositrory : Repository<Event>
     {
-        public EventRepositrory(MyDocAppointmentDatabaseContext context) : base(context)
+        public EventRepositrory(TestsDatabaseContext context) : base(context)
         {
         }
     }

@@ -8,14 +8,19 @@ namespace MyDocAppointment.API.Tests
     public class MedicationsControllerTests : BaseIntegrationTests<MedicationsController>
     {
         private const string ApiURL = "v1/api/Medications";
+
+        public MedicationsControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        {
+        }
+
         [Fact]
         public async void When_CreatedMedication_Then_ShouldReturnMedicationInTheGetRequest()
         {
             // Arrange
             CreateMedicationDto createMedicationDto = CreateSUT();
             // Act
-            var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiURL, createMedicationDto);
-            var getMedicationResult = await HttpClient.GetAsync(ApiURL);
+            var createMedicationResponse = await httpClient.PostAsJsonAsync(ApiURL, createMedicationDto);
+            var getMedicationResult = await httpClient.GetAsync(ApiURL);
             // Assert
             createMedicationResponse.EnsureSuccessStatusCode();
             createMedicationResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
@@ -31,11 +36,11 @@ namespace MyDocAppointment.API.Tests
         {
             // Arrange
             CreateMedicationDto createMedicationDto = CreateSUT();
-            var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiURL, createMedicationDto);
+            var createMedicationResponse = await httpClient.PostAsJsonAsync(ApiURL, createMedicationDto);
             var medication = await createMedicationResponse.Content.ReadFromJsonAsync<MedicationDto>();
 
             // Act
-            var resultResponse = await HttpClient.DeleteAsync
+            var resultResponse = await httpClient.DeleteAsync
                 ($"{ApiURL}/{medication.Id}");
 
             // Assert

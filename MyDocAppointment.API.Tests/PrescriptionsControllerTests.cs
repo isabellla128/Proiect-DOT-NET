@@ -16,29 +16,32 @@ namespace MyDocAppointment.API.Tests
         private const string ApiPatientsURL = "v1/api/Patients";
         private const string ApiMedicationsURL = "v1/api/Medications";
 
+        public PrescriptionsControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        {
+        }
 
         [Fact]
         public async void When_CreatedPrescription_Then_ShouldReturnPrescriptionInTheGetRequest()
         {
             // Arrange
             var createDoctorDto = CreateDoctorSUT();
-            var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiDoctorsURL, createDoctorDto);
+            var createDoctorResponse = await httpClient.PostAsJsonAsync(ApiDoctorsURL, createDoctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
 
 
             var createPatientDto = CreatePatientSUT();
-            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiPatientsURL, createPatientDto);
+            var createPatientResponse = await httpClient.PostAsJsonAsync(ApiPatientsURL, createPatientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
             var createMedicationDto = CreateMedicationDto();
-            var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiMedicationsURL, createMedicationDto);
+            var createMedicationResponse = await httpClient.PostAsJsonAsync(ApiMedicationsURL, createMedicationDto);
             var medication = await createMedicationResponse.Content.ReadFromJsonAsync<MedicationDto>();
 
             CreatePrescriptionDto prescriptionDto = CreateSUT(doctor.Id, patient.Id, medication.Id);
 
             // Act
-            var createPrescriptionResponse = await HttpClient.PostAsJsonAsync(ApiURL, prescriptionDto);
-            var getPrescriptionResult = await HttpClient.GetAsync(ApiURL);
+            var createPrescriptionResponse = await httpClient.PostAsJsonAsync(ApiURL, prescriptionDto);
+            var getPrescriptionResult = await httpClient.GetAsync(ApiURL);
 
             // Assert
             createPrescriptionResponse.EnsureSuccessStatusCode();
@@ -56,26 +59,26 @@ namespace MyDocAppointment.API.Tests
         {
             // Arrange
             var createDoctorDto = CreateDoctorSUT();
-            var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiDoctorsURL, createDoctorDto);
+            var createDoctorResponse = await httpClient.PostAsJsonAsync(ApiDoctorsURL, createDoctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
 
 
             var createPatientDto = CreatePatientSUT();
-            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiPatientsURL, createPatientDto);
+            var createPatientResponse = await httpClient.PostAsJsonAsync(ApiPatientsURL, createPatientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
             var createMedicationDto = CreateMedicationDto();
-            var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiMedicationsURL, createMedicationDto);
+            var createMedicationResponse = await httpClient.PostAsJsonAsync(ApiMedicationsURL, createMedicationDto);
             var medication = await createMedicationResponse.Content.ReadFromJsonAsync<MedicationDto>();
 
 
             CreatePrescriptionDto prescriptionDto = CreateSUT(doctor.Id, patient.Id, medication.Id);
-            var createPrescriptionResponse = await HttpClient.PostAsJsonAsync(ApiURL, prescriptionDto);
+            var createPrescriptionResponse = await httpClient.PostAsJsonAsync(ApiURL, prescriptionDto);
 
             var prescription = await createPrescriptionResponse.Content.ReadFromJsonAsync<PrescriptionDto>();
 
             // Act
-            var resultResponse = await HttpClient.DeleteAsync
+            var resultResponse = await httpClient.DeleteAsync
                 ($"{ApiURL}/{prescription.Id}");
 
             // Assert

@@ -1,35 +1,56 @@
 ﻿using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.API.Features.Patients;
+using MyDocAppointment.BusinessLayer.Data;
 using System.Net.Http.Json;
 using Xunit;
 
 namespace MyDocAppointment.API.Tests
 {
-    public class AppointmentsControllerTests : BaseIntegrationTests<DoctorsController>
+    public class AppointmentsControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>
     {
         private const string ApiURL = "v1/api/Appointments";
+        private readonly CustomWebApplicationFactory<Program> factory;
+        private readonly HttpClient httpClient;
+
+        //public AppointmentsControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        //{
+        //}
+        public AppointmentsControllerTests(CustomWebApplicationFactory<Program> factory)
+        {
+            this.factory = factory;
+            this.httpClient = factory.CreateClient();
+
+            using (var scope = factory.Services.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+                var db = scopedServices.GetRequiredService<TestsDatabaseContext>();
+
+                db.Appointments.RemoveRange(db.Appointments.ToList());
+            }
+        }
 
         [Fact]
         public async void When_CreatedAppointment_Then_ShouldReturnAppointmentInTheGetRequest()
         {
 
-            // Arrange
+             // Arrange
             CreatePatientDto patientDto = CreatePatientSUT();
             CreateDoctorDto doctorDto = CreateDoctorSUT();
 
-            var createDoctorResponse = await HttpClient.PostAsJsonAsync("v1/api/Doctors", doctorDto);
+            var createDoctorResponse = await httpClient.PostAsJsonAsync("v1/api/Doctors", doctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
             
-            var createPatientResponse = await HttpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
+            var createPatientResponse = await httpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
             
             CreateAppointmentDto appointmentDto = CreateSUT(patient.Id, doctor.Id);
 
             // Act
-            var createAppointmentResponse = await HttpClient.PostAsJsonAsync(ApiURL, appointmentDto);
-            var getAppointmentResult = await HttpClient.GetAsync(ApiURL);
+            var createAppointmentResponse = await httpClient.PostAsJsonAsync(ApiURL, appointmentDto);
+            var getAppointmentResult = await httpClient.GetAsync(ApiURL);
 
             // Assert
             createAppointmentResponse.EnsureSuccessStatusCode();
@@ -48,18 +69,18 @@ namespace MyDocAppointment.API.Tests
             CreatePatientDto patientDto = CreatePatientSUT();
             CreateDoctorDto doctorDto = CreateDoctorSUT();
 
-            var createDoctorResponse = await HttpClient.PostAsJsonAsync("v1/api/Doctors", doctorDto);
+            var createDoctorResponse = await httpClient.PostAsJsonAsync("v1/api/Doctors", doctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
             
-            var createPatientResponse = await HttpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
+            var createPatientResponse = await httpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
             CreateAppointmentDto appointmentDto = CreateSUT(patient.Id, doctor.Id);
-            var createAppointmentResponse = await HttpClient.PostAsJsonAsync(ApiURL, appointmentDto);
+            var createAppointmentResponse = await httpClient.PostAsJsonAsync(ApiURL, appointmentDto);
             var appointment = await createAppointmentResponse.Content.ReadFromJsonAsync<AppointmentDto>();
 
             // Act
-            var resultResponse = await HttpClient.DeleteAsync
+            var resultResponse = await httpClient.DeleteAsync
                 ($"{ApiURL}/{appointment.Id}");
 
             // Assert

@@ -5,7 +5,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
 {
     public class PatientRepository : Repository<Patient>
     {
-        public PatientRepository(MyDocAppointmentDatabaseContext context) : base(context)
+        public PatientRepository(TestsDatabaseContext context) : base(context)
         {
         }
     }

@@ -10,11 +10,15 @@ namespace MyDocAppointment.API.Tests
     {
         private const string ApiURL = "v1/api/Histories";
 
+        public HistoriesControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        {
+        }
+
         [Fact]
         public async void When_CreatedHistories_Then_ShouldReturnHistoryInTheGetRequest()
         {
             PatientDto patientDto = CreatePatientSUT();
-            var createPatientResponse = await HttpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
+            var createPatientResponse = await httpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
             createPatientResponse.EnsureSuccessStatusCode();
             createPatientResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
@@ -22,8 +26,8 @@ namespace MyDocAppointment.API.Tests
 
             HistoryDto historyDto = CreateSUT();
              // Act
-            var createHistoryResponse = await HttpClient.PostAsJsonAsync($"{ApiURL}?patientId={patient.Id}", historyDto);
-            var getHistoryResult = await HttpClient.GetAsync(ApiURL);
+            var createHistoryResponse = await httpClient.PostAsJsonAsync($"{ApiURL}?patientId={patient.Id}", historyDto);
+            var getHistoryResult = await httpClient.GetAsync(ApiURL);
 
             // Assert
             createHistoryResponse.EnsureSuccessStatusCode();
@@ -41,17 +45,17 @@ namespace MyDocAppointment.API.Tests
             // Arrange
 
             PatientDto patientDto = CreatePatientSUT();
-            var createPatientResponse = await HttpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
+            var createPatientResponse = await httpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
             createPatientResponse.EnsureSuccessStatusCode();
             createPatientResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
 
             HistoryDto historyDto = CreateSUT();
-            var createHistoryResponse = await HttpClient.PostAsJsonAsync($"{ApiURL}?patientId={patient.Id}", historyDto);
+            var createHistoryResponse = await httpClient.PostAsJsonAsync($"{ApiURL}?patientId={patient.Id}", historyDto);
             var history = await createHistoryResponse.Content.ReadFromJsonAsync<HistoryDto>();
 
             // Act
-            var resultResponse = await HttpClient.DeleteAsync
+            var resultResponse = await httpClient.DeleteAsync
                 ($"{ApiURL}/{history.Id}");
 
             // Assert

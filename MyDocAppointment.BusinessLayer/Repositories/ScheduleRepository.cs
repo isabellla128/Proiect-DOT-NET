@@ -5,7 +5,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
 {
     public class ScheduleRepository : Repository<Schedule>
     {
-        public ScheduleRepository(MyDocAppointmentDatabaseContext context) : base(context)
+        public ScheduleRepository(TestsDatabaseContext context) : base(context)
         {
         }
     }

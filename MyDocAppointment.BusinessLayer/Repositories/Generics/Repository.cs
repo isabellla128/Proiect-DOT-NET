@@ -5,9 +5,9 @@ namespace MyDocAppointment.BusinessLayer.Repositories
 {
     public abstract class Repository<T> : IRepository<T> where T : class
     {
-        protected MyDocAppointmentDatabaseContext context;
+        protected TestsDatabaseContext context;
 
-        public Repository(MyDocAppointmentDatabaseContext context)
+        public Repository(TestsDatabaseContext context)
         {
             this.context = context;
         }

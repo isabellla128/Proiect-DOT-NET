@@ -10,22 +10,25 @@ namespace MyDocAppointment.API.Tests
     {
         private const string ApiURL = "v1/api/Schedules";
 
-        
+        public SchedulesControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        {
+        }
+
         [Fact]
         public async void When_CreatedSchedule_Then_ShouldReturnScheduleInTheGetRequest()
         {
             //Arrange
-            var getScheduleResult = await HttpClient.GetAsync(ApiURL);
+            var getScheduleResult = await httpClient.GetAsync(ApiURL);
             var schedules = await getScheduleResult.Content.ReadFromJsonAsync<List<ScheduleDto>>();
             foreach(ScheduleDto schedule1 in schedules){
-                var resultResponse = await HttpClient.DeleteAsync($"{ApiURL}/{schedule1.Id}");
+                var resultResponse = await httpClient.DeleteAsync($"{ApiURL}/{schedule1.Id}");
             }
 
             ScheduleDto scheduleDto = CreateSUT();
 
             //Act
-            var createScheduleResponse=await HttpClient.PostAsJsonAsync(ApiURL, scheduleDto);
-            getScheduleResult=await HttpClient.GetAsync(ApiURL);
+            var createScheduleResponse=await httpClient.PostAsJsonAsync(ApiURL, scheduleDto);
+            getScheduleResult=await httpClient.GetAsync(ApiURL);
 
             //Assert
             createScheduleResponse.EnsureSuccessStatusCode();
@@ -41,16 +44,16 @@ namespace MyDocAppointment.API.Tests
         public async void When_RegisterEventsToSchedule_Then_ShouldReturnEventsInTheGetRequest()
         {
             //Arrange
-            var getScheduleResult = await HttpClient.GetAsync(ApiURL);
+            var getScheduleResult = await httpClient.GetAsync(ApiURL);
             var schedules = await getScheduleResult.Content.ReadFromJsonAsync<List<ScheduleDto>>();
             foreach (ScheduleDto schedule1 in schedules)
             {
-                var resultResponse1 = await HttpClient.DeleteAsync($"{ApiURL}/{schedule1.Id}");
+                var resultResponse1 = await httpClient.DeleteAsync($"{ApiURL}/{schedule1.Id}");
             }
 
 
             ScheduleDto scheduleDto = CreateSUT();
-            var createScheduleResponse = await HttpClient.PostAsJsonAsync(ApiURL, scheduleDto);
+            var createScheduleResponse = await httpClient.PostAsJsonAsync(ApiURL, scheduleDto);
             var events = new List<EventDto>
             {
                 new EventDto
@@ -70,7 +73,7 @@ namespace MyDocAppointment.API.Tests
             var schedule = await createScheduleResponse.Content.ReadFromJsonAsync<ScheduleDto>();
 
             //Act
-            var resultResponse=await HttpClient.PostAsJsonAsync(
+            var resultResponse=await httpClient.PostAsJsonAsync(
                 $"{ApiURL}/{schedule.Id}/events", events);
 
             //Assert
@@ -84,11 +87,11 @@ namespace MyDocAppointment.API.Tests
             //Arrange
 
             ScheduleDto scheduleDto = CreateSUT();
-            var createScheduleResponse=await HttpClient.PostAsJsonAsync(ApiURL, scheduleDto);
+            var createScheduleResponse=await httpClient.PostAsJsonAsync(ApiURL, scheduleDto);
             var schedule = await createScheduleResponse.Content.ReadFromJsonAsync<ScheduleDto>();
 
             //Act
-            var resultResponse = await HttpClient.DeleteAsync($"{ApiURL}/{schedule.Id}");
+            var resultResponse = await httpClient.DeleteAsync($"{ApiURL}/{schedule.Id}");
 
             //Assert
             resultResponse.EnsureSuccessStatusCode();

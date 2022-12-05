@@ -10,14 +10,18 @@ namespace MyDocAppointment.API.Tests
     {
         private const string ApiURL = "v1/api/Patients";
 
+        public PatientsControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        {
+        }
+
         [Fact]
         public async void When_CreatedPatient_Then_ShouldReturnPatientInTheGetRequest()
         {
             // Arrange
             CreatePatientDto createPatientDto = CreateSUT();
             // Act
-            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, createPatientDto);
-            var getPatientResult = await HttpClient.GetAsync(ApiURL);
+            var createPatientResponse = await httpClient.PostAsJsonAsync(ApiURL, createPatientDto);
+            var getPatientResult = await httpClient.GetAsync(ApiURL);
             // Assert
             createPatientResponse.EnsureSuccessStatusCode();
             createPatientResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
@@ -33,7 +37,7 @@ namespace MyDocAppointment.API.Tests
         //{
         //    // Arrange
         //    CreatePatientDto createPatientDto = CreateSUT();
-        //    var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, createPatientDto);
+        //    var createPatientResponse = await httpClient.PostAsJsonAsync(ApiURL, createPatientDto);
         //    var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
         //    var appointments = new List<AppointmentsDtoFromPatient>
@@ -50,7 +54,7 @@ namespace MyDocAppointment.API.Tests
         //        }
         //    };
         //    // Act
-        //    var resultResponse = await HttpClient.PostAsJsonAsync
+        //    var resultResponse = await httpClient.PostAsJsonAsync
         //        ($"{ApiURL}/{patient.Id}/appointments", appointments);
 
         //    // Assert
@@ -63,11 +67,11 @@ namespace MyDocAppointment.API.Tests
         {
             // Arrange
             CreatePatientDto createPatientDto = CreateSUT();
-            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, createPatientDto);
+            var createPatientResponse = await httpClient.PostAsJsonAsync(ApiURL, createPatientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
             // Act
-            var resultResponse = await HttpClient.DeleteAsync
+            var resultResponse = await httpClient.DeleteAsync
                 ($"{ApiURL}/{patient.Id}");
 
             // Assert
