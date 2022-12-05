@@ -7,15 +7,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 
-import { AddMedicationFormComponent } from './add-medication-form.component';
+import { MedicationFormComponent } from './medication-form.component';
 
-describe('AddMedicationFormComponent', () => {
-  let component: AddMedicationFormComponent;
-  let fixture: ComponentFixture<AddMedicationFormComponent>;
+describe('MedicationFormComponent', () => {
+  let component: MedicationFormComponent;
+  let fixture: ComponentFixture<MedicationFormComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddMedicationFormComponent ],
+      declarations: [ MedicationFormComponent ],
       imports: [
         NoopAnimationsModule,
         ReactiveFormsModule,
@@ -29,7 +29,7 @@ describe('AddMedicationFormComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddMedicationFormComponent);
+    fixture = TestBed.createComponent(MedicationFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

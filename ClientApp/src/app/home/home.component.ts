@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Doctor } from 'src/models/doctor';
 import { Medication } from 'src/models/medication';
-import { DoctorService } from '../services/doctor.service';
-import { MedicationService } from '../services/medication.service';
+import { DoctorService } from '../../shared/services/doctor.service';
+import { MedicationService } from '../../shared/services/medication.service';
 
 @Component({
   selector: 'app-home',
@@ -20,19 +20,10 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.doctorService.getAllDoctors().subscribe(
-      (response) => {
-        console.log(response);
-        this.doctors = response;
-        this.doctors = this.getRandomFromArray(response, 4);
-      },
-      (error) => {
-        console.error(error);
-      }
+    this.doctorService.collection$.subscribe(
+      (result) => (this.doctors = this.getRandomFromArray(result, 5))
     );
-
-    this.medicationService.getAllMedications();
-    this.medicationService.medications$.subscribe(
+    this.medicationService.collection$.subscribe(
       (result) => (this.drugs = this.getRandomFromArray(result, 3))
     );
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Doctor } from 'src/models/doctor';
-import { DoctorService } from '../services/doctor.service';
+import { DoctorService } from '../../shared/services/doctor.service';
 
 @Component({
   selector: 'app-medics',
@@ -10,10 +10,10 @@ import { DoctorService } from '../services/doctor.service';
 export class MedicsComponent implements OnInit {
   doctors: Doctor[] = [];
 
-  constructor(private doctorService: DoctorService) {}
+  constructor(public doctorService: DoctorService) {}
 
   ngOnInit() {
-    this.doctorService.getAllDoctors().subscribe(
+    this.doctorService.collection$.subscribe(
       (response) => {
         this.doctors = response;
       },
@@ -21,5 +21,13 @@ export class MedicsComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  onDelete(id: string) {
+    this.doctorService.delete(id);
+  }
+
+  onSubmit(event: Doctor) {
+    this.doctorService.post(event);
   }
 }
