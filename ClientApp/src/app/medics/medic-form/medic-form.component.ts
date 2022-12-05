@@ -6,8 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { FormBuilder } from '@angular/forms';
 import { Doctor } from 'src/models/doctor';
 import { DoctorService } from 'src/shared/services/doctor.service';
 
@@ -20,6 +19,7 @@ export class MedicFormComponent implements OnInit, OnChanges {
   @Input() doctor: Doctor = {} as Doctor;
   @Input() title: String = '';
   @Output() submitEmitter = new EventEmitter<Doctor>();
+
   medicForm = this.fb.group<Doctor>({
     id: '',
     title: '',

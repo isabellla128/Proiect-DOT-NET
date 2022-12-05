@@ -19,6 +19,10 @@ export class MedicationsComponent implements OnInit {
     });
   }
 
+  onSubmit(medication: Medication) {
+    this.medicationService.post(medication);
+  }
+
   onDelete(id: string) {
     this.medicationService.delete(id);
   }

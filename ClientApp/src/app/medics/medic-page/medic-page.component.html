@@ -59,12 +59,22 @@
     opened="false"
     position="end"
   >
-    <div class="form-container">
+    <div>
       <app-medic-form
         [doctor]="doctor"
         title="Edit Medic"
         (submitEmitter)="onFormSubmit($event)"
       ></app-medic-form>
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        color="warn"
+        class="edit-icon"
+        (click)="drawer.toggle()"
+      >
+        <mat-icon aria-label="Side nav toggle icon">close</mat-icon>
+      </button>
     </div>
   </mat-sidenav>
   <button

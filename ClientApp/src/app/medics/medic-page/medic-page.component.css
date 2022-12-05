@@ -119,6 +119,8 @@
   right: 10px;
 }
 
-.sidenav {
-  background-color: #f1f1f1;
+.edit-icon {
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
