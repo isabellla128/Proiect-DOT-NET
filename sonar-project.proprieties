@@ -1,0 +1,22 @@
+sonar.projectName=Proiect-DOT-NET
+
+sonar.projectVersion=1.0
+
+# Path to the source directories (required)
+sonar.sources=.
+
+sonar.language=cs
+
+sonar.sourceEncoding=UTF-8
+
+sonar.dotnet.visualstudio.solution.file=MyDocAppointment.sln
+
+sonar.dotnet.excludeGeneratedCode=true
+
+sonar.dotnet.version=7.0
+
+sonar.gallio.runner=IsolatedProcess
+
+sonar.gallio.coverage.tool=OpenCover 
+
+sonar.donet.visualstudio.testProjectPattern=*MyDocAppointment.API.Tests
