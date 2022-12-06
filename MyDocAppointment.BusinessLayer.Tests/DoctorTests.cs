@@ -111,7 +111,7 @@ namespace MyDocAppointment.BusinessLayer.Tests
 
             //assert
             result2.IsFailure.Should().BeTrue();
-            result2.Error.Should().Be("A new appoinments should not intersect with a fixed appointment");
+            result2.Error.Should().Be("A new appointment should not intersect with a fixed appointment");
         }
 
         [Fact]

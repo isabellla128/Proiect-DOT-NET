@@ -21,7 +21,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
 
         public string Name { get; private set; }
 
-        public int Stock { get; set; }
+        public int Stock { get; private set; }
 
         public string Unit { get; private set; }
         public int Capacity { get; private set; }
