@@ -115,5 +115,24 @@ namespace MyDocAppointment.BusinessLayer.Entities
             return Result.Success();
         }
 
+        public Result UpdateDoctor(Doctor doctor)
+        {
+            if (doctor == null)
+            {
+                return Result.Failure("Doctor should not be null");
+            }
+            FirstName = doctor.FirstName;
+            LastName= doctor.LastName;
+            Specialization= doctor.Specialization;
+            Email= doctor.Email;
+            Phone= doctor.Phone;
+            Title= doctor.Title;
+            Profession= doctor.Profession;
+            Location=doctor.Location;
+            Grade= doctor.Grade;
+            Reviews= doctor.Reviews;
+
+            return Result.Success();
+        }
     }
 }

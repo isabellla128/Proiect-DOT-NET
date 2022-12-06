@@ -52,5 +52,27 @@ namespace MyDocAppointment.BusinessLayer.Tests
             Assert.False(result);
         }
 
+        [Fact]
+        public void Given_IsStartDateValid_When_Start_isInFuture_Then_Should_Return_True()
+        {
+            DateTime startTime = DateTime.Now.AddDays(1);
+            DateTime endTime = DateTime.Now.AddDays(2);
+            var newEvent = new Event("event", startTime, endTime);
+
+            Assert.True(newEvent.IsStartDateValid());
+
+        }
+        
+        [Fact]
+        public void Given_IsStartDateValid_When_Start_isInPast_Then_Should_Return_False()
+        {
+            DateTime startTime = DateTime.Now.AddDays(-1);
+            DateTime endTime = DateTime.Now.AddDays(2);
+            var newEvent = new Event("event", startTime, endTime);
+
+            Assert.False(newEvent.IsStartDateValid());
+
+        }
+
     }
 }

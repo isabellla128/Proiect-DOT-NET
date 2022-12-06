@@ -1,4 +1,7 @@
-﻿namespace MyDocAppointment.BusinessLayer.Entities
+﻿using Microsoft.EntityFrameworkCore.Update.Internal;
+using ShelterManagement.Business.Helpers;
+
+namespace MyDocAppointment.BusinessLayer.Entities
 {
     public class Medication
     {
@@ -7,7 +10,6 @@
             Id = Guid.NewGuid();
             Name = name;
             Stock = stock;
-            //ramane de vazut daca pastram prescriptions si histories
             Prescriptions = new List<Prescription>();
             Histories = new List<History>();
             Unit = unit;
@@ -28,5 +30,21 @@
         public ICollection<Prescription> Prescriptions { get; private set; }
     
         public ICollection<History> Histories { get; private set; }
+
+        public Result UpdateMedication(Medication medication)
+        {
+            if (medication == null)
+            {
+                return Result.Failure("Medication should not be null");
+            }
+
+            Name = medication.Name;
+            Stock= medication.Stock;
+            Unit= medication.Unit;
+            Capacity= medication.Capacity;
+            Price = medication.Price;
+
+            return Result.Success();
+        }
     }
 }

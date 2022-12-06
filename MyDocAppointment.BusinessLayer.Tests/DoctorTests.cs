@@ -158,6 +158,35 @@ namespace MyDocAppointment.BusinessLayer.Tests
             //assert
             result.IsSuccess.Should().BeTrue();
         }
+        
+        [Fact]
+        public void Given_UpdateDoctor_IsCalled_When_Doctor_isNull_Then_Should_Return_Failure()
+        {
+            //arrange
+            var doctor = new Doctor("Jackie", "Chan", "all", "na", "na", "Dr.", "Medic specialist", "Iasi", 9.10, 117);
+
+
+            //act
+            var result = doctor.UpdateDoctor(null);
+
+            //assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Doctor should not be null");
+        }
+        
+        [Fact]
+        public void Given_UpdateDoctor_IsCalled_When_Doctor_isNotNull_Then_Should_Return_Success()
+        {
+            //arrange
+            var doctor = new Doctor("Jackie", "Chan", "all", "na", "na", "Dr.", "Medic specialist", "Iasi", 9.10, 117);
+            var doctor1 = new Doctor("Jackie", "Chan", "all", "na", "na", "Dr.", "Medic specialist", "Iasi", 9.10, 117);
+
+            //act
+            var result = doctor.UpdateDoctor(doctor1);
+
+            //assert
+            result.IsSuccess.Should().BeTrue();
+        }
 
     }
 }

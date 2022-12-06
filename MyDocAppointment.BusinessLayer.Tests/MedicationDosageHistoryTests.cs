@@ -68,5 +68,6 @@ namespace MyDocAppointment.BusinessLayer.Tests
             //assert
             result.IsSuccess.Should().BeTrue();
         }
+
     }
 }
