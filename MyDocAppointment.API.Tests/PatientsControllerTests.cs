@@ -10,6 +10,10 @@ namespace MyDocAppointment.API.Tests
     {
         private const string ApiURL = "v1/api/Patients";
 
+        public PatientsControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        {
+        }
+
         [Fact]
         public async void When_CreatedPatient_Then_ShouldReturnPatientInTheGetRequest()
         {

@@ -1,30 +1,39 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using Microsoft.Extensions.DependencyInjection;
 using MyDocAppointment.BusinessLayer.Data;
+using Xunit;
 
 namespace MyDocAppointment.API.Tests
 {
-    public class BaseIntegrationTests <T> where T : class
+    public class BaseIntegrationTests<T> : IClassFixture<CustomWebApplicationFactory<Program>> where T : class
     {
         protected HttpClient  HttpClient { get;private set; }
-        protected BaseIntegrationTests()
+        protected CustomWebApplicationFactory<Program> Factory { get; private set; } 
+
+        protected BaseIntegrationTests(CustomWebApplicationFactory<Program> factory)
         {
-            var application = new WebApplicationFactory<T>().WithWebHostBuilder(builder => { });
-            HttpClient = application.CreateClient();
+            Factory = factory;
+            HttpClient = factory.CreateClient();
             CleanDatabases();
         }
 
         private void CleanDatabases()
         {
-            var databaseContext = new MyDocAppointmentDatabaseContext();
-            databaseContext.Hospitals.RemoveRange(databaseContext.Hospitals.ToList());
-            databaseContext.Patients.RemoveRange(databaseContext.Patients.ToList());
-            databaseContext.Appointments.RemoveRange(databaseContext.Appointments.ToList());
-            databaseContext.Doctors.RemoveRange(databaseContext.Doctors.ToList());
-            databaseContext.Medications.RemoveRange(databaseContext.Medications.ToList());
-            databaseContext.Prescriptions.RemoveRange(databaseContext.Prescriptions.ToList());
-            databaseContext.MedicationDosagePrescriptions.RemoveRange(databaseContext.MedicationDosagePrescriptions.ToList());
-            //databaseContext.Schedules.RemoveRange(databaseContext.Schedules.ToList());
-            databaseContext.SaveChanges();
+            using (var scope = Factory.Services.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+                var databaseContext = scopedServices.GetRequiredService<TestsDatabaseContext>();
+
+
+                databaseContext.Hospitals.RemoveRange(databaseContext.Hospitals.ToList());
+                databaseContext.Patients.RemoveRange(databaseContext.Patients.ToList());
+                databaseContext.Appointments.RemoveRange(databaseContext.Appointments.ToList());
+                databaseContext.Doctors.RemoveRange(databaseContext.Doctors.ToList());
+                databaseContext.Medications.RemoveRange(databaseContext.Medications.ToList());
+                databaseContext.Prescriptions.RemoveRange(databaseContext.Prescriptions.ToList());
+                databaseContext.MedicationDosagePrescriptions.RemoveRange(databaseContext.MedicationDosagePrescriptions.ToList());
+                //databaseContext.Schedules.RemoveRange(databaseContext.Schedules.ToList());
+                databaseContext.SaveChanges();
+            }
         }
     }
 }

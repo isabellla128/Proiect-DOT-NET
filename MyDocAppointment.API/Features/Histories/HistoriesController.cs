@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Migrations;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
+using MyDocAppointment.BusinessLayer.Repositories.Interfaces;
 
 namespace MyDocAppointment.API.Features.Histories
 {
@@ -8,11 +10,11 @@ namespace MyDocAppointment.API.Features.Histories
     [ApiController]
     public class HistoriesController : ControllerBase
     {
-        private readonly IRepository<History> historyRepository;
-        private readonly IRepository<Patient> patientRepository;
-        private readonly IRepository<Medication> medicationRepository;
+        private readonly IHistoryRepository1 historyRepository;
+        private readonly IPatientRepository patientRepository;
+        private readonly IMedicationRepositrory medicationRepository;
 
-        public HistoriesController(IRepository<History> historyRepository, IRepository<Patient> patientRepository, IRepository<Medication> medicationRepository)
+        public HistoriesController(IHistoryRepository1 historyRepository, IPatientRepository patientRepository, IMedicationRepositrory medicationRepository)
         {
             this.historyRepository = historyRepository;
             this.patientRepository = patientRepository;
