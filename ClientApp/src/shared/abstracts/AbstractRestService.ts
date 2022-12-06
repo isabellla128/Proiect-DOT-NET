@@ -13,10 +13,11 @@ export default abstract class AbstractRestService<T> {
   }
 
   getAll() {
-    this._http.get<T[]>(this._url).subscribe(
-      (result) => this.collection$.next(result),
-      (error) => console.log(error)
-    );
+    this._http.get<T[]>(this._url).subscribe({
+      next: (result) => this.collection$.next(result),
+      error: (error) => console.log(error),
+      complete: () => {},
+    });
   }
 
   getOne(id: string) {
@@ -24,19 +25,21 @@ export default abstract class AbstractRestService<T> {
   }
 
   post(entity: T) {
-    this._http.post<T>(this._url, entity).subscribe(
-      (result) => this.collection$.next(this.addLocaly(result)),
-      (error) => console.log(error)
-    );
+    this._http.post<T>(this._url, entity).subscribe({
+      next: (result) => this.collection$.next(this.addLocaly(result)),
+      error: (error) => console.log(error),
+      complete: () => {},
+    });
   }
 
   delete(entityId: string) {
-    this._http.delete(this._url + '/' + entityId).subscribe(
-      (result) => {
+    this._http.delete(this._url + '/' + entityId).subscribe({
+      next: (result) => {
         this.deleteEntityLocaly(entityId);
       },
-      (error) => console.log(error)
-    );
+      error: (error) => console.log(error),
+      complete: () => {},
+    });
   }
 
   update(entity: T) {
@@ -46,12 +49,13 @@ export default abstract class AbstractRestService<T> {
           'Content-Type': 'application/json-patch+json',
         },
       })
-      .subscribe(
-        (result) => {
+      .subscribe({
+        next: (result) => {
           this.updateLocaly(result);
         },
-        (error) => console.error(error)
-      );
+        error: (error) => console.error(error),
+        complete: () => {},
+      });
   }
 
   private addLocaly(entity: T): T[] {
