@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Update.Internal;
+using ShelterManagement.Business.Helpers;
 
 namespace MyDocAppointment.BusinessLayer.Entities
 {
@@ -9,7 +10,6 @@ namespace MyDocAppointment.BusinessLayer.Entities
             Id = Guid.NewGuid();
             Name = name;
             Stock = stock;
-            //ramane de vazut daca pastram prescriptions si histories
             Prescriptions = new List<Prescription>();
             Histories = new List<History>();
             Unit = unit;
@@ -31,13 +31,20 @@ namespace MyDocAppointment.BusinessLayer.Entities
     
         public ICollection<History> Histories { get; private set; }
 
-        public void UpdateMedication(Medication medication)
+        public Result UpdateMedication(Medication medication)
         {
-            Name= medication.Name;
+            if (medication == null)
+            {
+                return Result.Failure("Medication should not be null");
+            }
+
+            Name = medication.Name;
             Stock= medication.Stock;
             Unit= medication.Unit;
             Capacity= medication.Capacity;
             Price = medication.Price;
+
+            return Result.Success();
         }
     }
 }

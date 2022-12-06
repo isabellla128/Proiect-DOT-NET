@@ -73,5 +73,27 @@ namespace MyDocAppointment.BusinessLayer.Tests
             result.IsFailure.Should().BeTrue();
             result.Error.Should().Be("You must add at least a medication dosage");
         }
+
+        [Fact]
+        public void Given_IsStartDateValid_When_Start_isInFuture_Then_Should_Return_True()
+        {
+            DateTime startTime = DateTime.Now.AddDays(1);
+            DateTime endTime = DateTime.Now.AddDays(2);
+            var history = new History(startTime, endTime);
+
+            Assert.True(history.IsStartDateValid());
+
+        }
+        
+        [Fact]
+        public void Given_IsStartDateValid_When_Start_isInPast_Then_Should_Return_False()
+        {
+            DateTime startTime = DateTime.Now.AddDays(-1);
+            DateTime endTime = DateTime.Now.AddDays(2);
+            var history = new History(startTime, endTime);
+
+            Assert.False(history.IsStartDateValid());
+
+        }
     }
 }

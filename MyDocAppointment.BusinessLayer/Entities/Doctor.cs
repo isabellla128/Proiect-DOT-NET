@@ -75,12 +75,12 @@ namespace MyDocAppointment.BusinessLayer.Entities
         {
             if(appointment == null)
             {
-                return Result.Failure("Appoinment should not be null");
+                return Result.Failure("Appointment should not be null");
             }
 
             if(appointment.StartTime < DateTime.Now)
             {
-                return Result.Failure("Appioinment should be in the furure");
+                return Result.Failure("Appointment should be in the future");
             }
 
             if (appointment.StartTime > appointment.EndTime)
@@ -93,7 +93,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
                 if (appointment.StartTime <= existentAppointment.EndTime && appointment.StartTime >= existentAppointment.StartTime ||
                     appointment.EndTime >= existentAppointment.StartTime && appointment.EndTime <= existentAppointment.EndTime)
                 {
-                    return Result.Failure("A new appoinments shooul not intersect with a fixed appointment");
+                    return Result.Failure("A new appointment should not intersect with a fixed appointment");
                 }
             }
 
@@ -115,9 +115,13 @@ namespace MyDocAppointment.BusinessLayer.Entities
             return Result.Success();
         }
 
-        public void UpdateDoctor(Doctor doctor)
+        public Result UpdateDoctor(Doctor doctor)
         {
-            FirstName= doctor.FirstName;
+            if (doctor == null)
+            {
+                return Result.Failure("Doctor should not be null");
+            }
+            FirstName = doctor.FirstName;
             LastName= doctor.LastName;
             Specialization= doctor.Specialization;
             Email= doctor.Email;
@@ -127,6 +131,8 @@ namespace MyDocAppointment.BusinessLayer.Entities
             Location=doctor.Location;
             Grade= doctor.Grade;
             Reviews= doctor.Reviews;
+
+            return Result.Success();
         }
     }
 }

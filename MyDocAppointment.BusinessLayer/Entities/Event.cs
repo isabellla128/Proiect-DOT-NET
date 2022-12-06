@@ -23,7 +23,10 @@ namespace MyDocAppointment.BusinessLayer.Entities
             return !string.IsNullOrWhiteSpace(Name);
         }
 
-        public bool IsStartDateValid() => DateTime.Now > StartDate;
+        public bool IsStartDateValid()
+        {
+            return StartDate > DateTime.Now;
+        }
 
         public Result AddScheduleToEvent(Schedule schedule)
         {

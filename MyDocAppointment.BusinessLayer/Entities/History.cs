@@ -23,7 +23,10 @@ namespace MyDocAppointment.BusinessLayer.Entities
 
         public Guid PatientId { get; private set; }
 
-        public bool IsStartDateValid() => DateTime.Now < StartDate;
+        public bool IsStartDateValid()
+        {
+            return DateTime.Now < StartDate;
+        }
 
         public Result AddPatientToHistory(Patient patient)
         {
