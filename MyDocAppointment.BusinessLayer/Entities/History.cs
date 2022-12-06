@@ -9,6 +9,8 @@ namespace MyDocAppointment.BusinessLayer.Entities
             Id = Guid.NewGuid();
             StartDate = startDate;
             EndDate = endDate;
+            MedicationDosageHistories = new List<MedicationDosageHistory>();
+
         }
 
         public Guid Id { get; private set; }
@@ -23,19 +25,32 @@ namespace MyDocAppointment.BusinessLayer.Entities
 
         public bool IsStartDateValid() => DateTime.Now < StartDate;
 
-        public void AddPatientToHistory(Patient patient)
+        public Result AddPatientToHistory(Patient patient)
         {
+            if (patient == null)
+            {
+                return Result.Failure("Patient should not be null");
+            }
+
             this.Patient = patient;
             PatientId = patient.Id;
+            return Result.Success();
+            
         }
 
         public Result AddMedications(List<MedicationDosageHistory> medicationsDosages)
         {
+            if (!medicationsDosages.Any())
+            {
+                return Result.Failure("You must add at least a medication dosage");
+            }
+
             medicationsDosages.ForEach(m =>
             {
                 m.RegisterMedicationInfoToHistory(this);
                 MedicationDosageHistories.Add(m);
             });
+
             return Result.Success();
         }
 

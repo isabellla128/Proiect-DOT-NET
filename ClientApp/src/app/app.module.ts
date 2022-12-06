@@ -14,16 +14,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { HomeComponent } from './home/home.component';
 import { MedicCardComponent } from './medic-card/medic-card.component';
 import { DrugCardComponent } from './drug-card/drug-card.component';
 import { MedicsComponent } from './medics/medics.component';
 import { MedicationsComponent } from './medications/medications.component';
-import { AddMedicationFormComponent } from './medications/add-medication-form/add-medication-form.component';
+import { MedicationFormComponent } from './medications/medication-form/medication-form.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MedicFormComponent } from './medics/medic-form/medic-form.component';
+import { MedicPageComponent } from './medics/medic-page/medic-page.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +40,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     DrugCardComponent,
     MedicsComponent,
     MedicationsComponent,
-    AddMedicationFormComponent,
+    MedicationFormComponent,
+    MedicFormComponent,
+    MedicPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +60,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatMenuModule,
+    MatExpansionModule,
     ReactiveFormsModule,
   ],
   providers: [],

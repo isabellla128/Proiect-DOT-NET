@@ -1,7 +1,7 @@
-<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="medicationForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="shipping-card">
     <mat-card-header>
-      <mat-card-title>Add a medication</mat-card-title>
+      <mat-card-title>{{ title }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
@@ -16,7 +16,7 @@
           <mat-form-field class="full-width">
             <input matInput placeholder="Capacity" formControlName="capacity" />
             <mat-error
-              *ngIf="addressForm.controls['capacity'].hasError('required')"
+              *ngIf="medicationForm.controls['capacity'].hasError('required')"
             >
               Capacity is <strong>required</strong>
             </mat-error>
@@ -26,7 +26,7 @@
           <mat-form-field class="full-width">
             <input matInput placeholder="Unit" formControlName="unit" />
             <mat-error
-              *ngIf="addressForm.controls['unit'].hasError('required')"
+              *ngIf="medicationForm.controls['unit'].hasError('required')"
             >
               Unit is <strong>required</strong>
             </mat-error>
@@ -42,7 +42,7 @@
               formControlName="stock"
             ></textarea>
             <mat-error
-              *ngIf="addressForm.controls['stock'].hasError('required')"
+              *ngIf="medicationForm.controls['stock'].hasError('required')"
             >
               Stock is <strong>required</strong>
             </mat-error>
@@ -54,7 +54,7 @@
           <mat-form-field class="full-width">
             <input matInput placeholder="Price" formControlName="price" />
             <mat-error
-              *ngIf="addressForm.controls['price'].hasError('required')"
+              *ngIf="medicationForm.controls['price'].hasError('required')"
             >
               Price is <strong>required</strong>
             </mat-error>

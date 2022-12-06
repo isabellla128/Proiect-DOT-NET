@@ -1,4 +1,6 @@
-﻿namespace MyDocAppointment.BusinessLayer.Entities
+﻿using ShelterManagement.Business.Helpers;
+
+namespace MyDocAppointment.BusinessLayer.Entities
 {
     public class Event
     {
@@ -18,15 +20,21 @@
 
         public bool ValidateName()
         {
-            return string.IsNullOrWhiteSpace(Name);
+            return !string.IsNullOrWhiteSpace(Name);
         }
 
         public bool IsStartDateValid() => DateTime.Now > StartDate;
 
-        public void AddScheduleToEvent(Schedule schedule)
+        public Result AddScheduleToEvent(Schedule schedule)
         {
+            if (schedule == null)
+            {
+                return Result.Failure("Schedule should not be null");
+            }
+
             this.Schedule = schedule;
             ScheduleId = schedule.Id;
+            return Result.Success();
         }
 
     }

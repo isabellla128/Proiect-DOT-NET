@@ -57,7 +57,11 @@ namespace MyDocAppointment.API.Features.Histories
             {
                 return BadRequest("Patient with given id not found");
             }
-            history.AddPatientToHistory(patient);
+            var result = history.AddPatientToHistory(patient);
+            if(result.IsFailure) 
+            {
+                return BadRequest(result.Error);
+            }
 
             historyRepository.Add(history);
             historyRepository.SaveChanges();
