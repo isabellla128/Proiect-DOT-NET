@@ -2,6 +2,7 @@
 using MyDocAppointment.API.Features.Events;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
+using MyDocAppointment.BusinessLayer.Repositories.Interfaces;
 
 namespace MyDocAppointment.API.Features.Schedules
 {
@@ -9,10 +10,10 @@ namespace MyDocAppointment.API.Features.Schedules
     [ApiController]
     public class SchedulesController : ControllerBase
     {
-        private readonly IRepository<Schedule> scheduleRepository;
-        private readonly IRepository<Event> eventRepository;
+        private readonly IScheduleRepository scheduleRepository;
+        private readonly IEventRepositrory eventRepository;
 
-        public SchedulesController(IRepository<Schedule> scheduleRepository, IRepository<Event> eventRepository)
+        public SchedulesController(IScheduleRepository scheduleRepository, IEventRepositrory eventRepository)
         {
             this.scheduleRepository = scheduleRepository;
             this.eventRepository = eventRepository;

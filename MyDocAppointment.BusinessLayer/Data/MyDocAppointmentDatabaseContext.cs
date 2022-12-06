@@ -3,7 +3,7 @@ using MyDocAppointment.BusinessLayer.Entities;
 
 namespace MyDocAppointment.BusinessLayer.Data
 {
-    public class MyDocAppointmentDatabaseContext : DbContext
+    public class MyDocAppointmentDatabaseContext : DbContext, IDatabaseContext
     {
 
         //public MyDocAppointmentDatabaseContext(DbContextOptions<TestsDatabaseContext> options) : base(options) 
@@ -30,9 +30,15 @@ namespace MyDocAppointment.BusinessLayer.Data
 
         public DbSet<Event> Events => Set<Event>();
         public DbSet<MedicationDosagePrescription> MedicationDosagePrescriptions => Set<MedicationDosagePrescription>();
-        public DbSet<MedicationDosageHistory> MedicationDosageHistories  => Set<MedicationDosageHistory>();
+        public DbSet<MedicationDosageHistory> MedicationDosageHistories => Set<MedicationDosageHistory>();
 
-        //public DbSet<Schedule> Schedules => Set<Schedule>();
+        public void Save()
+        {
+            SaveChanges();
+        }
+
+        public DbSet<Schedule> Schedules => Set<Schedule>();
+        public DbSet<History> Histories => Set<History>();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

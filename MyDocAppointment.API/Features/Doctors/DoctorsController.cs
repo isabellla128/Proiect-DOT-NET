@@ -2,6 +2,7 @@
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
+using MyDocAppointment.BusinessLayer.Repositories.Interfaces;
 
 namespace MyDocAppointment.API.Features.Doctors
 {
@@ -9,11 +10,11 @@ namespace MyDocAppointment.API.Features.Doctors
     [ApiController]
     public class DoctorsController : ControllerBase
     {
-        private readonly IRepository<Doctor> doctorRepository;
-        private readonly IRepository<Appointment> appointmentRepository;
-        private readonly IRepository<Patient> patientRepositroy;
+        private readonly IDoctorRepository doctorRepository;
+        private readonly IAppointmentRepository appointmentRepository;
+        private readonly IPatientRepository patientRepositroy;
 
-        public DoctorsController(IRepository<Doctor> doctorRepository, IRepository<Appointment> appointmentRepository, IRepository<Patient> patientRepositroy)
+        public DoctorsController(IDoctorRepository doctorRepository, IAppointmentRepository appointmentRepository, IPatientRepository patientRepositroy)
         {
             this.doctorRepository = doctorRepository;
             this.appointmentRepository = appointmentRepository;

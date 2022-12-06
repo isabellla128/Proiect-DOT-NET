@@ -3,7 +3,7 @@ using MyDocAppointment.BusinessLayer.Entities;
 
 namespace MyDocAppointment.BusinessLayer.Data
 {
-    public class TestsDatabaseContext : DbContext
+    public class TestsDatabaseContext : DbContext , IDatabaseContext
     {
         public TestsDatabaseContext(DbContextOptions<TestsDatabaseContext> options) : base(options) 
         {
@@ -27,9 +27,14 @@ namespace MyDocAppointment.BusinessLayer.Data
         public DbSet<MedicationDosagePrescription> MedicationDosagePrescriptions => Set<MedicationDosagePrescription>();
         public DbSet<MedicationDosageHistory> MedicationDosageHistories => Set<MedicationDosageHistory>();
 
-        //public DbSet<Schedule> Schedules => Set<Schedule>();
+        public DbSet<Schedule> Schedules => Set<Schedule>();
+        public DbSet<History> Histories => Set<History>();
 
-       
+        public void Save()
+        {
+            SaveChanges();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //set null hospitalId on doctor when delete hospital
