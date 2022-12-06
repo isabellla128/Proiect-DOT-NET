@@ -16,6 +16,9 @@ namespace MyDocAppointment.API.Tests
         private const string ApiPatientsURL = "v1/api/Patients";
         private const string ApiMedicationsURL = "v1/api/Medications";
 
+        public PrescriptionsControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
+        {
+        }
 
         [Fact]
         public async void When_CreatedPrescription_Then_ShouldReturnPrescriptionInTheGetRequest()

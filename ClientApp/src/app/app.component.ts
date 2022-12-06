@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { DoctorService } from 'src/shared/services/doctor.service';
+import { MedicationService } from 'src/shared/services/medication.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'MyDocAppointment';
+
+  constructor(
+    private doctorService: DoctorService,
+    private medicationService: MedicationService
+  ) {
+    this.doctorService.getAll();
+    this.medicationService.getAll();
+  }
 }

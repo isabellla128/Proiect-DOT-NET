@@ -1,6 +1,10 @@
+using Microsoft.EntityFrameworkCore.Migrations;
 using MyDocAppointment.BusinessLayer.Data;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
+using MyDocAppointment.BusinessLayer.Repositories.Interfaces;
+using MyDocDoctor.BusinessLayer.Repositories;
+using MyDocEvent.BusinessLayer.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,20 +17,39 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddControllers().AddNewtonsoftJson(x => { x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; });
 
-builder.Services.AddScoped<MyDocAppointmentDatabaseContext>();
+builder.Services.AddScoped<IDatabaseContext, MyDocAppointmentDatabaseContext>();
 
-builder.Services.AddScoped<IRepository<Doctor>, DoctorRepository>();
-builder.Services.AddScoped<IRepository<Hospital>, HospitalRepository>();
-builder.Services.AddScoped<IRepository<Patient>, PatientRepository>();
-builder.Services.AddScoped<IRepository<History>, HistoryRepository>();
-builder.Services.AddScoped<IRepository<Medication>, MedicationRepositrory>();
-builder.Services.AddScoped<IRepository<Prescription>, PrescriptionRepository>();
-builder.Services.AddScoped<IRepository<Appointment>, AppointmentRepository>();
-builder.Services.AddScoped<IRepository<Event>, EventRepositrory>();
-builder.Services.AddScoped<IRepository<Schedule>, ScheduleRepository>();
-builder.Services.AddScoped<IRepository<MedicationDosageHistory>, MedicationDosageHistoryRepository>();
-builder.Services.AddScoped<IRepository<MedicationDosagePrescription>, MedicationDosagePrescriptionRepository>();
+builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
+builder.Services.AddScoped<IHospitalRepository, HospitalRepository>();
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<IHistoryRepository1, HistoryRepository1>();
+builder.Services.AddScoped<IMedicationRepositrory, MedicationRepositrory>();
+builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<IEventRepositrory, EventRepositrory>();
+builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+builder.Services.AddScoped<IMedicationDosageHistoryRepository, MedicationDosageHistoryRepository>();
+builder.Services.AddScoped<IMedicationDosagePrescriptionRepository, MedicationDosagePrescriptionRepository>();
 
+// Create open SqliteConnection so EF won't automatically close it.
+//builder.Services.AddSingleton<DbConnection>(container =>
+//{
+//    var connection = new SqliteConnection("DataSource=:memory:");
+//    connection.Open();
+
+//    return connection;
+//});
+
+//builder.Services.AddDbContext<TestsDatabaseContext>((container, options) =>
+//{
+//    var connection = container.GetRequiredService<DbConnection>();
+//    options.UseSqlite(connection);
+//});
+
+
+//var conn = new SqliteConnection("Filename=:memory:");
+//conn.Open();
+//builder.Services.AddDbContext<TestsDatabaseContext>(c => c.UseSqlite(conn));
 
 
 var config = new ConfigurationBuilder();
@@ -51,3 +74,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

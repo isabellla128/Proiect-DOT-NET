@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
+using MyDocAppointment.BusinessLayer.Repositories.Interfaces;
 
 namespace MyDocAppointment.API.Features.Events
 {
@@ -8,10 +9,10 @@ namespace MyDocAppointment.API.Features.Events
     [ApiController]
     public class EventsController : ControllerBase
     {
-        private readonly IRepository<Event> eventRepository;
-        private readonly IRepository<Schedule> scheduleRepository;
+        private readonly IEventRepositrory eventRepository;
+        private readonly IScheduleRepository scheduleRepository;
 
-        public EventsController(IRepository<Event> eventRepository, IRepository<Schedule> scheduleRepository)
+        public EventsController(IEventRepositrory eventRepository, IScheduleRepository scheduleRepository)
         {
             this.eventRepository = eventRepository;
             this.scheduleRepository = scheduleRepository;
