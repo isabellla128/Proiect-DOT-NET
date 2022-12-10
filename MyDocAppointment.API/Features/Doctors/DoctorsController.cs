@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
@@ -12,35 +13,23 @@ namespace MyDocAppointment.API.Features.Doctors
         private readonly IRepository<Doctor> doctorRepository;
         private readonly IRepository<Appointment> appointmentRepository;
         private readonly IRepository<Patient> patientRepositroy;
+        private readonly IMapper mapper;
 
-        public DoctorsController(IRepository<Doctor> doctorRepository, IRepository<Appointment> appointmentRepository, IRepository<Patient> patientRepositroy)
+        public DoctorsController(IRepository<Doctor> doctorRepository, IRepository<Appointment> appointmentRepository, IRepository<Patient> patientRepositroy, IMapper mapper)
         {
             this.doctorRepository = doctorRepository;
             this.appointmentRepository = appointmentRepository;
             this.patientRepositroy = patientRepositroy;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult GetAllDoctors()
         {
-            var doctors = doctorRepository.GetAll().Select
-            (
-                d => new DoctorDto
-                {
-                    Id = d.Id,
-                    FirstName = d.FirstName,
-                    LastName = d.LastName,
-                    Specialization = d.Specialization,
-                    Email = d.Email,
-                    Phone = d.Phone,
-                    Title = d.Title,
-                    Profession = d.Profession,
-                    Location= d.Location,
-                    Grade= d.Grade,
-                    Reviews= d.Reviews,
-                }
-             );
-            return Ok(doctors);
+            var doctors = doctorRepository.GetAll();
+            var doctorsDto = mapper.Map<IEnumerable<DoctorDto>>(doctors);
+
+            return Ok(doctorsDto);
         }
 
         [HttpGet("{doctorId:Guid}/appointments")]

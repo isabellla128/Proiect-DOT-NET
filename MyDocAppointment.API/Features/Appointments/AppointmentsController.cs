@@ -29,22 +29,8 @@ namespace MyDocAppointment.API.Features.Appointments
 
             var appointments = appointmentRepository.GetAll();
             var appointmentsDto=mapper.Map<IEnumerable<AppointmentDto>>(appointments);
-
             
-            /*var appointments = appointmentRepository.GetAll().Select
-            (
-                a => new AppointmentDto
-                {
-                    Id = a.Id,
-                    DoctorId = a.DoctorId,
-                    PatientId = a.PatientId,
-                    StartTime = a.StartTime,
-                    EndTime = a.EndTime
-                }
-             );
-            */
-            
-            return Ok(appointments);
+            return Ok(appointmentsDto);
             
         }
 

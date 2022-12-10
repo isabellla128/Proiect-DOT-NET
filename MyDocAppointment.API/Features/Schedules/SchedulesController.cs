@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.API.Features.Events;
+using MyDocAppointment.API.Features.Prescriptions;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
@@ -11,26 +13,22 @@ namespace MyDocAppointment.API.Features.Schedules
     {
         private readonly IRepository<Schedule> scheduleRepository;
         private readonly IRepository<Event> eventRepository;
+        private readonly IMapper mapper;
 
-        public SchedulesController(IRepository<Schedule> scheduleRepository, IRepository<Event> eventRepository)
+        public SchedulesController(IRepository<Schedule> scheduleRepository, IRepository<Event> eventRepository, IMapper mapper)
         {
             this.scheduleRepository = scheduleRepository;
             this.eventRepository = eventRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult GetAllSchedules()
         {
-            var schedules = scheduleRepository.GetAll().Select(
-                    s => new ScheduleDto
-                    {
-                        Id = s.Id,
-                        StartDate = s.StartDate,
-                        EndDate = s.EndDate
-                    }
-                );
+            var schedules = scheduleRepository.GetAll();
+            var schedulesDto = mapper.Map<IEnumerable<ScheduleDto>>(schedules);
 
-            return Ok(schedules);
+            return Ok(schedulesDto);
         }
 
         [HttpGet("{scheduleId:Guid}/events")]

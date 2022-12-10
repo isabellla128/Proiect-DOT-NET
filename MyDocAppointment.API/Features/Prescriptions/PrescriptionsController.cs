@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using MyDocAppointment.API.Features.Medications;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
@@ -13,28 +15,24 @@ namespace MyDocAppointment.API.Features.Prescriptions
         public readonly IRepository<Patient> patientRepository;
         private readonly IRepository<MedicationDosagePrescription> medicationDosageRepository;
         private readonly IRepository<Medication> medicationRepository;
+        private readonly IMapper mapper;
 
-        public PrescriptionsController(IRepository<Prescription> prescriptionRepository, IRepository<Doctor> doctorRepository, IRepository<Patient> patientRepository, IRepository<Medication> medicationRepository, IRepository<MedicationDosagePrescription> medicationDosageRepository)
+        public PrescriptionsController(IRepository<Prescription> prescriptionRepository, IRepository<Doctor> doctorRepository, IRepository<Patient> patientRepository, IRepository<Medication> medicationRepository, IRepository<MedicationDosagePrescription> medicationDosageRepository, IMapper mapper)
         {
             this.prescriptionRepository=prescriptionRepository;
             this.doctorRepository=doctorRepository;
             this.patientRepository = patientRepository;
             this.medicationDosageRepository = medicationDosageRepository;
             this.medicationRepository = medicationRepository;
+            this.mapper=mapper;
         }
 
         [HttpGet]
         public IActionResult GetAllPrescriptions()
         {
-            var prescriptions = prescriptionRepository.GetAll().Select(
-                p => new PrescriptionDto
-                {
-                    Id = p.Id,
-                    DoctorId = p.DoctorId,
-                    PacientId = p.PatientId,
-                    MedicationDosagePrescriptions = p.MedicationDosagePrescriptions
-                });
-            return Ok(prescriptions);
+            var prescriptions = prescriptionRepository.GetAll();
+            var prescriptionsDto = mapper.Map<IEnumerable<PrescriptionDto>>(prescriptions);
+            return Ok(prescriptionsDto);
         }
 
         [HttpGet("{prescriptionId:Guid}/medicationsDosages")]
