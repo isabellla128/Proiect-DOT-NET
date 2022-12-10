@@ -134,5 +134,6 @@ namespace MyDocAppointment.BusinessLayer.Entities
 
             return Result.Success();
         }
+
     }
 }

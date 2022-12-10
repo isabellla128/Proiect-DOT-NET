@@ -85,5 +85,16 @@ namespace MyDocAppointment.API.Features.Medications
 
             return NoContent();
         }
+
+        [HttpPut("{medicationId:Guid}")]
+        public IActionResult UpdateMedication(Guid medicationId, [FromBody] Medication medication)
+        {
+            var medicationToChange = medicationRepository.GetById(medicationId);
+
+            medicationToChange.UpdateMedication(medication);
+
+            medicationRepository.SaveChanges();
+            return Ok(medicationToChange);
+        }
     }
 }
