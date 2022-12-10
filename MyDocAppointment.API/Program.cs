@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MyDocAppointment.API;
 using MyDocAppointment.BusinessLayer.Data;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
@@ -17,6 +18,8 @@ builder.Services.AddCors(options =>
                                                  .AllowAnyMethod();
                       });
 });
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
 // Add services to the container.
 
