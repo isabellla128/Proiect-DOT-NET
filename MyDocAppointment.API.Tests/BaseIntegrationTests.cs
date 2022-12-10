@@ -21,7 +21,7 @@ namespace MyDocAppointment.API.Tests
             using (var scope = Factory.Services.CreateScope())
             {
                 var scopedServices = scope.ServiceProvider;
-                var databaseContext = scopedServices.GetRequiredService<TestsDatabaseContext>();
+                var databaseContext = scopedServices.GetRequiredService<MyDocAppointmentDatabaseContext>();
 
 
                 databaseContext.Hospitals.RemoveRange(databaseContext.Hospitals.ToList());

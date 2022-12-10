@@ -3,19 +3,16 @@ using MyDocAppointment.BusinessLayer.Entities;
 
 namespace MyDocAppointment.BusinessLayer.Data
 {
-    public class MyDocAppointmentDatabaseContext : DbContext, IDatabaseContext
+    public class MyDocAppointmentDatabaseContext : DbContext
     {
 
-        //public MyDocAppointmentDatabaseContext(DbContextOptions<TestsDatabaseContext> options) : base(options) 
-        //{
-        //                this.Database.EnsureCreated();
-
-        //}
-
-        public MyDocAppointmentDatabaseContext()
+        public MyDocAppointmentDatabaseContext(DbContextOptions<MyDocAppointmentDatabaseContext> options) : base(options)
         {
             this.Database.EnsureCreated();
+
         }
+
+
         public DbSet<Hospital> Hospitals => Set<Hospital>();
 
         public DbSet<Appointment> Appointments => Set<Appointment>();
@@ -30,20 +27,14 @@ namespace MyDocAppointment.BusinessLayer.Data
 
         public DbSet<Event> Events => Set<Event>();
         public DbSet<MedicationDosagePrescription> MedicationDosagePrescriptions => Set<MedicationDosagePrescription>();
-        public DbSet<MedicationDosageHistory> MedicationDosageHistories => Set<MedicationDosageHistory>();
+        public DbSet<MedicationDosageHistory> MedicationDosageHistories  => Set<MedicationDosageHistory>();
 
-        public void Save()
-        {
-            SaveChanges();
-        }
+        //public DbSet<Schedule> Schedules => Set<Schedule>();
 
-        public DbSet<Schedule> Schedules => Set<Schedule>();
-        public DbSet<History> Histories => Set<History>();
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Data Source = dbMyDocAppointmentManagement.db");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlite("Data Source = dbMyDocAppointmentManagement.db");
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

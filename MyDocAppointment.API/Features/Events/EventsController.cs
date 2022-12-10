@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
-using MyDocAppointment.BusinessLayer.Repositories.Interfaces;
 
 namespace MyDocAppointment.API.Features.Events
 {
@@ -9,10 +8,10 @@ namespace MyDocAppointment.API.Features.Events
     [ApiController]
     public class EventsController : ControllerBase
     {
-        private readonly IEventRepositrory eventRepository;
-        private readonly IScheduleRepository scheduleRepository;
+        private readonly IRepository<Event> eventRepository;
+        private readonly IRepository<Schedule> scheduleRepository;
 
-        public EventsController(IEventRepositrory eventRepository, IScheduleRepository scheduleRepository)
+        public EventsController(IRepository<Event> eventRepository, IRepository<Schedule> scheduleRepository)
         {
             this.eventRepository = eventRepository;
             this.scheduleRepository = scheduleRepository;
@@ -46,11 +45,7 @@ namespace MyDocAppointment.API.Features.Events
                 return BadRequest("Schedule with given id not found");
             }
 
-            var resultAddSchedule = e.AddScheduleToEvent(schedule);
-            if (resultAddSchedule.IsFailure) 
-            {
-                return BadRequest(resultAddSchedule.Error);
-            }
+            e.AddScheduleToEvent(schedule);
             eventRepository.Add(e);
             eventRepository.SaveChanges();
             return Created(nameof(GetAllEvents), e);

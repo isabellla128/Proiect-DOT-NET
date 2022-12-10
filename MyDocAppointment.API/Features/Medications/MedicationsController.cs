@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
-using MyDocAppointment.BusinessLayer.Repositories.Interfaces;
 
 namespace MyDocAppointment.API.Features.Medications
 {
@@ -9,9 +8,9 @@ namespace MyDocAppointment.API.Features.Medications
     [ApiController]
     public class MedicationsController : ControllerBase
     {
-        private readonly IMedicationRepositrory medicationRepository;
+        private readonly IRepository<Medication> medicationRepository;
 
-        public MedicationsController(IMedicationRepositrory medicationRepository)
+        public MedicationsController(IRepository<Medication> medicationRepository)
         {
             this.medicationRepository = medicationRepository;
         }
@@ -78,7 +77,7 @@ namespace MyDocAppointment.API.Features.Medications
             {
                 medicationRepository.Delete(medicationId);
             }
-            catch (ArgumentException e)
+            catch(ArgumentException e)
             {
                 return NotFound(e.Message);
             }
@@ -86,18 +85,5 @@ namespace MyDocAppointment.API.Features.Medications
 
             return NoContent();
         }
-
-        [HttpPut("{medicationId:Guid}")]
-        public IActionResult UpdateMedication(Guid medicationId, [FromBody]Medication medication)
-        {
-            var medicationToChange = medicationRepository.GetById(medicationId);
-
-            medicationToChange.UpdateMedication(medication);
-
-            medicationRepository.SaveChanges();
-            return Ok(medicationToChange);
-        }
-
-        
     }
 }

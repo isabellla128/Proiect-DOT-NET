@@ -2,8 +2,6 @@
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
-using MyDocAppointment.BusinessLayer.Repositories.Interfaces;
-using System.Numerics;
 
 namespace MyDocAppointment.API.Features.Doctors
 {
@@ -11,11 +9,11 @@ namespace MyDocAppointment.API.Features.Doctors
     [ApiController]
     public class DoctorsController : ControllerBase
     {
-        private readonly IDoctorRepository doctorRepository;
-        private readonly IAppointmentRepository appointmentRepository;
-        private readonly IPatientRepository patientRepositroy;
+        private readonly IRepository<Doctor> doctorRepository;
+        private readonly IRepository<Appointment> appointmentRepository;
+        private readonly IRepository<Patient> patientRepositroy;
 
-        public DoctorsController(IDoctorRepository doctorRepository, IAppointmentRepository appointmentRepository, IPatientRepository patientRepositroy)
+        public DoctorsController(IRepository<Doctor> doctorRepository, IRepository<Appointment> appointmentRepository, IRepository<Patient> patientRepositroy)
         {
             this.doctorRepository = doctorRepository;
             this.appointmentRepository = appointmentRepository;
@@ -130,17 +128,5 @@ namespace MyDocAppointment.API.Features.Doctors
         {
             return Ok();
         }
-
-        [HttpPut("{doctorId:Guid}")]
-        public IActionResult UpdateDoctor(Guid doctorId, [FromBody] Doctor doctor)
-        {
-            var doctorToChange = doctorRepository.GetById(doctorId);
-
-            doctorToChange.UpdateDoctor(doctor);
-
-            doctorRepository.SaveChanges();
-            return Ok(doctorToChange);
-        }
-
     }
 }
