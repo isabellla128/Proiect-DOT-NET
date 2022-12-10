@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using MyDocAppointment.BusinessLayer.Data;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
@@ -13,7 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddControllers().AddNewtonsoftJson(x => { x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; });
 
-builder.Services.AddDbContext<MyDocAppointmentDatabaseContext>();
+builder.Services.AddDbContext<MyDocAppointmentDatabaseContext>(options => options.UseSqlite("Data Source = dbMyDocAppointmentManagement.db"));
 
 builder.Services.AddScoped<IRepository<Doctor>, DoctorRepository>();
 builder.Services.AddScoped<IRepository<Hospital>, HospitalRepository>();
