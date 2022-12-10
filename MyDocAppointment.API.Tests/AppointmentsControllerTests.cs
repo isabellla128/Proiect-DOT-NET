@@ -10,18 +10,12 @@ using Xunit;
 
 namespace MyDocAppointment.API.Tests
 {
-    public class AppointmentsControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>
+    public class AppointmentsControllerTests : BaseIntegrationTests<AppointmentsController>
     {
         private const string ApiURL = "v1/api/Appointments";
 
-        public HttpClient HttpClient { get; private set; }
-
-        public CustomWebApplicationFactory<Program> Factory { get; private set; }
-
-        public AppointmentsControllerTests(CustomWebApplicationFactory<Program> factory)
+        public AppointmentsControllerTests(CustomWebApplicationFactory<Program> factory) : base(factory)
         {
-            Factory = factory;
-            HttpClient = factory.CreateClient();
         }
 
         [Fact]
@@ -29,15 +23,6 @@ namespace MyDocAppointment.API.Tests
         {
 
             // Arrange
-            #region
-            var scope = (Factory.Services.GetRequiredService<IServiceScopeFactory>()).CreateScope();
-
-            var databasaeContext = scope.ServiceProvider.GetRequiredService<TestsDatabaseContext>();
-
-            databasaeContext.Doctors.RemoveRange(databasaeContext.Doctors.ToList());
-            databasaeContext.Patients.RemoveRange(databasaeContext.Patients.ToList());
-            databasaeContext.Appointments.RemoveRange(databasaeContext.Appointments.ToList());
-            #endregion
 
             CreatePatientDto patientDto = CreatePatientSUT();
             CreateDoctorDto doctorDto = CreateDoctorSUT();
