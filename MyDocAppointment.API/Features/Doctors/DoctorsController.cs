@@ -123,10 +123,17 @@ namespace MyDocAppointment.API.Features.Doctors
             return NoContent();
         }
 
-        [HttpPatch("{personId:Guid}")]
-        public IActionResult changeHospital()
+
+        [HttpPut("{doctorId:Guid}")]
+        public IActionResult UpdateDoctor(Guid doctorId, [FromBody] Doctor doctor)
         {
-            return Ok();
+            var doctorToChange = doctorRepository.GetById(doctorId);
+
+            doctorToChange.UpdateDoctor(doctor);
+
+            doctorRepository.SaveChanges();
+            return Ok(doctorToChange);
         }
+
     }
 }
