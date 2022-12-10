@@ -26,7 +26,7 @@ namespace MyDocAppointment.API.Features.Prescriptions
         [HttpGet]
         public IActionResult GetAllPrescriptions()
         {
-            var prescriptions = prescriptionRepository.GetAll().Select(
+            var prescriptions = prescriptionRepository.GetAll().Result.Select(
                 p => new PrescriptionDto
                 {
                     Id = p.Id,
@@ -40,7 +40,7 @@ namespace MyDocAppointment.API.Features.Prescriptions
         [HttpGet("{prescriptionId:Guid}/medicationsDosages")]
         public IActionResult GetAllMedicationsFromPrescription(Guid prescriptionId)
         {
-            var prescription = prescriptionRepository.GetById(prescriptionId);
+            var prescription = prescriptionRepository.GetById(prescriptionId).Result;
             if (prescription == null)
             {
                 return NotFound("Prescription with given id not found");
@@ -57,8 +57,8 @@ namespace MyDocAppointment.API.Features.Prescriptions
 
             var prescription = new Prescription();
             
-            var doctor = doctorRepository.GetById(prescriptionDto.DoctorId);
-            var patient = patientRepository.GetById(prescriptionDto.PacientId);
+            var doctor = doctorRepository.GetById(prescriptionDto.DoctorId).Result;
+            var patient = patientRepository.GetById(prescriptionDto.PacientId).Result;
 
             if(doctor == null)
             {
@@ -74,7 +74,7 @@ namespace MyDocAppointment.API.Features.Prescriptions
             var medicationDosages = new List<MedicationDosagePrescription>();
             foreach (var medicationDosageDto in prescriptionDto.MedicationDosages)
             {
-                var medication = medicationRepository.GetById(medicationDosageDto.MedicationId);
+                var medication = medicationRepository.GetById(medicationDosageDto.MedicationId).Result;
 
                 if(medication == null)
                 {

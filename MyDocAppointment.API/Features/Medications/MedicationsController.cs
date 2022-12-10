@@ -18,7 +18,7 @@ namespace MyDocAppointment.API.Features.Medications
         [HttpGet]
         public IActionResult GetAllMedications()
         {
-            var medications = medicationRepository.GetAll().Select
+            var medications = medicationRepository.GetAll().Result.Select
             (
                 m => new MedicationDto
                 {
@@ -36,7 +36,7 @@ namespace MyDocAppointment.API.Features.Medications
         [HttpGet("{medicationId:Guid}")]
         public IActionResult GetMedicationById(Guid medicationId)
         {
-            var medication = medicationRepository.GetById(medicationId);
+            var medication = medicationRepository.GetById(medicationId).Result;
             var m = new MedicationDto
             {
                 Id = medication.Id,
@@ -89,7 +89,7 @@ namespace MyDocAppointment.API.Features.Medications
         [HttpPut("{medicationId:Guid}")]
         public IActionResult UpdateMedication(Guid medicationId, [FromBody] Medication medication)
         {
-            var medicationToChange = medicationRepository.GetById(medicationId);
+            var medicationToChange = medicationRepository.GetById(medicationId).Result;
 
             medicationToChange.UpdateMedication(medication);
 

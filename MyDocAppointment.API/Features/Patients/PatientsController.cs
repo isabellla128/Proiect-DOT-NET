@@ -21,7 +21,7 @@ namespace MyDocAppointment.API.Features.Patients
         [HttpGet]
         public IActionResult GetAllPatients()
         {
-            var patients = patientRepository.GetAll().Select(
+            var patients = patientRepository.GetAll().Result.Select(
                 p => new PatientDto
                 {
                     Id = p.Id,
@@ -44,7 +44,7 @@ namespace MyDocAppointment.API.Features.Patients
 
             var appointments = patient.Appointments;
             return Ok(appointments);*/
-            var appointments = appointmentRepository.Find(appointment => appointment.PatientId == patientId);
+            var appointments = appointmentRepository.Find(appointment => appointment.PatientId == patientId).Result;
             return Ok(appointments.Select(
                 a => new AppointmentsDtoFromPatient
                 {

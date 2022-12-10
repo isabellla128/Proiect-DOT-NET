@@ -20,7 +20,7 @@ namespace MyDocAppointment.API.Features.Events
         [HttpGet]
         public IActionResult GetAllEvents()
         {
-            var events = eventRepository.GetAll().Select
+            var events = eventRepository.GetAll().Result.Select
             (
                 e => new EventDto
                 {
@@ -39,7 +39,7 @@ namespace MyDocAppointment.API.Features.Events
         {
             var e = new Event(eventDto.Name, eventDto.StartDate, eventDto.EndDate);
 
-            var schedule = scheduleRepository.GetById(scheduleId);
+            var schedule = scheduleRepository.GetById(scheduleId).Result;
             if(schedule == null)
             {
                 return BadRequest("Schedule with given id not found");

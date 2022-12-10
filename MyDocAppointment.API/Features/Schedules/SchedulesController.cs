@@ -21,7 +21,7 @@ namespace MyDocAppointment.API.Features.Schedules
         [HttpGet]
         public IActionResult GetAllSchedules()
         {
-            var schedules = scheduleRepository.GetAll().Select(
+            var schedules = scheduleRepository.GetAll().Result.Select(
                     s => new ScheduleDto
                     {
                         Id = s.Id,
@@ -36,7 +36,7 @@ namespace MyDocAppointment.API.Features.Schedules
         [HttpGet("{scheduleId:Guid}/events")]
         public IActionResult GetAllEventsFromSchedule(Guid scheduleId)
         {
-            var events = eventRepository.Find(e => e.ScheduleId == scheduleId);
+            var events = eventRepository.Find(e => e.ScheduleId == scheduleId).Result;
             return Ok(events.Select(
                 e => new EventDto
                 {
@@ -61,7 +61,7 @@ namespace MyDocAppointment.API.Features.Schedules
         public IActionResult RegisterNewEventsToSchedule(Guid scheduleId, [FromBody] List<CreateEventDto> eventsDtos)
         {
 
-            var schedule = scheduleRepository.GetById(scheduleId);
+            var schedule = scheduleRepository.GetById(scheduleId).Result;
             if (schedule == null)
             {
                 return NotFound("Schedule with given id not found");

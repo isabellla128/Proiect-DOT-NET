@@ -21,7 +21,7 @@ namespace MyDocAppointment.API.Features.Hospitals
         [HttpGet]
         public IActionResult GetAllHospitals()
         {
-            var hospitals = hospitalRepository.GetAll().Select(
+            var hospitals = hospitalRepository.GetAll().Result.Select(
                     h => new HospitalDto
                     {
                         Id = h.Id,
@@ -37,7 +37,7 @@ namespace MyDocAppointment.API.Features.Hospitals
         [HttpGet("{hospitalId:Guid}/doctors")]
         public IActionResult GetAllDoctorsFromHostpital(Guid hospitalId)
         {
-            var doctors = doctorRepository.Find(doctor => doctor.HospitalId == hospitalId);
+            var doctors = doctorRepository.Find(doctor => doctor.HospitalId == hospitalId).Result;
             return Ok(doctors.Select(
                 d => new DoctorDto
                 {
@@ -63,7 +63,7 @@ namespace MyDocAppointment.API.Features.Hospitals
         public IActionResult RegisterNewDoctorsToHospital(Guid hospitalId, [FromBody] List<CreateDoctorDto> doctorsDtos)
         {
 
-            var hospital = hospitalRepository.GetById(hospitalId);
+            var hospital = hospitalRepository.GetById(hospitalId).Result;
             if (hospital == null)
             {
                 return NotFound("Hospital with given id not found");

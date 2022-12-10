@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using MyDocAppointment.BusinessLayer.Data;
 
 namespace MyDocAppointment.BusinessLayer.Repositories
@@ -12,16 +13,16 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             this.context = context;
         }
 
-        public virtual T Add(T entity)
+        public virtual async Task<T> Add(T entity)
         {
-            context.Add(entity);
+            await context.AddAsync(entity);
             //context.SaveChanges();
             return entity;
         }
 
-        public virtual T Delete(Guid id)
+        public virtual async Task<T?> Delete(Guid id)
         {
-            var entity = context.Find<T>(id);
+            var entity = await context.FindAsync<T>(id);
             if (entity == null)
             {
                 throw new ArgumentException($"There is no {typeof(T).Name} with id = {id}");
@@ -31,29 +32,29 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             return entity;
         }
 
-        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+        public virtual async Task<IReadOnlyCollection<T>> Find(Expression<Func<T, bool>> predicate)
         {
-            return context.Set<T>()
+            return await context.Set<T>()
                 .AsQueryable()
-                .Where(predicate).ToList();
+                .Where(predicate).ToListAsync();
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public virtual async Task<IReadOnlyCollection<T>> GetAll()
         {
-            return context.Set<T>().ToList();
+            return await context.Set<T>().ToListAsync();
         }
 
-        public virtual T? GetById(Guid id)
+        public virtual async Task<T?> GetById(Guid id)
         {
-            return context.Find<T>(id);
+            return await context.FindAsync<T>(id);
         }
 
-        public void SaveChanges()
+        public async void SaveChanges()
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public virtual T Update(T entity)
+        public virtual async Task<T> Update(T entity)
         {
             context.Update(entity);
             //context.SaveChanges();

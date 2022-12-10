@@ -23,7 +23,7 @@ namespace MyDocAppointment.API.Features.Doctors
         [HttpGet]
         public IActionResult GetAllDoctors()
         {
-            var doctors = doctorRepository.GetAll().Select
+            var doctors = doctorRepository.GetAll().Result.Select
             (
                 d => new DoctorDto
                 {
@@ -46,7 +46,7 @@ namespace MyDocAppointment.API.Features.Doctors
         [HttpGet("{doctorId:Guid}/appointments")]
         public IActionResult GetAppointmentsFromDoctor(Guid doctorId)
         {
-            var appointments = appointmentRepository.Find(appointment => appointment.DoctorId == doctorId);
+            var appointments = appointmentRepository.Find(appointment => appointment.DoctorId == doctorId).Result;
             return Ok(appointments.Select(
                 a => new AppointmentsDtoFromDoctor
                 {
@@ -70,7 +70,7 @@ namespace MyDocAppointment.API.Features.Doctors
         [HttpPost("{doctorId:Guid}/appointments")]
         public IActionResult RegisterNewDoctorsToPatient(Guid doctorId, [FromBody] List<AppointmentsDtoFromDoctor> appointmentDtos)
         {
-            var doctor = doctorRepository.GetById(doctorId);
+            var doctor = doctorRepository.GetById(doctorId).Result;
             if (doctor == null)
             {
                 return NotFound("Doctor with given id not found");
@@ -80,7 +80,7 @@ namespace MyDocAppointment.API.Features.Doctors
             {
                 var appointment = new Appointment(a.StartTime, a.EndTime);
 
-                var patient = patientRepositroy.GetById(a.PatientId);
+                var patient = patientRepositroy.GetById(a.PatientId).Result;
                 if(patient == null)
                 {
                     return BadRequest($"Patient with given id ({a.PatientId}) not found");
@@ -127,7 +127,7 @@ namespace MyDocAppointment.API.Features.Doctors
         [HttpPut("{doctorId:Guid}")]
         public IActionResult UpdateDoctor(Guid doctorId, [FromBody] Doctor doctor)
         {
-            var doctorToChange = doctorRepository.GetById(doctorId);
+            var doctorToChange = doctorRepository.GetById(doctorId).Result;
 
             doctorToChange.UpdateDoctor(doctor);
 

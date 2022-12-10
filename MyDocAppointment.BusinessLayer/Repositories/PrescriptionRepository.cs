@@ -10,9 +10,9 @@ namespace MyDocAppointment.BusinessLayer.Repositories
         {
         }
 
-        public override IEnumerable<Prescription> GetAll()
+        public override async Task<IReadOnlyCollection<Prescription>> GetAll()
         {
-            return context.Prescriptions.Include(p => p.MedicationDosagePrescriptions).ToList();
+            return await context.Prescriptions.Include(p => p.MedicationDosagePrescriptions).ToListAsync();
 
         }
     }

@@ -22,7 +22,7 @@ namespace MyDocAppointment.API.Features.Histories
         [HttpGet]
         public IActionResult GetAllHistories()
         {
-            var histories = historyRepository.GetAll().Select
+            var histories = historyRepository.GetAll().Result.Select
             (
                 h => new HistoryDto
                 {
@@ -37,7 +37,7 @@ namespace MyDocAppointment.API.Features.Histories
         [HttpGet("{historyId:Guid}/medications")]
         public IActionResult GetMedicationsFromHistory(Guid historyId)
         {
-            var history = historyRepository.GetById(historyId);
+            var history = historyRepository.GetById(historyId).Result;
             if (history == null)
             {
                 return NotFound("History with given id not found");
@@ -50,7 +50,7 @@ namespace MyDocAppointment.API.Features.Histories
         {
             var history = new History(historyDto.StartDate, historyDto.EndDate);
 
-            var patient = patientRepository.GetById(patientId);
+            var patient = patientRepository.GetById(patientId).Result;
             if(patient == null)
             {
                 return BadRequest("Patient with given id not found");

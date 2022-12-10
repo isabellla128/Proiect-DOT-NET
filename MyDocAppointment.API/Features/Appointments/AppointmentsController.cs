@@ -23,7 +23,7 @@ namespace MyDocAppointment.API.Features.Appointments
         [HttpGet]
         public IActionResult GetAllAppointments()
         {
-            var appointments = appointmentRepository.GetAll().Select
+            var appointments = appointmentRepository.GetAll().Result.Select
             (
                 a => new AppointmentDto
                 {
@@ -42,8 +42,8 @@ namespace MyDocAppointment.API.Features.Appointments
         public IActionResult Create([FromBody] CreateAppointmentDto appointmentDto)
         {
             var appointment = new Appointment(appointmentDto.StartTime, appointmentDto.EndTime);
-            var doctor = doctorRepository.GetById(appointmentDto.DoctorId);
-            var patient = patientRepository.GetById(appointmentDto.PatientId);
+            var doctor = doctorRepository.GetById(appointmentDto.DoctorId).Result;
+            var patient = patientRepository.GetById(appointmentDto.PatientId).Result;
             if(doctor == null)
             {
                 return BadRequest("Doctor with given id not found");
