@@ -17,7 +17,7 @@ namespace MyDocAppointment.API.Tests
             {
                 var dbContextDescriptor = services.SingleOrDefault(
                     d => d.ServiceType ==
-                        typeof(DbContextOptions<TestsDatabaseContext>));
+                        typeof(DbContextOptions<MyDocAppointmentDatabaseContext>));
 
                 services.Remove(dbContextDescriptor);
 
@@ -26,12 +26,6 @@ namespace MyDocAppointment.API.Tests
                         typeof(DbConnection));
 
                 services.Remove(dbConnectionDescriptor);
-
-                var principalDb = services.SingleOrDefault(d =>
-                    d.ServiceType == typeof(MyDocAppointmentDatabaseContext));
-                services.Remove(principalDb);
-
-                services.AddScoped<IDatabaseContext, TestsDatabaseContext>();
 
                 // Create open SqliteConnection so EF won't automatically close it.
                 services.AddSingleton<DbConnection>(container =>
@@ -42,7 +36,7 @@ namespace MyDocAppointment.API.Tests
                     return connection;
                 });
 
-                services.AddDbContext<TestsDatabaseContext>((container, options) =>
+                services.AddDbContext<MyDocAppointmentDatabaseContext>((container, options) =>
                 {
                     var connection = container.GetRequiredService<DbConnection>();
                     options.UseSqlite(connection);
