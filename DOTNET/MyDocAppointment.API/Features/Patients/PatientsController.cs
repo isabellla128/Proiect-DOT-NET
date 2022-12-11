@@ -34,15 +34,14 @@ namespace MyDocAppointment.API.Features.Patients
         [HttpGet("{patientId:Guid}/appointments")]
         public IActionResult GetAllDoctorsFromPatient(Guid patientId)
         {
-            /*var patient = patientRepository.GetById(patientId);
-            if (patient == null)
+
+            var appointments = appointmentRepository.Find(appointment => appointment.PatientId == patientId).Result;
+
+            if(!appointments.Any())
             {
-                return NotFound("Patient with given id not found");
+                return NotFound("There is no patient with given id");
             }
 
-            var appointments = patient.Appointments;
-            return Ok(appointments);*/
-            var appointments = appointmentRepository.Find(appointment => appointment.PatientId == patientId).Result;
             return Ok(appointments.Select(
                 a => new AppointmentsDtoFromPatient
                 {

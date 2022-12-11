@@ -11,15 +11,13 @@ namespace MyDocAppointment.API.Features.Histories
     {
         private readonly IRepository<History> historyRepository;
         private readonly IRepository<Patient> patientRepository;
-        private readonly IRepository<Medication> medicationRepository;
         private readonly IMapper mapper;
 
 
-        public HistoriesController(IRepository<History> historyRepository, IRepository<Patient> patientRepository, IRepository<Medication> medicationRepository, IMapper mapper)
+        public HistoriesController(IRepository<History> historyRepository, IRepository<Patient> patientRepository, IMapper mapper)
         {
             this.historyRepository = historyRepository;
             this.patientRepository = patientRepository;
-            this.medicationRepository = medicationRepository;
             this.mapper = mapper;
         }
 

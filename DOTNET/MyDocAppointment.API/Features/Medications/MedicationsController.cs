@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.API.Features.Histories;
 using MyDocAppointment.BusinessLayer.Entities;
@@ -31,6 +32,12 @@ namespace MyDocAppointment.API.Features.Medications
         public IActionResult GetMedicationById(Guid medicationId)
         {
             var medication = medicationRepository.GetById(medicationId).Result;
+
+            if (medication == null)
+            {
+                return NotFound("There is no medication with given id");
+            }
+
             var m = new MedicationDto
             {
                 Id = medication.Id,
@@ -43,16 +50,6 @@ namespace MyDocAppointment.API.Features.Medications
             return Ok(m);
         }
 
-         //[HttpGet("{medicationId:Guid}/histories")]
-         //public IActionResult GetHistoryById(Guid medicationId)
-         //{
-         //   var medication = medicationRepository.GetById(medicationId);
-         //   if (medication == null)
-         //   {
-         //       return NotFound("Medication with given id not found");
-         //   }
-         //   return Ok(medication.Histories);
-         //}
 
         [HttpPost]
         public IActionResult Create([FromBody] CreateMedicationDto medicationDto)
@@ -84,6 +81,11 @@ namespace MyDocAppointment.API.Features.Medications
         public IActionResult UpdateMedication(Guid medicationId, [FromBody] Medication medication)
         {
             var medicationToChange = medicationRepository.GetById(medicationId).Result;
+
+            if(medicationToChange==null)
+            {
+                return NotFound("There is no medication with the given id");
+            }
 
             medicationToChange.UpdateMedication(medication);
 
