@@ -49,7 +49,11 @@
         <mat-icon>delete_forever</mat-icon>
       </button>
       <div class="row">
-        <a class="overlap-link" mat-button routerLink="/home">
+        <a
+          class="overlap-link"
+          mat-button
+          [routerLink]="'/medics/' + doctor.id + '/appointment'"
+        >
           <mat-icon class="overlap-icon">event</mat-icon>
           <p>Appointment</p></a
         >

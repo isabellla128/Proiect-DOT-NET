@@ -31,10 +31,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MedicFormComponent } from './medics/medic-form/medic-form.component';
 import { MedicPageComponent } from './medics/medic-page/medic-page.component';
 import { MedicLocationComponent } from './medics/medic-location/medic-location.component';
-import { MedicScheduleComponent } from './medics/medic-schedule/medic-schedule.component';
+import { MedicAppointmentComponent } from './medics/medic-appointment/medic-appointment.component';
 import { MedicProfileComponent } from './medics/medic-profile/medic-profile.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { FlatpickrModule } from 'angularx-flatpickr';
 
 @NgModule({
   declarations: [
@@ -49,7 +54,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     MedicFormComponent,
     MedicPageComponent,
     MedicLocationComponent,
-    MedicScheduleComponent,
+    MedicAppointmentComponent,
     MedicProfileComponent,
   ],
   imports: [
@@ -74,11 +79,15 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     MatExpansionModule,
     ReactiveFormsModule,
     BrowserModule,
-    AppRoutingModule,
+    CommonModule,
+    FormsModule,
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
