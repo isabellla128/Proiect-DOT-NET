@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MyDocAppointment.BusinessLayer.Data;
 using System.Data.Common;
 
-namespace MyDocAppointment.API.Tests
+namespace MyDocAppointment.Tests.ApiTests
 {
     public class CustomWebApplicationFactory<TProgram>
         : WebApplicationFactory<TProgram> where TProgram : class

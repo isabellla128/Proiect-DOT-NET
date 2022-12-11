@@ -4,7 +4,7 @@ using System.Net.Http.Json;
 using FluentAssertions;
 using MyDocAppointment.API.Features.Events;
 
-namespace MyDocAppointment.API.Tests
+namespace MyDocAppointment.Tests.ApiTests
 {
     public class SchedulesControllerTests : BaseIntegrationTests<SchedulesController>
     {

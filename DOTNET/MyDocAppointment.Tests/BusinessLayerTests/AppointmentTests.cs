@@ -1,7 +1,7 @@
-﻿using FluentAssertions;
-using MyDocAppointment.BusinessLayer.Entities;
+﻿using MyDocAppointment.BusinessLayer.Entities;
+using FluentAssertions;
 
-namespace MyDocAppointment.BusinessLayer.Tests
+namespace MyDocAppointment.Tests.BusinessLayerTests
 {
     public class AppointmentTests
     {

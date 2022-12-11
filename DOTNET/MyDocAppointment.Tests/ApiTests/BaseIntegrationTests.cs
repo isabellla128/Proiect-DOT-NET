@@ -2,7 +2,7 @@
 using MyDocAppointment.BusinessLayer.Data;
 using Xunit;
 
-namespace MyDocAppointment.API.Tests
+namespace MyDocAppointment.Tests.ApiTests
 {
     public class BaseIntegrationTests<T> : IClassFixture<CustomWebApplicationFactory<Program>> where T : class
     {

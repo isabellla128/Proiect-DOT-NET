@@ -3,7 +3,7 @@ using MyDocAppointment.API.Features.Medications;
 using System.Net.Http.Json;
 using Xunit;
 
-namespace MyDocAppointment.API.Tests
+namespace MyDocAppointment.Tests.ApiTests
 {
     public class MedicationsControllerTests : BaseIntegrationTests<MedicationsController>
     {

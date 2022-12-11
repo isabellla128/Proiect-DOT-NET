@@ -5,7 +5,7 @@ using MyDocAppointment.API.Features.Patients;
 using System.Net.Http.Json;
 using Xunit;
 
-namespace MyDocAppointment.API.Tests
+namespace MyDocAppointment.Tests.ApiTests
 {
     public class AppointmentsControllerTests : BaseIntegrationTests<AppointmentsController>
     {
