@@ -1,10 +1,7 @@
 ﻿using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.API.Features.Patients;
-using MyDocAppointment.BusinessLayer.Data;
-using System.Data.Common;
 using System.Net.Http.Json;
 using Xunit;
 

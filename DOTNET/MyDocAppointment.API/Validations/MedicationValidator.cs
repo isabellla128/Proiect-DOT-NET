@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using MyDocAppointment.API.Features.Medications;
-using MyDocAppointment.API.Features.Patients;
 
 namespace MyDocAppointment.API.Validations
 {
