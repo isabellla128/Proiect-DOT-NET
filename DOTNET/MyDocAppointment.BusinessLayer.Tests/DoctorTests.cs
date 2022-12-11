@@ -20,6 +20,33 @@ namespace MyDocAppointment.BusinessLayer.Tests
         }
 
         [Fact]
+        public void Given_AddReview_IsCalled_When_review_isLessThan0_Then_Should_Return_Failure()
+        {
+            //arrange
+            var doctor = new Doctor("Jackie", "Chan", "all", "na", "na", "Dr.", "Medic specialist", "Iasi", 9.10, 117);
+
+            //act
+            var result = doctor.AddReview(-1);
+
+            //assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("The review grade should be between 1 and 10");
+        }
+        
+        [Fact]
+        public void Given_AddReview_IsCalled_When_review_isBetween0And10_Then_Should_Return_Success()
+        {
+            //arrange
+            var doctor = new Doctor("Jackie", "Chan", "all", "na", "na", "Dr.", "Medic specialist", "Iasi", 9.10, 117);
+
+            //act
+            var result = doctor.AddReview(10);
+
+            //assert
+            result.IsSuccess.Should().BeTrue();
+        }
+
+        [Fact]
         public void Given_AddHospitalToDoctor_IsCalled_When_Hospital_isNull_Then_Should_Return_Failure()
         {
             //arrange
