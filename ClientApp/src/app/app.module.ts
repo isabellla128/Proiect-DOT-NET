@@ -33,6 +33,8 @@ import { MedicPageComponent } from './medics/medic-page/medic-page.component';
 import { MedicLocationComponent } from './medics/medic-location/medic-location.component';
 import { MedicScheduleComponent } from './medics/medic-schedule/medic-schedule.component';
 import { MedicProfileComponent } from './medics/medic-profile/medic-profile.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
@@ -71,6 +73,12 @@ import { MedicProfileComponent } from './medics/medic-profile/medic-profile.comp
     MatMenuModule,
     MatExpansionModule,
     ReactiveFormsModule,
+    BrowserModule,
+    AppRoutingModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
