@@ -57,6 +57,19 @@ namespace MyDocAppointment.BusinessLayer.Entities
             }
         }
 
+        public Result AddReview(int review)
+        {
+            if (review < 1 || review >10)
+            {
+                return Result.Failure("The review grade should be between 1 and 10");
+            }
+
+            Grade = (Grade * Reviews + review) / (Reviews + 1);
+            Reviews += 1;
+
+            return Result.Success();
+        }
+
         public Result AddHospitalToDoctor(Hospital hospital)
         {
             if (hospital == null)

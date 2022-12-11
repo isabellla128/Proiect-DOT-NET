@@ -56,6 +56,25 @@ namespace MyDocAppointment.API.Features.Doctors
             return Created(nameof(GetAllDoctors), doctor);
         }
 
+        [HttpPost("{doctorId:Guid}/reviews")]
+        public IActionResult AddReviewToDoctor(Guid doctorId, [FromBody] CreateReviewDto reviewDto)
+        {
+            var doctor = doctorRepository.GetById(doctorId).Result;
+            if (doctor == null)
+            {
+                return NotFound("Doctor with given id not found");
+            }
+
+            var result = doctor.AddReview(reviewDto.review);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
+            doctorRepository.SaveChanges();
+            return Ok(doctor);
+        }
+
+
         [HttpPost("{doctorId:Guid}/appointments")]
         public IActionResult RegisterNewDoctorsToPatient(Guid doctorId, [FromBody] List<AppointmentsDtoFromDoctor> appointmentDtos)
         {
