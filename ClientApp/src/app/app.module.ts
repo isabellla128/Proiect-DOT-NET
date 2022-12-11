@@ -30,6 +30,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MedicFormComponent } from './medics/medic-form/medic-form.component';
 import { MedicPageComponent } from './medics/medic-page/medic-page.component';
+import { MedicLocationComponent } from './medics/medic-location/medic-location.component';
+import { MedicScheduleComponent } from './medics/medic-schedule/medic-schedule.component';
+import { MedicProfileComponent } from './medics/medic-profile/medic-profile.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +46,9 @@ import { MedicPageComponent } from './medics/medic-page/medic-page.component';
     MedicationFormComponent,
     MedicFormComponent,
     MedicPageComponent,
+    MedicLocationComponent,
+    MedicScheduleComponent,
+    MedicProfileComponent,
   ],
   imports: [
     BrowserModule,

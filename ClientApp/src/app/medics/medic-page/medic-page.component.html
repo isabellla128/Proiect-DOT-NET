@@ -18,31 +18,27 @@
   </div>
   <div class="main-container">
     <div class="menu">
-      <a mat-button [routerLink]="'/medics/' + doctor.id" color="primary"
+      <a
+        mat-button
+        [routerLink]="'/medics/' + doctor.id + '/profile'"
+        color="primary"
         >Medic Profile</a
       >
-      <a mat-button routerLink="/schedule" color="primary">Schedule</a>
-      <a mat-button routerLink="/location" color="primary">Location</a>
+      <a
+        mat-button
+        [routerLink]="'/medics/' + doctor.id + '/schedule'"
+        color="primary"
+        >Schedule</a
+      >
+      <a
+        mat-button
+        [routerLink]="'/medics/' + doctor.id + '/locations'"
+        color="primary"
+        >Location</a
+      >
     </div>
     <div>
-      <div class="description">
-        <h2>{{ doctor.profession }}</h2>
-        <h3>Specialization:</h3>
-        <p>{{ doctor.specialization }}</p>
-        <h3>Location:</h3>
-        <div class="chip">{{ doctor.location }}</div>
-      </div>
-      <div class="appointment primary-background">
-        <p>
-          Appointments at {{ doctor.title }} {{ doctor.firstName }}
-          {{ doctor.lastName }}
-        </p>
-
-        <div class="buttons-section">
-          <button mat-flat-button>See Schedule</button>
-          <button mat-flat-button>Appointment</button>
-        </div>
-      </div>
+      <router-outlet></router-outlet>
     </div>
     <div>
       <mat-card class="demo-inline-calendar-card">
