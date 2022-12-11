@@ -87,5 +87,33 @@ namespace MyDocAppointment.BusinessLayer.Tests
             //assert
             result.IsSuccess.Should().BeTrue();
         }
+        [Fact]
+        public void Given_AddPrescription_IsCalled_When_Prescription_isNull_Then_Should_Return_Failure()
+        {
+            //arrange
+            var patient = new Patient("First", "Last", "firstlast@yahoo.ro", "0711111111");
+
+            //act
+            var result = patient.AddPrescription(null);
+
+            //assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Should().Be("Prescription should not be null");
+        }
+        
+        [Fact]
+        public void Given_AddPrescription_IsCalled_When_Prescription_isNotNull_Then_Should_Return_Success()
+        {
+            //arrange
+            var patient = new Patient("First", "Last", "firstlast@yahoo.ro", "0711111111");
+            var prescription = new Prescription();
+
+            //act
+            var result = patient.AddPrescription(prescription);
+
+            //assert
+            result.IsSuccess.Should().BeTrue();
+
+        }
     }
 }
