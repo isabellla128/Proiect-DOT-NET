@@ -28,7 +28,7 @@ namespace MyDocAppointment.API.Features.Appointments
         {
 
             var appointments = appointmentRepository.GetAll().Result;
-            var appointmentsDto=mapper.Map<IEnumeIrable<AppointmentDto>>(appointments);
+            var appointmentsDto=mapper.Map<IEnumerable<AppointmentDto>>(appointments);
             
             return Ok(appointmentsDto);
             
