@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.API.Features.Appointments;
+using MyDocAppointment.API.Features.Medications;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
@@ -12,25 +14,21 @@ namespace MyDocAppointment.API.Features.Patients
         public readonly IRepository<Patient> patientRepository;
         public readonly IRepository<Doctor> doctorRepository;
         public readonly IRepository<Appointment> appointmentRepository;
-        public PatientsController(IRepository<Patient> patientRepository, IRepository<Doctor> doctorRepository, IRepository<Appointment> appointmentRepository)
+        private readonly IMapper mapper;
+
+        public PatientsController(IRepository<Patient> patientRepository, IRepository<Doctor> doctorRepository, IRepository<Appointment> appointmentRepository, IMapper mapper)
         {
             this.patientRepository = patientRepository;
             this.doctorRepository = doctorRepository;
             this.appointmentRepository = appointmentRepository;
+            this.mapper = mapper;
         }
         [HttpGet]
         public IActionResult GetAllPatients()
         {
-            var patients = patientRepository.GetAll().Result.Select(
-                p => new PatientDto
-                {
-                    Id = p.Id,
-                    FirstName = p.FirstName,
-                    LastName = p.LastName,
-                    Email = p.Email,
-                    Phone = p.Phone
-                }) ;
-            return Ok(patients);
+            var patients = patientRepository.GetAll().Result;
+            var patientsDto = mapper.Map<IEnumerable<PatientDto>>(patients);
+            return Ok(patientsDto);
         }
 
         [HttpGet("{patientId:Guid}/appointments")]

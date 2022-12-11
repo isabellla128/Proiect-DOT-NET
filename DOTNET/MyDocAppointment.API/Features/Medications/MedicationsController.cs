@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using MyDocAppointment.API.Features.Histories;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
@@ -9,28 +11,20 @@ namespace MyDocAppointment.API.Features.Medications
     public class MedicationsController : ControllerBase
     {
         private readonly IRepository<Medication> medicationRepository;
+        private readonly IMapper mapper;
 
-        public MedicationsController(IRepository<Medication> medicationRepository)
+        public MedicationsController(IRepository<Medication> medicationRepository, IMapper mapper)
         {
             this.medicationRepository = medicationRepository;
+            this.mapper = mapper;
         }
       
         [HttpGet]
         public IActionResult GetAllMedications()
         {
-            var medications = medicationRepository.GetAll().Result.Select
-            (
-                m => new MedicationDto
-                {
-                    Id = m.Id,
-                    Name = m.Name,
-                    Stock = m.Stock,
-                    Unit = m.Unit,
-                    Capacity = m.Capacity,
-                    Price = m.Price,
-                }
-             );
-            return Ok(medications);
+            var medications = medicationRepository.GetAll().Result;
+            var medicationsDto = mapper.Map<IEnumerable<MedicationDto>>(medications);
+            return Ok(medicationsDto);
         }
 
         [HttpGet("{medicationId:Guid}")]
