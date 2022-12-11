@@ -3,10 +3,11 @@ on:
   push:
     branches:
       - main
+      - developer
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  build:
+  dotnet-project:
     name: Build and analyze
     runs-on: windows-latest
     steps:
@@ -27,6 +28,7 @@ jobs:
         id: cache-sonar-scanner
         uses: actions/cache@v1
         with:
+          projectBaseDir: DOTNET
           path: .\.sonar\scanner
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
@@ -42,6 +44,22 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"isabellla128_Proiect-DOT-NET" /o:"isabellla128" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"isabellla128_Proiect-DOT-NET" /o:"isabellla128" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.xml /d:sonar.exclusions=**\Migrations\*
+          dotnet tool install --global coverlet.console 
+          dotnet build --no-incremental DOTNET/MyDocAppointment.sln
+          coverlet .\DOTNET\MyDocAppointment.API.Tests\bin\Debug\net7.0\MyDocAppointment.API.Tests.dll --target "dotnet"  --targetargs "test DOTNET/MyDocAppointment.sln --no-build" -f=opencover -o="coverage.xml"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+  angular-project:
+    name: Angular
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: ClientApp
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  
