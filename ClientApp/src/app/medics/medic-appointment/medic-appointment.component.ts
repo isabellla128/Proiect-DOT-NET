@@ -16,7 +16,6 @@ import {
   addHours,
 } from 'date-fns';
 import { Subject } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -26,6 +25,8 @@ import {
 import { EventColor } from 'calendar-utils';
 import { DoctorService } from 'src/shared/services/doctor.service';
 import { ActivatedRoute } from '@angular/router';
+import { PatientService } from 'src/shared/services/patient.service';
+import { Appointment } from 'src/models/appointment';
 
 const colors: Record<string, EventColor> = {
   yellow: {
@@ -41,24 +42,11 @@ const colors: Record<string, EventColor> = {
 @Component({
   selector: 'app-medic-appointment',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    `
-      h3 {
-        margin: 0 0 10px;
-      }
-
-      pre {
-        background-color: #f5f5f5;
-        padding: 15px;
-      }
-    `,
-  ],
-  templateUrl: 'medic-appointment.component.html',
+  styleUrls: ['./medic-appointment.component.css'],
+  templateUrl: './medic-appointment.component.html',
 })
 export class MedicAppointmentComponent implements OnInit {
-  @ViewChild('modalContent', { static: true })
   doctorId: string = '';
-  modalContent!: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
 
@@ -66,6 +54,14 @@ export class MedicAppointmentComponent implements OnInit {
 
   viewDate: Date = new Date();
   currentDate: Date = new Date();
+
+  appointmentModel: Appointment = {
+    id: '',
+    doctorId: '',
+    patientId: '',
+    startTime: '',
+    endTime: '',
+  };
 
   modalData:
     | {
@@ -99,33 +95,40 @@ export class MedicAppointmentComponent implements OnInit {
   activeDayIsOpen: boolean = true;
 
   constructor(
-    private modal: NgbModal,
     private doctorService: DoctorService,
+    private patientService: PatientService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.route.parent?.params.subscribe(
-      (params) => (this.doctorId = params['id'])
-    );
+    this.appointmentModel.patientId = this.patientService.patientId;
+    this.route.parent?.params.subscribe((params) => {
+      (this.doctorId = params['id']),
+        (this.appointmentModel.doctorId = params['id']);
+    });
     this.doctorService.getAppointments(this.doctorId).subscribe({
       next: (appointments) => {
         console.log(appointments);
 
-        appointments.forEach((appointment, index) => {
-          this.events.push({
-            start: new Date(appointment.startTime),
-            end: new Date(appointment.endTime),
-            title: 'Appointment' + index,
-            color: { ...colors['purple'] },
-            actions: this.actions,
-            resizable: {
-              beforeStart: true,
-              afterEnd: true,
-            },
-            draggable: true,
+        appointments
+          .filter(
+            (appointment) =>
+              appointment.patientId === this.patientService.patientId
+          )
+          .forEach((appointment, index) => {
+            this.events.push({
+              start: new Date(appointment.startTime),
+              end: new Date(appointment.endTime),
+              title: 'Appointment' + index,
+              color: { ...colors['purple'] },
+              actions: this.actions,
+              resizable: {
+                beforeStart: true,
+                afterEnd: true,
+              },
+              draggable: true,
+            });
           });
-        });
       },
       error: (error) => console.log(error),
     });
@@ -163,18 +166,15 @@ export class MedicAppointmentComponent implements OnInit {
     this.handleEvent('Dropped or resized', event);
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
-  }
+  handleEvent(action: string, event: CalendarEvent): void {}
 
-  addEvent(): void {
+  addAppointment(): void {
     this.events = [
       ...this.events,
       {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
+        title: 'Appointment',
+        start: new Date(this.appointmentModel.startTime),
+        end: new Date(this.appointmentModel.endTime),
         color: colors['purple'],
         draggable: true,
         resizable: {
@@ -183,6 +183,7 @@ export class MedicAppointmentComponent implements OnInit {
         },
       },
     ];
+    this.doctorService.postAppointment(this.doctorId, this.appointmentModel);
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {

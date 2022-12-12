@@ -9,7 +9,7 @@ import AbstractRestService from '../abstracts/AbstractRestService';
   providedIn: 'root',
 })
 export class PatientService extends AbstractRestService<Patient> {
-  patientId: String = '5049a678-9524-48df-99f2-cecf3e105b83';
+  patientId: string = '27f2c8a3-03dd-4584-b7b2-0376799e92e7';
   constructor(private http: HttpClient) {
     super(http, BASE_API_URL + 'Patients', new BehaviorSubject<Patient[]>([]));
   }

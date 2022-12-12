@@ -19,4 +19,20 @@ export class DoctorService extends AbstractRestService<Doctor> {
       this._url + '/' + doctorId + '/appointments'
     );
   }
+
+  postAppointment(doctorId: string, appointment: Appointment) {
+    this.http
+      .post<Appointment>(this._url + '/' + doctorId + '/appointments', [
+        {
+          startTime: appointment.startTime,
+          endTime: appointment.endTime,
+          patientId: appointment.patientId,
+        },
+      ])
+      .subscribe({
+        next: (result) => console.log(result),
+        error: (error) => console.log(error),
+        complete: () => {},
+      });
+  }
 }
