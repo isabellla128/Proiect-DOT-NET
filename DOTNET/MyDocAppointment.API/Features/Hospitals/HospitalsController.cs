@@ -71,7 +71,21 @@ namespace MyDocAppointment.API.Features.Hospitals
 
             foreach (var d in doctorsDtos)
             {
-                if (!(d.FirstName != null && d.LastName != null && d.Specialization != null && d.Email != null && d.Phone != null && d.Title != null && d.Profession != null && d.Location != null))
+                if (d.FirstName == null)
+                    return BadRequest("The fields in doctor must not be null");
+                if (d.LastName == null)
+                    return BadRequest("The fields in doctor must not be null");
+                if (d.Specialization == null)
+                    return BadRequest("The fields in doctor must not be null");
+                if (d.Email == null)
+                    return BadRequest("The fields in doctor must not be null");
+                if (d.Phone == null)
+                    return BadRequest("The fields in doctor must not be null");
+                if (d.Title == null)
+                    return BadRequest("The fields in doctor must not be null");
+                if (d.Profession == null)
+                    return BadRequest("The fields in doctor must not be null");
+                if (d.Location == null)
                     return BadRequest("The fields in doctor must not be null");
             }
 
