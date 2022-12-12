@@ -7,6 +7,6 @@ namespace MyDocAppointment.API.Features.Prescriptions
         public Guid DoctorId { get; set; }
         public Guid PacientId { get; set; }
 
-        public List<MedicationDosagePrescriptionDto>  MedicationDosages { get; set; }
+        public List<MedicationDosagePrescriptionDto>?  MedicationDosages { get; set; }
     }
 }

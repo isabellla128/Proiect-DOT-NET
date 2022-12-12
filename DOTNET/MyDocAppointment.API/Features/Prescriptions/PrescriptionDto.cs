@@ -8,6 +8,6 @@ namespace MyDocAppointment.API.Features.Prescriptions
         public Guid DoctorId { get; set; }
         public Guid PacientId { get; set; }
 
-        public ICollection<MedicationDosagePrescription> MedicationDosagePrescriptions { get; set; }
+        public ICollection<MedicationDosagePrescription>? MedicationDosagePrescriptions { get; set; }
     }
 }

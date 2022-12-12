@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
@@ -11,27 +12,22 @@ namespace MyDocAppointment.API.Features.Hospitals
     {
         private readonly IRepository<Hospital> hospitalRepository;
         private readonly IRepository<Doctor> doctorRepository;
+        private readonly IMapper mapper;
 
-        public HospitalsController(IRepository<Hospital> hospitalRepository, IRepository<Doctor> doctorRepository)
+        public HospitalsController(IRepository<Hospital> hospitalRepository, IRepository<Doctor> doctorRepository,IMapper mapper)
         {
             this.hospitalRepository = hospitalRepository;
             this.doctorRepository = doctorRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult GetAllHospitals()
         {
-            var hospitals = hospitalRepository.GetAll().Result.Select(
-                    h => new HospitalDto
-                    {
-                        Id = h.Id,
-                        Name = h.Name,
-                        Address = h.Address,
-                        Phone = h.Phone
-                    }
-                );
+            var hospitals = hospitalRepository.GetAll().Result;
+            var hospitalsDto= mapper.Map<IEnumerable<HospitalDto>>(hospitals);
 
-            return Ok(hospitals);
+            return Ok(hospitalsDto);
         }
 
         [HttpGet("{hospitalId:Guid}/doctors")]
@@ -53,10 +49,14 @@ namespace MyDocAppointment.API.Features.Hospitals
         [HttpPost]
         public IActionResult CreateHospital([FromBody] CreateHospitalDto hospitalDto)
         {
-            var hospital = new Hospital(hospitalDto.Name, hospitalDto.Address, hospitalDto.Phone);
-            hospitalRepository.Add(hospital);
-            hospitalRepository.SaveChanges();
-            return Created(nameof(GetAllHospitals), hospital);
+            if (hospitalDto.Name != null && hospitalDto.Address != null && hospitalDto.Phone != null)
+            {
+                var hospital = new Hospital(hospitalDto.Name, hospitalDto.Address, hospitalDto.Phone);
+                hospitalRepository.Add(hospital);
+                hospitalRepository.SaveChanges();
+                return Created(nameof(GetAllHospitals), hospital);
+            }
+            return BadRequest("The fields in hospital must not be null");
         }
 
         [HttpPost("{hospitalId:Guid}/doctors")]

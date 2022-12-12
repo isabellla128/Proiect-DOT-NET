@@ -24,17 +24,8 @@ namespace MyDocAppointment.BusinessLayer.Data
         public DbSet<Medication> Medications => Set<Medication>();
 
         public DbSet<Prescription> Prescriptions => Set<Prescription>();
-
-        public DbSet<Event> Events => Set<Event>();
         public DbSet<MedicationDosagePrescription> MedicationDosagePrescriptions => Set<MedicationDosagePrescription>();
         public DbSet<MedicationDosageHistory> MedicationDosageHistories  => Set<MedicationDosageHistory>();
-
-        //public DbSet<Schedule> Schedules => Set<Schedule>();
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlite("Data Source = dbMyDocAppointmentManagement.db");
-        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
@@ -9,34 +10,32 @@ namespace MyDocAppointment.API.Features.Medications
     public class MedicationsController : ControllerBase
     {
         private readonly IRepository<Medication> medicationRepository;
+        private readonly IMapper mapper;
 
-        public MedicationsController(IRepository<Medication> medicationRepository)
+        public MedicationsController(IRepository<Medication> medicationRepository, IMapper mapper)
         {
             this.medicationRepository = medicationRepository;
+            this.mapper = mapper;
         }
       
         [HttpGet]
         public IActionResult GetAllMedications()
         {
-            var medications = medicationRepository.GetAll().Result.Select
-            (
-                m => new MedicationDto
-                {
-                    Id = m.Id,
-                    Name = m.Name,
-                    Stock = m.Stock,
-                    Unit = m.Unit,
-                    Capacity = m.Capacity,
-                    Price = m.Price,
-                }
-             );
-            return Ok(medications);
+            var medications = medicationRepository.GetAll().Result;
+            var medicationsDto = mapper.Map<IEnumerable<MedicationDto>>(medications);
+            return Ok(medicationsDto);
         }
 
         [HttpGet("{medicationId:Guid}")]
         public IActionResult GetMedicationById(Guid medicationId)
         {
             var medication = medicationRepository.GetById(medicationId).Result;
+
+            if (medication == null)
+            {
+                return NotFound("There is no medication with given id");
+            }
+
             var m = new MedicationDto
             {
                 Id = medication.Id,
@@ -49,24 +48,18 @@ namespace MyDocAppointment.API.Features.Medications
             return Ok(m);
         }
 
-         //[HttpGet("{medicationId:Guid}/histories")]
-         //public IActionResult GetHistoryById(Guid medicationId)
-         //{
-         //   var medication = medicationRepository.GetById(medicationId);
-         //   if (medication == null)
-         //   {
-         //       return NotFound("Medication with given id not found");
-         //   }
-         //   return Ok(medication.Histories);
-         //}
 
         [HttpPost]
         public IActionResult Create([FromBody] CreateMedicationDto medicationDto)
         {
-            var medication = new Medication(medicationDto.Name, medicationDto.Stock, medicationDto.Unit, medicationDto.Capacity, medicationDto.Price);
-            medicationRepository.Add(medication);
-            medicationRepository.SaveChanges();
-            return Created(nameof(GetAllMedications), medication);
+            if (medicationDto.Name != null && medicationDto.Unit != null)
+            {
+                var medication = new Medication(medicationDto.Name, medicationDto.Stock, medicationDto.Unit, medicationDto.Capacity, medicationDto.Price);
+                medicationRepository.Add(medication);
+                medicationRepository.SaveChanges();
+                return Created(nameof(GetAllMedications), medication);
+            }
+            return BadRequest("The fields in medication must not be null");
         }
 
 
@@ -90,6 +83,11 @@ namespace MyDocAppointment.API.Features.Medications
         public IActionResult UpdateMedication(Guid medicationId, [FromBody] Medication medication)
         {
             var medicationToChange = medicationRepository.GetById(medicationId).Result;
+
+            if(medicationToChange==null)
+            {
+                return NotFound("There is no medication with the given id");
+            }
 
             medicationToChange.UpdateMedication(medication);
 

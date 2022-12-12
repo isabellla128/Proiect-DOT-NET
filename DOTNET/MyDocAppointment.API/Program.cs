@@ -1,7 +1,10 @@
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using MyDocAppointment.API;
 using MyDocAppointment.BusinessLayer.Data;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
+using System.Reflection;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -18,9 +21,12 @@ builder.Services.AddCors(options =>
                       });
 });
 
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(c => c.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -36,35 +42,8 @@ builder.Services.AddScoped<IRepository<History>, HistoryRepository>();
 builder.Services.AddScoped<IRepository<Medication>, MedicationRepositrory>();
 builder.Services.AddScoped<IRepository<Prescription>, PrescriptionRepository>();
 builder.Services.AddScoped<IRepository<Appointment>, AppointmentRepository>();
-builder.Services.AddScoped<IRepository<Event>, EventRepositrory>();
-builder.Services.AddScoped<IRepository<Schedule>, ScheduleRepository>();
 builder.Services.AddScoped<IRepository<MedicationDosageHistory>, MedicationDosageHistoryRepository>();
 builder.Services.AddScoped<IRepository<MedicationDosagePrescription>, MedicationDosagePrescriptionRepository>();
-
-// Create open SqliteConnection so EF won't automatically close it.
-//builder.Services.AddSingleton<DbConnection>(container =>
-//{
-//    var connection = new SqliteConnection("DataSource=:memory:");
-//    connection.Open();
-
-//    return connection;
-//});
-
-//builder.Services.AddDbContext<TestsDatabaseContext>((container, options) =>
-//{
-//    var connection = container.GetRequiredService<DbConnection>();
-//    options.UseSqlite(connection);
-//});
-
-
-//var conn = new SqliteConnection("Filename=:memory:");
-//conn.Open();
-//builder.Services.AddDbContext<TestsDatabaseContext>(c => c.UseSqlite(conn));
-
-
-var config = new ConfigurationBuilder();
-
-
 
 var app = builder.Build();
 

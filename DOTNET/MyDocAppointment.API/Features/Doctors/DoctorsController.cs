@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
+using ShelterManagement.Business.Helpers;
 
 namespace MyDocAppointment.API.Features.Doctors
 {
@@ -12,35 +14,23 @@ namespace MyDocAppointment.API.Features.Doctors
         private readonly IRepository<Doctor> doctorRepository;
         private readonly IRepository<Appointment> appointmentRepository;
         private readonly IRepository<Patient> patientRepositroy;
+        private readonly IMapper mapper;
 
-        public DoctorsController(IRepository<Doctor> doctorRepository, IRepository<Appointment> appointmentRepository, IRepository<Patient> patientRepositroy)
+        public DoctorsController(IRepository<Doctor> doctorRepository, IRepository<Appointment> appointmentRepository, IRepository<Patient> patientRepositroy, IMapper mapper)
         {
             this.doctorRepository = doctorRepository;
             this.appointmentRepository = appointmentRepository;
             this.patientRepositroy = patientRepositroy;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult GetAllDoctors()
         {
-            var doctors = doctorRepository.GetAll().Result.Select
-            (
-                d => new DoctorDto
-                {
-                    Id = d.Id,
-                    FirstName = d.FirstName,
-                    LastName = d.LastName,
-                    Specialization = d.Specialization,
-                    Email = d.Email,
-                    Phone = d.Phone,
-                    Title = d.Title,
-                    Profession = d.Profession,
-                    Location= d.Location,
-                    Grade= d.Grade,
-                    Reviews= d.Reviews,
-                }
-             );
-            return Ok(doctors);
+            var doctors = doctorRepository.GetAll().Result;
+            var doctorsDto = mapper.Map<IEnumerable<DoctorDto>>(doctors);
+
+            return Ok(doctorsDto);
         }
 
         [HttpGet("{doctorId:Guid}/appointments")]
@@ -59,13 +49,36 @@ namespace MyDocAppointment.API.Features.Doctors
         [HttpPost]
         public IActionResult Create([FromBody] CreateDoctorDto doctorDto)
         {
-            var doctor = new Doctor(doctorDto.FirstName, doctorDto.LastName, doctorDto.Specialization,
-                doctorDto.Email, doctorDto.Phone, doctorDto.Title, doctorDto.Profession, doctorDto.Location, doctorDto.Grade,doctorDto.Reviews);
+            if (doctorDto.FirstName != null && doctorDto.LastName != null && doctorDto.Specialization != null && doctorDto.Email != null && doctorDto.Phone != null && doctorDto.Title != null && doctorDto.Profession != null && doctorDto.Location != null)
+            {
+                var doctor = new Doctor(doctorDto.FirstName, doctorDto.LastName, doctorDto.Specialization,
+                doctorDto.Email, doctorDto.Phone, doctorDto.Title, doctorDto.Profession, doctorDto.Location, doctorDto.Grade, doctorDto.Reviews);
 
-            doctorRepository.Add(doctor);
-            doctorRepository.SaveChanges();
-            return Created(nameof(GetAllDoctors), doctor);
+                doctorRepository.Add(doctor);
+                doctorRepository.SaveChanges();
+                return Created(nameof(GetAllDoctors), doctor);
+            }
+            return BadRequest("The fields in doctor must not be null");
         }
+
+        [HttpPost("{doctorId:Guid}/reviews")]
+        public IActionResult AddReviewToDoctor(Guid doctorId, [FromBody] CreateReviewDto reviewDto)
+        {
+            var doctor = doctorRepository.GetById(doctorId).Result;
+            if (doctor == null)
+            {
+                return NotFound("Doctor with given id not found");
+            }
+
+            var result = doctor.AddReview(reviewDto.review);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
+            doctorRepository.SaveChanges();
+            return Ok(doctor);
+        }
+
 
         [HttpPost("{doctorId:Guid}/appointments")]
         public IActionResult RegisterNewDoctorsToPatient(Guid doctorId, [FromBody] List<AppointmentsDtoFromDoctor> appointmentDtos)
@@ -128,6 +141,11 @@ namespace MyDocAppointment.API.Features.Doctors
         public IActionResult UpdateDoctor(Guid doctorId, [FromBody] Doctor doctor)
         {
             var doctorToChange = doctorRepository.GetById(doctorId).Result;
+
+            if (doctorToChange == null)
+            {
+                return NotFound("Doctor with given id not found");
+            }
 
             doctorToChange.UpdateDoctor(doctor);
 

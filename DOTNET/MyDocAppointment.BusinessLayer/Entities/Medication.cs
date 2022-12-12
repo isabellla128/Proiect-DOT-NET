@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Update.Internal;
-using ShelterManagement.Business.Helpers;
+﻿using ShelterManagement.Business.Helpers;
 
 namespace MyDocAppointment.BusinessLayer.Entities
 {
@@ -31,7 +30,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
     
         public ICollection<History> Histories { get; private set; }
 
-        public Result UpdateMedication(Medication medication)
+        public Result UpdateMedication(Medication? medication)
         {
             if (medication == null)
             {

@@ -8,11 +8,11 @@ namespace MyDocAppointment.BusinessLayer.Entities
         {
         }
 
-        public History History { get; private set; }
+        public History? History { get; private set; }
 
         public Guid HistoryId { get; private set; }
 
-        public Result RegisterMedicationInfoToHistory(History history)
+        public Result RegisterMedicationInfoToHistory(History? history)
         {
             if(history == null)
             {

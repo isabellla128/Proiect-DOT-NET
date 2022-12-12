@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
@@ -11,31 +12,25 @@ namespace MyDocAppointment.API.Features.Appointments
         private readonly IRepository<Appointment> appointmentRepository;
         private readonly IRepository<Patient> patientRepository;
         private readonly IRepository<Doctor> doctorRepository;
+        private readonly IMapper mapper;
 
-
-        public AppointmentsController(IRepository<Appointment> appointmentRepository, IRepository<Patient> patientRepository, IRepository<Doctor> doctorRepository)
+        public AppointmentsController(IRepository<Appointment> appointmentRepository, IRepository<Patient> patientRepository, IRepository<Doctor> doctorRepository, IMapper mapper)
         {
             this.appointmentRepository = appointmentRepository;
             this.patientRepository = patientRepository; 
             this.doctorRepository = doctorRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult GetAllAppointments()
         {
-            var appointments = appointmentRepository.GetAll().Result.Select
-            (
-                a => new AppointmentDto
-                {
-                    Id = a.Id,
-                    DoctorId = a.DoctorId,
-                    PatientId = a.PatientId,
-                    StartTime = a.StartTime,
-                    EndTime = a.EndTime
-                }
-             );
-            return Ok(appointments);
 
+            var appointments = appointmentRepository.GetAll().Result;
+            var appointmentsDto=mapper.Map<IEnumerable<AppointmentDto>>(appointments);
+            
+            return Ok(appointmentsDto);
+            
         }
 
         [HttpPost]

@@ -5,7 +5,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
     public abstract class MedicationDosage
     {
 
-        public MedicationDosage(DateTime startDate, DateTime endDate, float quantity, float frequency)
+        protected MedicationDosage(DateTime startDate, DateTime endDate, float quantity, float frequency)
         {
             Id = Guid.NewGuid();
             StartDate = startDate;
@@ -16,7 +16,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
 
         public Guid Id { get; private set; }
 
-        public Medication Medication { get; private set; }
+        public Medication? Medication { get; private set; }
 
         public Guid MedicationId  { get; private set; }
 
@@ -30,7 +30,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
         //timplul la care se ia Quantity unitati in ore (o pastila la 12 ore)
         public float Frequency { get; private set; }
         
-        public Result AddMedication(Medication medication)
+        public Result AddMedication(Medication? medication)
         {
             if (medication == null)
             {

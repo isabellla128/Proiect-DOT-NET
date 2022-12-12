@@ -8,7 +8,7 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   dotnet-project:
-    name: Build and analyze
+    name: Build and analyze .Net
     runs-on: windows-latest
     steps:
       - name: Set up JDK 11
@@ -47,10 +47,10 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"isabellla128_Proiect-DOT-NET" /o:"isabellla128" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.xml /d:sonar.exclusions=**\Migrations\*
           dotnet tool install --global coverlet.console 
           dotnet build --no-incremental DOTNET/MyDocAppointment.sln
-          coverlet .\DOTNET\MyDocAppointment.API.Tests\bin\Debug\net7.0\MyDocAppointment.API.Tests.dll --target "dotnet"  --targetargs "test DOTNET/MyDocAppointment.sln --no-build" -f=opencover -o="coverage.xml"
+          coverlet .\DOTNET\MyDocAppointment.Tests\bin\Debug\net7.0\MyDocAppointment.Tests.dll --target "dotnet"  --targetargs "test DOTNET/MyDocAppointment.sln --no-build" -f=opencover -o="coverage.xml"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
   angular-project:
-    name: Angular
+    name: Build and analyze Angular
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
