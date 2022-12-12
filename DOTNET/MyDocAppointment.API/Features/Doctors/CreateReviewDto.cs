@@ -2,7 +2,7 @@
 {
     public class CreateReviewDto
     {
-        public int review { get; set; }
+        public int Review { get; set; }
 
     }
 }

@@ -17,16 +17,18 @@ namespace MyDocAppointment.API
             CreateMap<Appointment, AppointmentDto>().ReverseMap();
             CreateMap<Appointment, CreateAppointmentDto>().ReverseMap();
             CreateMap<Appointment, AppointmentsDtoFromDoctor>().ReverseMap();
+            CreateMap<Appointment, AppointmentsDtoFromPatient>().ReverseMap();
 
 
             CreateMap<Doctor, DoctorDto>().ReverseMap();
             CreateMap<Doctor, CreateDoctorDto>().ReverseMap();
 
+
             CreateMap<History, HistoryDto>().ReverseMap();
-            CreateMap<History, HistoryDto>().ReverseMap();
+            CreateMap<History, CreateHistoryDto>().ReverseMap();
 
             CreateMap<Hospital, HospitalDto>().ReverseMap();
-            CreateMap<Hospital, HospitalDto>().ReverseMap();
+            CreateMap<Hospital, CreateHospitalDto>().ReverseMap();
 
 
             CreateMap<Medication, MedicationDto>().ReverseMap();

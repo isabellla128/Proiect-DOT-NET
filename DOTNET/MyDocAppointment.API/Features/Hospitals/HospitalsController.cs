@@ -34,16 +34,9 @@ namespace MyDocAppointment.API.Features.Hospitals
         public IActionResult GetAllDoctorsFromHostpital(Guid hospitalId)
         {
             var doctors = doctorRepository.Find(doctor => doctor.HospitalId == hospitalId).Result;
-            return Ok(doctors.Select(
-                d => new DoctorDto
-                {
-                    FirstName = d.FirstName,
-                    LastName = d.LastName,
-                    Specialization = d.Specialization,
-                    Email = d.Email,
-                    Phone = d.Phone,
-                    Id = d.Id
-                }));
+            var doctorDtos = mapper.Map<IEnumerable<DoctorDto>>(doctors);
+
+            return Ok(doctorDtos);
         }
 
         [HttpPost]
@@ -51,7 +44,7 @@ namespace MyDocAppointment.API.Features.Hospitals
         {
             if (hospitalDto.Name != null && hospitalDto.Address != null && hospitalDto.Phone != null)
             {
-                var hospital = new Hospital(hospitalDto.Name, hospitalDto.Address, hospitalDto.Phone);
+                var hospital = mapper.Map<Hospital>(hospitalDto);
                 hospitalRepository.Add(hospital);
                 hospitalRepository.SaveChanges();
                 return Created(nameof(GetAllHospitals), hospital);
@@ -89,7 +82,7 @@ namespace MyDocAppointment.API.Features.Hospitals
                     return BadRequest("The fields in doctor must not be null");
             }
 
-            var doctors = doctorsDtos.Select(d => new Doctor(d.FirstName, d.LastName, d.Specialization, d.Email, d.Phone, d.Title, d.Profession, d.Location, d.Grade, d.Reviews)).ToList();
+            var doctors = mapper.Map<List<Doctor>>(doctorsDtos);
 
             var result = hospital.AddDoctors(doctors);
 

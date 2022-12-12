@@ -41,13 +41,9 @@ namespace MyDocAppointment.API.Features.Patients
                 return NotFound("There is no patient with given id");
             }
 
-            return Ok(appointments.Select(
-                a => new AppointmentsDtoFromPatient
-                {
-                    StartTime = a.StartTime,
-                    EndTime = a.EndTime,
-                    DoctorId = a.DoctorId,
-                }));
+            var appoinmentDtos = mapper.Map<IEnumerable<AppointmentsDtoFromPatient>>(appointments);
+
+            return Ok(appoinmentDtos);
         }
 
         [HttpPost]
@@ -56,7 +52,7 @@ namespace MyDocAppointment.API.Features.Patients
 
             if (patientDto.FirstName != null && patientDto.LastName != null && patientDto.Email != null && patientDto.Phone != null)
             {
-                var patient = new Patient(patientDto.FirstName, patientDto.LastName, patientDto.Email, patientDto.Phone);
+                var patient = mapper.Map<Patient>(patientDto);
                 patientRepository.Add(patient);
                 patientRepository.SaveChanges();
                 return Created(nameof(GetAllPatients), patient);
