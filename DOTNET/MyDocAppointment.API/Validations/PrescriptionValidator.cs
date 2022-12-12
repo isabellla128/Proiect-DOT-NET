@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
-using MyDocAppointment.API.Features.Medications;
 using MyDocAppointment.API.Features.Prescriptions;
 
 namespace MyDocAppointment.API.Validations
-{   
+{
     public class PrescriptionValidator: AbstractValidator<CreatePrescriptionDto>
     {
         public PrescriptionValidator()

@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Update.Internal;
-using ShelterManagement.Business.Helpers;
+﻿using ShelterManagement.Business.Helpers;
 
 namespace MyDocAppointment.BusinessLayer.Entities
 {
