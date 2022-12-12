@@ -7,12 +7,17 @@ import { MedicPageComponent } from './medics/medic-page/medic-page.component';
 import { MedicProfileComponent } from './medics/medic-profile/medic-profile.component';
 import { MedicAppointmentComponent } from './medics/medic-appointment/medic-appointment.component';
 import { MedicLocationComponent } from './medics/medic-location/medic-location.component';
+import { PrescriptionsComponent } from './prescriptions/prescriptions.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {
     path: 'medics',
     component: MedicsComponent,
+  },
+  {
+    path: 'prescriptions',
+    component: PrescriptionsComponent,
   },
   {
     path: 'medics/:id',
