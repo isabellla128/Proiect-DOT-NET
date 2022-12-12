@@ -47,8 +47,8 @@ namespace MyDocAppointment.BusinessLayer.Entities
 
             foreach (var existentAppointment in Appointments)
             {
-                if (appointment.StartTime <= existentAppointment.EndTime && appointment.StartTime >= existentAppointment.StartTime ||
-                    appointment.EndTime >= existentAppointment.StartTime && appointment.EndTime <= existentAppointment.EndTime)
+                if (!(appointment.StartTime >= existentAppointment.EndTime
+                         || appointment.EndTime <= existentAppointment.StartTime))
                 {
                     return Result.Failure("A new appoinments should not intersect with a fixed appointment");
                 }
