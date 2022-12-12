@@ -48,12 +48,16 @@ namespace MyDocAppointment.API.Features.Doctors
         [HttpPost]
         public IActionResult Create([FromBody] CreateDoctorDto doctorDto)
         {
-            var doctor = new Doctor(doctorDto.FirstName, doctorDto.LastName, doctorDto.Specialization,
-                doctorDto.Email, doctorDto.Phone, doctorDto.Title, doctorDto.Profession, doctorDto.Location, doctorDto.Grade,doctorDto.Reviews);
+            if (doctorDto.FirstName != null && doctorDto.LastName != null && doctorDto.Specialization != null && doctorDto.Email != null && doctorDto.Phone != null && doctorDto.Title != null && doctorDto.Profession != null && doctorDto.Location != null && doctorDto.Grade != null && doctorDto.Reviews != null)
+            {
+                var doctor = new Doctor(doctorDto.FirstName, doctorDto.LastName, doctorDto.Specialization,
+                doctorDto.Email, doctorDto.Phone, doctorDto.Title, doctorDto.Profession, doctorDto.Location, doctorDto.Grade, doctorDto.Reviews);
 
-            doctorRepository.Add(doctor);
-            doctorRepository.SaveChanges();
-            return Created(nameof(GetAllDoctors), doctor);
+                doctorRepository.Add(doctor);
+                doctorRepository.SaveChanges();
+                return Created(nameof(GetAllDoctors), doctor);
+            }
+            return BadRequest("The fields in doctor must not be null");
         }
 
         [HttpPost("{doctorId:Guid}/reviews")]
