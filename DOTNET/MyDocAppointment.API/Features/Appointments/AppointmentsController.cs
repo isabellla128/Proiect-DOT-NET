@@ -36,7 +36,7 @@ namespace MyDocAppointment.API.Features.Appointments
         [HttpPost]
         public IActionResult Create([FromBody] CreateAppointmentDto appointmentDto)
         {
-            var appointment = new Appointment(appointmentDto.StartTime, appointmentDto.EndTime);
+            var appointment = mapper.Map<Appointment>(appointmentDto);
             var doctor = doctorRepository.GetById(appointmentDto.DoctorId).Result;
             var patient = patientRepository.GetById(appointmentDto.PatientId).Result;
             if(doctor == null)

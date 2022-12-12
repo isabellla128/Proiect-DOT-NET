@@ -37,13 +37,9 @@ namespace MyDocAppointment.API.Features.Doctors
         public IActionResult GetAppointmentsFromDoctor(Guid doctorId)
         {
             var appointments = appointmentRepository.Find(appointment => appointment.DoctorId == doctorId).Result;
-            return Ok(appointments.Select(
-                a => new AppointmentsDtoFromDoctor
-                {
-                    StartTime = a.StartTime,
-                    EndTime = a.EndTime,
-                    PatientId = a.PatientId,
-                })) ;
+
+            var appointmentDtos = mapper.Map<IEnumerable<AppointmentsDtoFromDoctor>>(appointments);
+            return Ok(appointmentDtos);
         }
 
         [HttpPost]
