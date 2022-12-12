@@ -14,6 +14,9 @@
   flex: 0 1 auto;
 }
 
+.z-index-high {
+  z-index: 100 !important;
+}
 .mat-toolbar.mat-primary {
   position: sticky;
   top: 0;
