@@ -20,7 +20,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
         public DateTime StartTime { get; private set; }
         public DateTime EndTime { get; private set; }
 
-        public Result AddDoctorToAppointment(Doctor doctor)
+        public Result AddDoctorToAppointment(Doctor? doctor)
         {
             if (doctor == null)
             {

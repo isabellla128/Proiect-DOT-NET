@@ -28,29 +28,37 @@ namespace MyDocAppointment.Tests.ApiTests
             var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiDoctorsURL, createDoctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
 
+            doctor.Should().NotBeNull();
 
             var createPatientDto = CreatePatientSUT();
             var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiPatientsURL, createPatientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
+            patient.Should().NotBeNull();
+
             var createMedicationDto = CreateMedicationDto();
             var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiMedicationsURL, createMedicationDto);
             var medication = await createMedicationResponse.Content.ReadFromJsonAsync<MedicationDto>();
 
-            CreatePrescriptionDto prescriptionDto = CreateSUT(doctor.Id, patient.Id, medication.Id);
+            medication.Should().NotBeNull();
 
-            // Act
-            var createPrescriptionResponse = await HttpClient.PostAsJsonAsync(ApiURL, prescriptionDto);
-            var getPrescriptionResult = await HttpClient.GetAsync(ApiURL);
+            if (doctor != null && patient != null && medication != null)
+            {
+                CreatePrescriptionDto prescriptionDto = CreateSUT(doctor.Id, patient.Id, medication.Id);
 
-            // Assert
-            createPrescriptionResponse.EnsureSuccessStatusCode();
-            createPrescriptionResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+                // Act
+                var createPrescriptionResponse = await HttpClient.PostAsJsonAsync(ApiURL, prescriptionDto);
+                var getPrescriptionResult = await HttpClient.GetAsync(ApiURL);
 
-            getPrescriptionResult.EnsureSuccessStatusCode();
-            var prescriptions = await getPrescriptionResult.Content.ReadFromJsonAsync<List<PrescriptionDto>>();
-            prescriptions.Should().HaveCount(1);
-            prescriptions.Should().NotBeNull();
+                // Assert
+                createPrescriptionResponse.EnsureSuccessStatusCode();
+                createPrescriptionResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+
+                getPrescriptionResult.EnsureSuccessStatusCode();
+                var prescriptions = await getPrescriptionResult.Content.ReadFromJsonAsync<List<PrescriptionDto>>();
+                prescriptions.Should().HaveCount(1);
+                prescriptions.Should().NotBeNull();
+            }
         }
 
 
@@ -62,28 +70,41 @@ namespace MyDocAppointment.Tests.ApiTests
             var createDoctorResponse = await HttpClient.PostAsJsonAsync(ApiDoctorsURL, createDoctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
 
+            doctor.Should().NotBeNull();
 
             var createPatientDto = CreatePatientSUT();
             var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiPatientsURL, createPatientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
+            patient.Should().NotBeNull();
+
             var createMedicationDto = CreateMedicationDto();
             var createMedicationResponse = await HttpClient.PostAsJsonAsync(ApiMedicationsURL, createMedicationDto);
             var medication = await createMedicationResponse.Content.ReadFromJsonAsync<MedicationDto>();
 
+            medication.Should().NotBeNull();
 
-            CreatePrescriptionDto prescriptionDto = CreateSUT(doctor.Id, patient.Id, medication.Id);
-            var createPrescriptionResponse = await HttpClient.PostAsJsonAsync(ApiURL, prescriptionDto);
+            if (doctor != null && patient != null && medication != null)
+            {
 
-            var prescription = await createPrescriptionResponse.Content.ReadFromJsonAsync<PrescriptionDto>();
+                CreatePrescriptionDto prescriptionDto = CreateSUT(doctor.Id, patient.Id, medication.Id);
+                var createPrescriptionResponse = await HttpClient.PostAsJsonAsync(ApiURL, prescriptionDto);
 
-            // Act
-            var resultResponse = await HttpClient.DeleteAsync
-                ($"{ApiURL}/{prescription.Id}");
+                var prescription = await createPrescriptionResponse.Content.ReadFromJsonAsync<PrescriptionDto>();
 
-            // Assert
-            resultResponse.EnsureSuccessStatusCode();
-            resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+                prescription.Should().NotBeNull();
+
+                if (prescription != null)
+                {
+                    // Act
+                    var resultResponse = await HttpClient.DeleteAsync
+                        ($"{ApiURL}/{prescription.Id}");
+
+                    // Assert
+                    resultResponse.EnsureSuccessStatusCode();
+                    resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+                }
+            }
         }
 
 
@@ -135,7 +156,7 @@ namespace MyDocAppointment.Tests.ApiTests
             };
         }
 
-        private CreateMedicationDto CreateMedicationDto()
+        private static CreateMedicationDto CreateMedicationDto()
         {
             return new CreateMedicationDto()
             {

@@ -73,13 +73,19 @@ namespace MyDocAppointment.Tests.ApiTests
             };
             var hospital = await createHospitalResponse.Content.ReadFromJsonAsync<HospitalDto>();
 
-            // Act
-            var resultResponse = await HttpClient.PostAsJsonAsync
-                ($"{ApiURL}/{hospital.Id}/doctors", doctors);
 
-            // Assert
-            resultResponse.EnsureSuccessStatusCode();
-            resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+            hospital.Should().NotBeNull();
+
+            if (hospital != null)
+            {
+                // Act
+                var resultResponse = await HttpClient.PostAsJsonAsync
+                    ($"{ApiURL}/{hospital.Id}/doctors", doctors);
+
+                // Assert
+                resultResponse.EnsureSuccessStatusCode();
+                resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+            }
         }
 
         [Fact] 
@@ -90,13 +96,18 @@ namespace MyDocAppointment.Tests.ApiTests
             var createHostpitalResponse = await HttpClient.PostAsJsonAsync(ApiURL, createHospitalDto);
             var hospital = await createHostpitalResponse.Content.ReadFromJsonAsync<DoctorDto>();
 
-            // Act
-            var resultResponse = await HttpClient.DeleteAsync 
-                ($"{ApiURL}/{hospital.Id}");
+            hospital.Should().NotBeNull();
 
-            // Assert
-            resultResponse.EnsureSuccessStatusCode();
-            resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+            if (hospital != null)
+            {
+                // Act
+                var resultResponse = await HttpClient.DeleteAsync
+                    ($"{ApiURL}/{hospital.Id}");
+
+                // Assert
+                resultResponse.EnsureSuccessStatusCode();
+                resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+            }
         }
 
         private static CreateHospitalDto CreateSUT()

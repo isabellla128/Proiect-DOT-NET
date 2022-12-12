@@ -18,24 +18,18 @@ namespace MyDocAppointment.Tests.ApiTests
         public async void When_CreatedSchedule_Then_ShouldReturnScheduleInTheGetRequest()
         {
             //Arrange
-            var getScheduleResult = await HttpClient.GetAsync(ApiURL);
-            var schedules = await getScheduleResult.Content.ReadFromJsonAsync<List<ScheduleDto>>();
-            foreach(ScheduleDto schedule1 in schedules){
-                var resultResponse = await HttpClient.DeleteAsync($"{ApiURL}/{schedule1.Id}");
-            }
-
             ScheduleDto scheduleDto = CreateSUT();
 
             //Act
             var createScheduleResponse=await HttpClient.PostAsJsonAsync(ApiURL, scheduleDto);
-            getScheduleResult=await HttpClient.GetAsync(ApiURL);
+            var getScheduleResult=await HttpClient.GetAsync(ApiURL);
 
             //Assert
             createScheduleResponse.EnsureSuccessStatusCode();
             createScheduleResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
 
             getScheduleResult.EnsureSuccessStatusCode();
-            schedules = await getScheduleResult.Content.ReadFromJsonAsync<List<ScheduleDto>>();
+            var schedules = await getScheduleResult.Content.ReadFromJsonAsync<List<ScheduleDto>>();
             schedules.Should().HaveCount(1);
             schedules.Should().NotBeNull();
         }
@@ -44,14 +38,6 @@ namespace MyDocAppointment.Tests.ApiTests
         public async void When_RegisterEventsToSchedule_Then_ShouldReturnEventsInTheGetRequest()
         {
             //Arrange
-            var getScheduleResult = await HttpClient.GetAsync(ApiURL);
-            var schedules = await getScheduleResult.Content.ReadFromJsonAsync<List<ScheduleDto>>();
-            foreach (ScheduleDto schedule1 in schedules)
-            {
-                var resultResponse1 = await HttpClient.DeleteAsync($"{ApiURL}/{schedule1.Id}");
-            }
-
-
             ScheduleDto scheduleDto = CreateSUT();
             var createScheduleResponse = await HttpClient.PostAsJsonAsync(ApiURL, scheduleDto);
             var events = new List<EventDto>
@@ -72,13 +58,18 @@ namespace MyDocAppointment.Tests.ApiTests
             
             var schedule = await createScheduleResponse.Content.ReadFromJsonAsync<ScheduleDto>();
 
-            //Act
-            var resultResponse=await HttpClient.PostAsJsonAsync(
-                $"{ApiURL}/{schedule.Id}/events", events);
+            schedule.Should().NotBeNull();
 
-            //Assert
-            resultResponse.EnsureSuccessStatusCode();
-            resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+            if (schedule != null)
+            {
+                //Act
+                var resultResponse = await HttpClient.PostAsJsonAsync(
+                    $"{ApiURL}/{schedule.Id}/events", events);
+
+                //Assert
+                resultResponse.EnsureSuccessStatusCode();
+                resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+            }
         }
 
         [Fact]
@@ -90,12 +81,17 @@ namespace MyDocAppointment.Tests.ApiTests
             var createScheduleResponse=await HttpClient.PostAsJsonAsync(ApiURL, scheduleDto);
             var schedule = await createScheduleResponse.Content.ReadFromJsonAsync<ScheduleDto>();
 
-            //Act
-            var resultResponse = await HttpClient.DeleteAsync($"{ApiURL}/{schedule.Id}");
+            schedule.Should().NotBeNull();
 
-            //Assert
-            resultResponse.EnsureSuccessStatusCode();
-            resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+            if (schedule != null)
+            {
+                //Act
+                var resultResponse = await HttpClient.DeleteAsync($"{ApiURL}/{schedule.Id}");
+
+                //Assert
+                resultResponse.EnsureSuccessStatusCode();
+                resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+            }
         }
 
         private static ScheduleDto CreateSUT()
