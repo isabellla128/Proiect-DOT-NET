@@ -88,13 +88,18 @@ namespace MyDocAppointment.Tests.ApiTests
             var createDoctorResponse = await HttpClient.PostAsJsonAsync(DoctorsApiURL, createDoctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
 
-            // Act
-            var resultResponse = await HttpClient.DeleteAsync 
-                ($"{DoctorsApiURL}/{doctor.Id}");
+            doctor.Should().NotBeNull();
 
-            // Assert
-            resultResponse.EnsureSuccessStatusCode();
-            resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+            if (doctor != null)
+            {
+                // Act
+                var resultResponse = await HttpClient.DeleteAsync
+                    ($"{DoctorsApiURL}/{doctor.Id}");
+
+                // Assert
+                resultResponse.EnsureSuccessStatusCode();
+                resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+            }
         }
         private static CreateDoctorDto CreateSUT()
         {

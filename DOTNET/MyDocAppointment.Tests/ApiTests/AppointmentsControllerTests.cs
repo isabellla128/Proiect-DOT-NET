@@ -26,27 +26,34 @@ namespace MyDocAppointment.Tests.ApiTests
 
             var createDoctorResponse = await HttpClient.PostAsJsonAsync("v1/api/Doctors", doctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
-            
+
+            doctor.Should().NotBeNull();
+
             var createPatientResponse = await HttpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
-            
-            CreateAppointmentDto appointmentDto = CreateSUT(patient.Id, doctor.Id);
 
-            // Act
-            var createAppointmentResponse = await HttpClient.PostAsJsonAsync(ApiURL, appointmentDto);
-            var getAppointmentResult = await HttpClient.GetAsync(ApiURL);
+            patient.Should().NotBeNull();
 
-            // Assert
-            createAppointmentResponse.EnsureSuccessStatusCode();
-            createAppointmentResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+            if (patient != null && doctor != null)
+            {
+                CreateAppointmentDto appointmentDto = CreateSUT(patient.Id, doctor.Id);
 
-            getAppointmentResult.EnsureSuccessStatusCode();
-            var appointments = await getAppointmentResult.Content.ReadFromJsonAsync<List<AppointmentDto>>();
-            appointments.Should().HaveCount(1);
-            appointments.Should().NotBeNull();
+                // Act
+                var createAppointmentResponse = await HttpClient.PostAsJsonAsync(ApiURL, appointmentDto);
+                var getAppointmentResult = await HttpClient.GetAsync(ApiURL);
+
+                // Assert
+                createAppointmentResponse.EnsureSuccessStatusCode();
+                createAppointmentResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+
+                getAppointmentResult.EnsureSuccessStatusCode();
+                var appointments = await getAppointmentResult.Content.ReadFromJsonAsync<List<AppointmentDto>>();
+                appointments.Should().HaveCount(1);
+                appointments.Should().NotBeNull();
+            }
         }
 
-        [Fact] 
+        [Fact]
         public async void When_DeletedAppointment_Then_ShouldReturnNoAppointmentInTheGetRequest()
         {
             // Arrange
@@ -55,22 +62,34 @@ namespace MyDocAppointment.Tests.ApiTests
 
             var createDoctorResponse = await HttpClient.PostAsJsonAsync("v1/api/Doctors", doctorDto);
             var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
-            
+
+            doctor.Should().NotBeNull();
+
             var createPatientResponse = await HttpClient.PostAsJsonAsync("v1/api/Patients", patientDto);
             var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
-            CreateAppointmentDto appointmentDto = CreateSUT(patient.Id, doctor.Id);
-            var createAppointmentResponse = await HttpClient.PostAsJsonAsync(ApiURL, appointmentDto);
-            var appointment = await createAppointmentResponse.Content.ReadFromJsonAsync<AppointmentDto>();
+            patient.Should().NotBeNull();
 
-            // Act
-            var resultResponse = await HttpClient.DeleteAsync
-                ($"{ApiURL}/{appointment.Id}");
+            if (patient != null && doctor != null)
+            {
+                CreateAppointmentDto appointmentDto = CreateSUT(patient.Id, doctor.Id);
+                var createAppointmentResponse = await HttpClient.PostAsJsonAsync(ApiURL, appointmentDto);
+                var appointment = await createAppointmentResponse.Content.ReadFromJsonAsync<AppointmentDto>();
 
-            // Assert
-            resultResponse.EnsureSuccessStatusCode();
-            resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+                appointment.Should().NotBeNull();
 
+                if (appointment != null)
+                {
+                    // Act
+                    var resultResponse = await HttpClient.DeleteAsync
+                        ($"{ApiURL}/{appointment.Id}");
+
+                    // Assert
+                    resultResponse.EnsureSuccessStatusCode();
+                    resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+
+                }
+            }
         }
         
         private static CreatePatientDto CreatePatientSUT()

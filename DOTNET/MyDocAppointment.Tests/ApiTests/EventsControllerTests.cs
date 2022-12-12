@@ -24,20 +24,25 @@ namespace MyDocAppointment.Tests.ApiTests
             var createScheduleResponse = await HttpClient.PostAsJsonAsync("v1/api/Schedules", createScheduleDto);
             var schedule = await createScheduleResponse.Content.ReadFromJsonAsync<ScheduleDto>();
             
-            CreateEventDto createEventDto = CreateEventSUT(schedule.Id);
+            schedule.Should().NotBeNull();
 
-            // Act
-            var createEventResponse = await HttpClient.PostAsJsonAsync(ApiURL, createEventDto);
-            var getEventResult = await HttpClient.GetAsync(ApiURL);
+            if (schedule != null)
+            {
+                CreateEventDto createEventDto = CreateEventSUT(schedule.Id);
 
-            // Assert
-            createEventResponse.EnsureSuccessStatusCode();
-            createEventResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+                // Act
+                var createEventResponse = await HttpClient.PostAsJsonAsync(ApiURL, createEventDto);
+                var getEventResult = await HttpClient.GetAsync(ApiURL);
 
-            getEventResult.EnsureSuccessStatusCode();
-            var appointments = await getEventResult.Content.ReadFromJsonAsync<List<EventDto>>();
-            appointments.Should().HaveCount(1);
-            appointments.Should().NotBeNull();
+                // Assert
+                createEventResponse.EnsureSuccessStatusCode();
+                createEventResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+
+                getEventResult.EnsureSuccessStatusCode();
+                var appointments = await getEventResult.Content.ReadFromJsonAsync<List<EventDto>>();
+                appointments.Should().HaveCount(1);
+                appointments.Should().NotBeNull();
+            }
         }
         
         [Fact] 
@@ -49,17 +54,27 @@ namespace MyDocAppointment.Tests.ApiTests
             var createScheduleResponse = await HttpClient.PostAsJsonAsync("v1/api/Schedules", createScheduleDto);
             var schedule = await createScheduleResponse.Content.ReadFromJsonAsync<ScheduleDto>();
 
-            CreateEventDto createEventDto = CreateEventSUT(schedule.Id);
-            var createEventResponse = await HttpClient.PostAsJsonAsync(ApiURL, createEventDto);
-            var e = await createEventResponse.Content.ReadFromJsonAsync<EventDto>();
+            schedule.Should().NotBeNull();
 
-            // Act
-            var resultResponse = await HttpClient.DeleteAsync
-                ($"{ApiURL}/{e.Id}");
+            if (schedule != null)
+            {
+                CreateEventDto createEventDto = CreateEventSUT(schedule.Id);
+                var createEventResponse = await HttpClient.PostAsJsonAsync(ApiURL, createEventDto);
+                var e = await createEventResponse.Content.ReadFromJsonAsync<EventDto>();
 
-            // Assert
-            resultResponse.EnsureSuccessStatusCode();
-            resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+                e.Should().NotBeNull();
+
+                if (e != null)
+                {   
+                    // Act
+                    var resultResponse = await HttpClient.DeleteAsync
+                        ($"{ApiURL}/{e.Id}");
+
+                    // Assert
+                    resultResponse.EnsureSuccessStatusCode();
+                    resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+                }
+            }
 
         }
         
