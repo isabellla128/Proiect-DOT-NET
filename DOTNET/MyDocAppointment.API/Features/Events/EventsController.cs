@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
@@ -30,12 +31,12 @@ namespace MyDocAppointment.API.Features.Events
         }
 
         [HttpPost]
-        public IActionResult Create(Guid scheduleId, [FromBody] CreateEventDto eventDto)
+        public IActionResult Create([FromBody] CreateEventDto eventDto)
         {
             var e = new Event(eventDto.Name, eventDto.StartDate, eventDto.EndDate);
 
-            var schedule = scheduleRepository.GetById(scheduleId).Result;
-            if(schedule == null)
+            var schedule = scheduleRepository.GetById(eventDto.ScheduleId).Result;
+            if (schedule == null)
             {
                 return BadRequest("Schedule with given id not found");
             }

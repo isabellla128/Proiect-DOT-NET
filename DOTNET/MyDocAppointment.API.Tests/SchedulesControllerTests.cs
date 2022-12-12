@@ -18,24 +18,18 @@ namespace MyDocAppointment.API.Tests
         public async void When_CreatedSchedule_Then_ShouldReturnScheduleInTheGetRequest()
         {
             //Arrange
-            var getScheduleResult = await HttpClient.GetAsync(ApiURL);
-            var schedules = await getScheduleResult.Content.ReadFromJsonAsync<List<ScheduleDto>>();
-            foreach(ScheduleDto schedule1 in schedules){
-                var resultResponse = await HttpClient.DeleteAsync($"{ApiURL}/{schedule1.Id}");
-            }
-
             ScheduleDto scheduleDto = CreateSUT();
 
             //Act
-            var createScheduleResponse=await HttpClient.PostAsJsonAsync(ApiURL, scheduleDto);
-            getScheduleResult=await HttpClient.GetAsync(ApiURL);
+            var createScheduleResponse =await HttpClient.PostAsJsonAsync(ApiURL, scheduleDto);
+            var getScheduleResult=await HttpClient.GetAsync(ApiURL);
 
             //Assert
             createScheduleResponse.EnsureSuccessStatusCode();
             createScheduleResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
 
             getScheduleResult.EnsureSuccessStatusCode();
-            schedules = await getScheduleResult.Content.ReadFromJsonAsync<List<ScheduleDto>>();
+            var schedules = await getScheduleResult.Content.ReadFromJsonAsync<List<ScheduleDto>>();
             schedules.Should().HaveCount(1);
             schedules.Should().NotBeNull();
         }

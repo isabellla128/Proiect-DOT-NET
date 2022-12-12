@@ -23,7 +23,6 @@ namespace MyDocAppointment.API.Tests
         {
 
             // Arrange
-
             CreatePatientDto patientDto = CreatePatientSUT();
             CreateDoctorDto doctorDto = CreateDoctorSUT();
 

@@ -34,7 +34,7 @@ namespace MyDocAppointment.API.Tests
             doctors.Should().NotBeNull();
         }
 
-        [Fact]  //NU MERGE NUJ DC AM FACUT-O DUPA (REGISTER DOCTORS TOH OSPITAL) SI AIA MERGE SI ASTA NU
+        [Fact]
         public async void When_RegisterAppointmentsToDoctor_Then_ShouldReturnAppointmentsInTheGetRequest()
         {
             // Arrange

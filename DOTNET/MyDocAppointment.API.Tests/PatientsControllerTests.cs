@@ -1,5 +1,8 @@
 ﻿using FluentAssertions;
+using MyDocAppointment.API.Features.Appointments;
+using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.API.Features.Patients;
+using MyDocAppointment.BusinessLayer.Entities;
 using System.Net.Http.Json;
 using Xunit;
 
@@ -31,36 +34,43 @@ namespace MyDocAppointment.API.Tests
             patients.Should().HaveCount(1);
             patients.Should().NotBeNull();
         }
+        /*
+        [Fact]
+        public async void When_RegisterAppointmentsToPatient_Then_ShouldReturnAppointmentsInTheGetRequest()
+        {
+            // Arrange
+            CreateDoctorDto createDoctorDto = CreateDoctorSUT();
+            var createDoctorResponse = await HttpClient.PostAsJsonAsync("v1/api/Doctors", createDoctorDto);
+            var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
 
-        //[Fact]
-        //public async void When_RegisterAppointmentsToHospital_Then_ShouldReturnAppointmentsInTheGetRequest()
-        //{
-        //    // Arrange
-        //    CreatePatientDto createPatientDto = CreateSUT();
-        //    var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, createPatientDto);
-        //    var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
+            CreatePatientDto createPatientDto = CreateSUT();
+            var createPatientResponse = await HttpClient.PostAsJsonAsync(ApiURL, createPatientDto);
+            var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
-        //    var appointments = new List<AppointmentsDtoFromPatient>
-        //    {
-        //        new AppointmentsDtoFromPatient
-        //        {
-        //            StartTime = DateTime.Now,
-        //            EndTime = DateTime.Now,
-        //        },
-        //        new AppointmentsDtoFromPatient
-        //        {
-        //            StartTime = DateTime.Now,
-        //            EndTime = DateTime.Now,
-        //        }
-        //    };
-        //    // Act
-        //    var resultResponse = await HttpClient.PostAsJsonAsync
-        //        ($"{ApiURL}/{patient.Id}/appointments", appointments);
+            var appointments = new List<AppointmentsDtoFromDoctor>
+            {
+                new AppointmentsDtoFromDoctor
+                {
+                    StartTime = DateTime.Now.AddDays(1),
+                    EndTime = DateTime.Now.AddDays(1).AddHours(1),
+                    PatientId = patient.Id
+                },
+                new AppointmentsDtoFromDoctor
+                {
+                    StartTime = DateTime.Now.AddDays(2),
+                    EndTime = DateTime.Now.AddDays(2).AddHours(1),
+                    PatientId = patient.Id
+                }
+            };
 
-        //    // Assert
-        //    resultResponse.EnsureSuccessStatusCode();
-        //    resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
-        //}
+            // Act
+            var resultResponse = await HttpClient.PostAsJsonAsync
+                ($"{"v1/api/Doctors"}/{doctor.Id}/appointments", appointments);
+            var getPatientrResult = await HttpClient.GetAsync($"{ApiURL}/{patient.Id}/appointments", appointments);
+            // Assert
+            getPatientrResult.EnsureSuccessStatusCode();
+            getPatientrResult.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+        }*/
 
         [Fact]
         public async void When_DeletedPatient_Then_ShouldReturnNoPatientInTheGetRequest()
@@ -87,6 +97,22 @@ namespace MyDocAppointment.API.Tests
                 LastName = "Tot eu",
                 Email = "eu@datoteu.eu",
                 Phone = "0712312312",
+            };
+        }
+        private static CreateDoctorDto CreateDoctorSUT()
+        {
+            return new CreateDoctorDto
+            {
+                FirstName = "FirstName1",
+                LastName = "LastName1",
+                Specialization = "Dermatology",
+                Email = "doctor@gmail.com",
+                Phone = "1234567890",
+                Title = "doctor  docent",
+                Profession = "--",
+                Location = "Bosnia",
+                Grade = 9,
+                Reviews = 10
             };
         }
     }
