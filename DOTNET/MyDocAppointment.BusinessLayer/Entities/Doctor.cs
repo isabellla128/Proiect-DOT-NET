@@ -70,7 +70,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             return Result.Success();
         }
 
-        public Result AddHospitalToDoctor(Hospital hospital)
+        public Result AddHospitalToDoctor(Hospital? hospital)
         {
             if (hospital == null)
             {
@@ -84,7 +84,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             }
         }
 
-        public Result AddAppointment(Appointment appointment)
+        public Result AddAppointment(Appointment? appointment)
         {
             if(appointment == null)
             {
@@ -116,7 +116,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             
         }
 
-        public Result AddPrescription(Prescription prescription)
+        public Result AddPrescription(Prescription? prescription)
         {
             if (prescription == null)
             {
@@ -128,7 +128,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             return Result.Success();
         }
 
-        public Result UpdateDoctor(Doctor doctor)
+        public Result UpdateDoctor(Doctor? doctor)
         {
             if (doctor == null)
             {

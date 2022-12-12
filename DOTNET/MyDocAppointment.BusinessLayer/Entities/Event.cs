@@ -28,7 +28,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             return StartDate > DateTime.Now;
         }
 
-        public Result AddScheduleToEvent(Schedule schedule)
+        public Result AddScheduleToEvent(Schedule? schedule)
         {
             if (schedule == null)
             {

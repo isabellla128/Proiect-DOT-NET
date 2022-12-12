@@ -30,7 +30,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
 
         public ICollection<Prescription> Prescriptions { get; private set; }
 
-        public Result AddAppointment(Appointment appointment)
+        public Result AddAppointment(Appointment? appointment)
         {
             if(appointment == null)
             {
@@ -59,7 +59,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             return Result.Success();
         }
 
-        public Result AddPrescription(Prescription prescription) 
+        public Result AddPrescription(Prescription? prescription) 
         {
             if(prescription == null)
             {

@@ -32,7 +32,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             return Result.Success();
         }
 
-        public Result AddPatientToAppointment(Patient patient)
+        public Result AddPatientToAppointment(Patient? patient)
         {
             if (patient == null)
             {

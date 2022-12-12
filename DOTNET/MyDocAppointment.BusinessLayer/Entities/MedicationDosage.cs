@@ -30,7 +30,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
         //timplul la care se ia Quantity unitati in ore (o pastila la 12 ore)
         public float Frequency { get; private set; }
         
-        public Result AddMedication(Medication medication)
+        public Result AddMedication(Medication? medication)
         {
             if (medication == null)
             {

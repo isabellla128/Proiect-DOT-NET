@@ -28,7 +28,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             return DateTime.Now < StartDate;
         }
 
-        public Result AddPatientToHistory(Patient patient)
+        public Result AddPatientToHistory(Patient? patient)
         {
             if (patient == null)
             {

@@ -12,7 +12,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
 
         public Guid PrescriptionId { get; private set; }
 
-        public Result RegisterMedicationInfoToPrescription(Prescription prescription)
+        public Result RegisterMedicationInfoToPrescription(Prescription? prescription)
         {
             if(prescription == null)
             {

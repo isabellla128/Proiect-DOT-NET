@@ -22,7 +22,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
         public ICollection<MedicationDosagePrescription> MedicationDosagePrescriptions { get; private set; }
 
 
-        public Result AddDoctorToPrescription(Doctor doctor)
+        public Result AddDoctorToPrescription(Doctor? doctor)
         {
             if (doctor == null)
             {
@@ -33,7 +33,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             DoctorId = doctor.Id;
             return Result.Success();
         }
-        public Result AddPatientToPrescription(Patient patient)
+        public Result AddPatientToPrescription(Patient? patient)
         {
             if (patient == null)
             {
