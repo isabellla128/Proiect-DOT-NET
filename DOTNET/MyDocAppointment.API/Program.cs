@@ -42,8 +42,6 @@ builder.Services.AddScoped<IRepository<History>, HistoryRepository>();
 builder.Services.AddScoped<IRepository<Medication>, MedicationRepositrory>();
 builder.Services.AddScoped<IRepository<Prescription>, PrescriptionRepository>();
 builder.Services.AddScoped<IRepository<Appointment>, AppointmentRepository>();
-builder.Services.AddScoped<IRepository<Event>, EventRepositrory>();
-builder.Services.AddScoped<IRepository<Schedule>, ScheduleRepository>();
 builder.Services.AddScoped<IRepository<MedicationDosageHistory>, MedicationDosageHistoryRepository>();
 builder.Services.AddScoped<IRepository<MedicationDosagePrescription>, MedicationDosagePrescriptionRepository>();
 
