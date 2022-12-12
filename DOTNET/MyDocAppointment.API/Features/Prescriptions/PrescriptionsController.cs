@@ -12,16 +12,14 @@ namespace MyDocAppointment.API.Features.Prescriptions
         public readonly IRepository<Prescription> prescriptionRepository;
         public readonly IRepository<Doctor> doctorRepository;
         public readonly IRepository<Patient> patientRepository;
-        private readonly IRepository<MedicationDosagePrescription> medicationDosageRepository;
         private readonly IRepository<Medication> medicationRepository;
         private readonly IMapper mapper;
 
-        public PrescriptionsController(IRepository<Prescription> prescriptionRepository, IRepository<Doctor> doctorRepository, IRepository<Patient> patientRepository, IRepository<Medication> medicationRepository, IRepository<MedicationDosagePrescription> medicationDosageRepository, IMapper mapper)
+        public PrescriptionsController(IRepository<Prescription> prescriptionRepository, IRepository<Doctor> doctorRepository, IRepository<Patient> patientRepository, IRepository<Medication> medicationRepository, IMapper mapper)
         {
             this.prescriptionRepository=prescriptionRepository;
             this.doctorRepository=doctorRepository;
             this.patientRepository = patientRepository;
-            this.medicationDosageRepository = medicationDosageRepository;
             this.medicationRepository = medicationRepository;
             this.mapper=mapper;
         }

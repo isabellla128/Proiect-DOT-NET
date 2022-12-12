@@ -5,7 +5,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
     public abstract class MedicationDosage
     {
 
-        public MedicationDosage(DateTime startDate, DateTime endDate, float quantity, float frequency)
+        protected MedicationDosage(DateTime startDate, DateTime endDate, float quantity, float frequency)
         {
             Id = Guid.NewGuid();
             StartDate = startDate;
