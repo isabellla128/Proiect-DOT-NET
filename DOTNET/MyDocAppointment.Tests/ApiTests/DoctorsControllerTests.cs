@@ -34,17 +34,17 @@ namespace MyDocAppointment.Tests.ApiTests
             doctors.Should().NotBeNull();
         }
 
-        [Fact]  //NU MERGE NUJ DC AM FACUT-O DUPA (REGISTER DOCTORS TOH OSPITAL) SI AIA MERGE SI ASTA NU
+        [Fact]
         public async void When_RegisterAppointmentsToDoctor_Then_ShouldReturnAppointmentsInTheGetRequest()
         {
             // Arrange
             CreateDoctorDto createDoctorDto = CreateSUT();
             var createDoctorResponse = await HttpClient.PostAsJsonAsync(DoctorsApiURL, createDoctorDto);
-            var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
+            DoctorDto? doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
 
             CreatePatientDto createPatientDto = CreatePatientSUT();
             var createPatientResponse = await HttpClient.PostAsJsonAsync(PatientsApiUrl, createPatientDto);
-            var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
+            PatientDto? patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
 
             var appointments = new List<AppointmentsDtoFromDoctor>
             {
