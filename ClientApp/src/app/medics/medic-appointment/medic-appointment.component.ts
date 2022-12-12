@@ -61,6 +61,7 @@ export class MedicAppointmentComponent {
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
+  currentDate: Date = new Date();
 
   modalData:
     | {

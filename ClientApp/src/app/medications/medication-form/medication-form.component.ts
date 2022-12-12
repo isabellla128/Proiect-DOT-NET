@@ -7,7 +7,6 @@ import {
   OnChanges,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MedicationService } from 'src/shared/services/medication.service';
 import { Medication } from 'src/models/medication';
 
 @Component({
@@ -15,9 +14,9 @@ import { Medication } from 'src/models/medication';
   templateUrl: './medication-form.component.html',
   styleUrls: ['./medication-form.component.css'],
 })
-export class MedicationFormComponent implements OnInit, OnChanges {
+export class MedicationFormComponent implements OnChanges {
   @Input() medication: Medication = {} as Medication;
-  @Input() title: String = '';
+  @Input() title: string = '';
   @Output() submitEmitter = new EventEmitter<Medication>();
   medicationForm = this.fb.group<Medication>({
     id: '',
@@ -29,8 +28,6 @@ export class MedicationFormComponent implements OnInit, OnChanges {
   });
 
   constructor(private fb: FormBuilder) {}
-
-  ngOnInit(): void {}
 
   ngOnChanges(changes: any) {
     this.medicationForm.setValue(changes.medication.currentValue);

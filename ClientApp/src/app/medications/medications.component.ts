@@ -13,7 +13,7 @@ export class MedicationsComponent implements OnInit {
   constructor(private medicationService: MedicationService) {}
 
   ngOnInit() {
-    this, this.medicationService.getAll();
+    this.medicationService.getAll();
     this.medicationService.collection$.subscribe((medications) => {
       this.drugs = medications;
     });

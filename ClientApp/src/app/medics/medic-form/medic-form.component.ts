@@ -15,9 +15,9 @@ import { DoctorService } from 'src/shared/services/doctor.service';
   templateUrl: './medic-form.component.html',
   styleUrls: ['./medic-form.component.css'],
 })
-export class MedicFormComponent implements OnInit, OnChanges {
+export class MedicFormComponent implements OnChanges {
   @Input() doctor: Doctor = {} as Doctor;
-  @Input() title: String = '';
+  @Input() title: string = '';
   @Output() submitEmitter = new EventEmitter<Doctor>();
 
   medicForm = this.fb.group<Doctor>({
@@ -35,8 +35,6 @@ export class MedicFormComponent implements OnInit, OnChanges {
   });
 
   constructor(private fb: FormBuilder, private doctorService: DoctorService) {}
-
-  ngOnInit(): void {}
 
   ngOnChanges(changes: any) {
     this.medicForm.setValue(changes.doctor.currentValue);

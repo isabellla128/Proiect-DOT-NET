@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Doctor } from 'src/models/doctor';
 import { DoctorService } from 'src/shared/services/doctor.service';

@@ -10,7 +10,6 @@ import AbstractRestService from '../abstracts/AbstractRestService';
   providedIn: 'root',
 })
 export class MedicationService extends AbstractRestService<Medication> {
-  // url = BASE_API_URL + 'Medications';
   constructor(private http: HttpClient) {
     super(
       http,
