@@ -12,6 +12,7 @@ namespace MyDocAppointment.API.Features.Prescriptions
         public readonly IRepository<Prescription> prescriptionRepository;
         public readonly IRepository<Doctor> doctorRepository;
         public readonly IRepository<Patient> patientRepository;
+        private readonly IRepository<MedicationDosagePrescription> medicationDosageRepository;
         private readonly IRepository<Medication> medicationRepository;
         private readonly IMapper mapper;
 
