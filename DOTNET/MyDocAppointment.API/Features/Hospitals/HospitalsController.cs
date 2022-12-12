@@ -69,26 +69,6 @@ namespace MyDocAppointment.API.Features.Hospitals
                 return NotFound("Hospital with given id not found");
             }
 
-            foreach (var d in doctorsDtos)
-            {
-                if (d.FirstName == null)
-                    return BadRequest("The fields in doctor must not be null");
-                if (d.LastName == null)
-                    return BadRequest("The fields in doctor must not be null");
-                if (d.Specialization == null)
-                    return BadRequest("The fields in doctor must not be null");
-                if (d.Email == null)
-                    return BadRequest("The fields in doctor must not be null");
-                if (d.Phone == null)
-                    return BadRequest("The fields in doctor must not be null");
-                if (d.Title == null)
-                    return BadRequest("The fields in doctor must not be null");
-                if (d.Profession == null)
-                    return BadRequest("The fields in doctor must not be null");
-                if (d.Location == null)
-                    return BadRequest("The fields in doctor must not be null");
-            }
-
             var doctors = doctorsDtos.Select(d => new Doctor(d.FirstName, d.LastName, d.Specialization, d.Email, d.Phone, d.Title, d.Profession, d.Location, d.Grade, d.Reviews)).ToList();
 
             var result = hospital.AddDoctors(doctors);
