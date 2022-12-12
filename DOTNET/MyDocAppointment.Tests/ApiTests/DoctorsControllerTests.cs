@@ -40,11 +40,15 @@ namespace MyDocAppointment.Tests.ApiTests
             // Arrange
             CreateDoctorDto createDoctorDto = CreateSUT();
             var createDoctorResponse = await HttpClient.PostAsJsonAsync(DoctorsApiURL, createDoctorDto);
-            DoctorDto? doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
+            var doctor = await createDoctorResponse.Content.ReadFromJsonAsync<DoctorDto>();
+
+            doctor.Should().NotBeNull();
 
             CreatePatientDto createPatientDto = CreatePatientSUT();
             var createPatientResponse = await HttpClient.PostAsJsonAsync(PatientsApiUrl, createPatientDto);
-            PatientDto? patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
+            var patient = await createPatientResponse.Content.ReadFromJsonAsync<PatientDto>();
+
+            patient.Should().NotBeNull();
 
             var appointments = new List<AppointmentsDtoFromDoctor>
             {
