@@ -37,13 +37,9 @@ namespace MyDocAppointment.API.Features.Doctors
         public IActionResult GetAppointmentsFromDoctor(Guid doctorId)
         {
             var appointments = appointmentRepository.Find(appointment => appointment.DoctorId == doctorId).Result;
-            return Ok(appointments.Select(
-                a => new AppointmentsDtoFromDoctor
-                {
-                    StartTime = a.StartTime,
-                    EndTime = a.EndTime,
-                    PatientId = a.PatientId,
-                })) ;
+
+            var appointmentDtos = mapper.Map<IEnumerable<AppointmentsDtoFromDoctor>>(appointments);
+            return Ok(appointmentDtos);
         }
 
         [HttpPost]
@@ -51,8 +47,7 @@ namespace MyDocAppointment.API.Features.Doctors
         {
             if (doctorDto.FirstName != null && doctorDto.LastName != null && doctorDto.Specialization != null && doctorDto.Email != null && doctorDto.Phone != null && doctorDto.Title != null && doctorDto.Profession != null && doctorDto.Location != null)
             {
-                var doctor = new Doctor(doctorDto.FirstName, doctorDto.LastName, doctorDto.Specialization,
-                doctorDto.Email, doctorDto.Phone, doctorDto.Title, doctorDto.Profession, doctorDto.Location, doctorDto.Grade, doctorDto.Reviews);
+                var doctor = mapper.Map<Doctor>(doctorDto);
 
                 doctorRepository.Add(doctor);
                 doctorRepository.SaveChanges();
@@ -70,7 +65,7 @@ namespace MyDocAppointment.API.Features.Doctors
                 return NotFound("Doctor with given id not found");
             }
 
-            var result = doctor.AddReview(reviewDto.review);
+            var result = doctor.AddReview(reviewDto.Review);
             if (result.IsFailure)
             {
                 return BadRequest(result.Error);
@@ -91,7 +86,7 @@ namespace MyDocAppointment.API.Features.Doctors
             var appointments = new List<Appointment>();
             foreach (var a in appointmentDtos)
             {
-                var appointment = new Appointment(a.StartTime, a.EndTime);
+                var appointment = mapper.Map<Appointment>(a);
 
                 var patient = patientRepositroy.GetById(a.PatientId).Result;
                 if(patient == null)

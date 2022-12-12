@@ -45,7 +45,7 @@ namespace MyDocAppointment.API.Features.Histories
         [HttpPost]
         public IActionResult Create(Guid patientId, [FromBody] CreateHistoryDto historyDto)
         {
-            var history = new History(historyDto.StartDate, historyDto.EndDate);
+            var history = mapper.Map<History>(historyDto);
 
             var patient = patientRepository.GetById(patientId).Result;
             if(patient == null)
