@@ -50,29 +50,34 @@ namespace MyDocAppointment.Tests.ApiTests
 
             patient.Should().NotBeNull();
 
-            var appointments = new List<AppointmentsDtoFromDoctor>
+            if (patient != null)
             {
-                new AppointmentsDtoFromDoctor
+                var appointments = new List<AppointmentsDtoFromDoctor>
                 {
-                    StartTime = DateTime.Now.AddDays(1),
-                    EndTime = DateTime.Now.AddDays(1).AddHours(1),
-                    PatientId = patient.Id 
-                },
-                new AppointmentsDtoFromDoctor
+                    new AppointmentsDtoFromDoctor
+                    {
+                        StartTime = DateTime.Now.AddDays(1),
+                        EndTime = DateTime.Now.AddDays(1).AddHours(1),
+                        PatientId = patient.Id
+                    },
+                    new AppointmentsDtoFromDoctor
+                    {
+                        StartTime = DateTime.Now.AddDays(2),
+                        EndTime = DateTime.Now.AddDays(2).AddHours(1),
+                        PatientId = patient.Id
+                    }
+                };
+                if (doctor != null)
                 {
-                    StartTime = DateTime.Now.AddDays(2),
-                    EndTime = DateTime.Now.AddDays(2).AddHours(1),
-                    PatientId = patient.Id
-                }
-            };
-            
-            // Act
-            var resultResponse = await HttpClient.PostAsJsonAsync
-                ($"{DoctorsApiURL}/{doctor.Id}/appointments", appointments);
+                    // Act
+                    var resultResponse = await HttpClient.PostAsJsonAsync
+                    ($"{DoctorsApiURL}/{doctor.Id}/appointments", appointments);
 
-            // Assert
-            resultResponse.EnsureSuccessStatusCode();
-            resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+                    // Assert
+                    resultResponse.EnsureSuccessStatusCode();
+                    resultResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+                }
+            }
         }
         
         [Fact]
