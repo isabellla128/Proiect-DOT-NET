@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef,
+  OnInit,
 } from '@angular/core';
 import {
   startOfDay,
@@ -23,6 +24,8 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
+import { DoctorService } from 'src/shared/services/doctor.service';
+import { ActivatedRoute } from '@angular/router';
 
 const colors: Record<string, EventColor> = {
   yellow: {
@@ -52,8 +55,9 @@ const colors: Record<string, EventColor> = {
   ],
   templateUrl: 'medic-appointment.component.html',
 })
-export class MedicAppointmentComponent {
+export class MedicAppointmentComponent implements OnInit {
   @ViewChild('modalContent', { static: true })
+  doctorId: string = '';
   modalContent!: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
@@ -90,50 +94,42 @@ export class MedicAppointmentComponent {
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: { ...colors['purple'] },
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: { ...colors['blue'] },
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
+  events: CalendarEvent[] = [];
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal) {}
+  constructor(
+    private modal: NgbModal,
+    private doctorService: DoctorService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.route.parent?.params.subscribe(
+      (params) => (this.doctorId = params['id'])
+    );
+    this.doctorService.getAppointments(this.doctorId).subscribe({
+      next: (appointments) => {
+        console.log(appointments);
+
+        appointments.forEach((appointment, index) => {
+          this.events.push({
+            start: new Date(appointment.startTime),
+            end: new Date(appointment.endTime),
+            title: 'Appointment' + index,
+            color: { ...colors['purple'] },
+            actions: this.actions,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true,
+            },
+            draggable: true,
+          });
+        });
+      },
+      error: (error) => console.log(error),
+    });
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {

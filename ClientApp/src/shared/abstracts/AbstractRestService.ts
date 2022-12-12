@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 export default abstract class AbstractRestService<T> {
   constructor(
     private _http: HttpClient,
-    private _url: string,
+    protected _url: string,
     private _collection$: BehaviorSubject<T[]>
   ) {}
 
