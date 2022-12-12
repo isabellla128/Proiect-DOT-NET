@@ -49,10 +49,14 @@ namespace MyDocAppointment.API.Features.Hospitals
         [HttpPost]
         public IActionResult CreateHospital([FromBody] CreateHospitalDto hospitalDto)
         {
-            var hospital = new Hospital(hospitalDto.Name, hospitalDto.Address, hospitalDto.Phone);
-            hospitalRepository.Add(hospital);
-            hospitalRepository.SaveChanges();
-            return Created(nameof(GetAllHospitals), hospital);
+            if (hospitalDto.Name != null && hospitalDto.Address != null && hospitalDto.Phone != null)
+            {
+                var hospital = new Hospital(hospitalDto.Name, hospitalDto.Address, hospitalDto.Phone);
+                hospitalRepository.Add(hospital);
+                hospitalRepository.SaveChanges();
+                return Created(nameof(GetAllHospitals), hospital);
+            }
+            return BadRequest("The fields in hospital must not be null");
         }
 
         [HttpPost("{hospitalId:Guid}/doctors")]
@@ -65,7 +69,11 @@ namespace MyDocAppointment.API.Features.Hospitals
                 return NotFound("Hospital with given id not found");
             }
 
-            var doctors = doctorsDtos.Select(d => new Doctor(d.FirstName, d.LastName, d.Specialization, d.Email, d.Phone, d.Title, d.Profession, d.Location, d.Grade, d.Reviews)).ToList();
+            
+            var doctors = doctorsDtos.Select(d => {
+                if (d.FirstName != null & d.LastName != null && d.Specialization != null && d.Email != null && d.Phone != null && d.Title != null && d.Profession != null && d.Location != null)
+                    new Doctor(d.FirstName, d.LastName, d.Specialization, d.Email, d.Phone, d.Title, d.Profession, d.Location, d.Grade, d.Reviews);
+            }).ToList();
 
             var result = hospital.AddDoctors(doctors);
 

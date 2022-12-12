@@ -53,10 +53,15 @@ namespace MyDocAppointment.API.Features.Patients
         [HttpPost]
         public IActionResult CreatePatient([FromBody] CreatePatientDto patientDto)
         {
-            var patient = new Patient(patientDto.FirstName, patientDto.LastName, patientDto.Email, patientDto.Phone);
-            patientRepository.Add(patient);
-            patientRepository.SaveChanges();
-            return Created(nameof(GetAllPatients), patient);
+
+            if (patientDto.FirstName != null && patientDto.LastName != null && patientDto.Email != null && patientDto.Phone != null)
+            {
+                var patient = new Patient(patientDto.FirstName, patientDto.LastName, patientDto.Email, patientDto.Phone);
+                patientRepository.Add(patient);
+                patientRepository.SaveChanges();
+                return Created(nameof(GetAllPatients), patient);
+            }
+            return BadRequest("The fields in patient must not be null");
         }
 
 

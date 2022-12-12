@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
+using ShelterManagement.Business.Helpers;
 
 namespace MyDocAppointment.API.Features.Doctors
 {
@@ -48,7 +49,7 @@ namespace MyDocAppointment.API.Features.Doctors
         [HttpPost]
         public IActionResult Create([FromBody] CreateDoctorDto doctorDto)
         {
-            if (doctorDto.FirstName != null && doctorDto.LastName != null && doctorDto.Specialization != null && doctorDto.Email != null && doctorDto.Phone != null && doctorDto.Title != null && doctorDto.Profession != null && doctorDto.Location != null && doctorDto.Grade != null && doctorDto.Reviews != null)
+            if (doctorDto.FirstName != null && doctorDto.LastName != null && doctorDto.Specialization != null && doctorDto.Email != null && doctorDto.Phone != null && doctorDto.Title != null && doctorDto.Profession != null && doctorDto.Location != null)
             {
                 var doctor = new Doctor(doctorDto.FirstName, doctorDto.LastName, doctorDto.Specialization,
                 doctorDto.Email, doctorDto.Phone, doctorDto.Title, doctorDto.Profession, doctorDto.Location, doctorDto.Grade, doctorDto.Reviews);
@@ -140,6 +141,11 @@ namespace MyDocAppointment.API.Features.Doctors
         public IActionResult UpdateDoctor(Guid doctorId, [FromBody] Doctor doctor)
         {
             var doctorToChange = doctorRepository.GetById(doctorId).Result;
+
+            if (doctorToChange == null)
+            {
+                return NotFound("Doctor with given id not found");
+            }
 
             doctorToChange.UpdateDoctor(doctor);
 

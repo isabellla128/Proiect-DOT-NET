@@ -52,10 +52,14 @@ namespace MyDocAppointment.API.Features.Medications
         [HttpPost]
         public IActionResult Create([FromBody] CreateMedicationDto medicationDto)
         {
-            var medication = new Medication(medicationDto.Name, medicationDto.Stock, medicationDto.Unit, medicationDto.Capacity, medicationDto.Price);
-            medicationRepository.Add(medication);
-            medicationRepository.SaveChanges();
-            return Created(nameof(GetAllMedications), medication);
+            if (medicationDto.Name != null && medicationDto.Unit != null)
+            {
+                var medication = new Medication(medicationDto.Name, medicationDto.Stock, medicationDto.Unit, medicationDto.Capacity, medicationDto.Price);
+                medicationRepository.Add(medication);
+                medicationRepository.SaveChanges();
+                return Created(nameof(GetAllMedications), medication);
+            }
+            return BadRequest("The fields in medication must not be null");
         }
 
 
