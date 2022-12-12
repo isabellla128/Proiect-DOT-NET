@@ -15,7 +15,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
         public string Name { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
-        public Schedule Schedule { get; private set; }
+        public Schedule? Schedule { get; private set; }
         public Guid ScheduleId {  get; private set; }
 
         public bool ValidateName()

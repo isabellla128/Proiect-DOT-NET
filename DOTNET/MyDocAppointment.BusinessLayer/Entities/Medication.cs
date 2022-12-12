@@ -30,7 +30,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
     
         public ICollection<History> Histories { get; private set; }
 
-        public Result UpdateMedication(Medication medication)
+        public Result UpdateMedication(Medication? medication)
         {
             if (medication == null)
             {

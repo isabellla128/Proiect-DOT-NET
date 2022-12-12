@@ -8,7 +8,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
     {
         protected MyDocAppointmentDatabaseContext context;
 
-        public Repository(MyDocAppointmentDatabaseContext context)
+        protected Repository(MyDocAppointmentDatabaseContext context)
         {
             this.context = context;
         }
@@ -16,7 +16,6 @@ namespace MyDocAppointment.BusinessLayer.Repositories
         public virtual async Task<T> Add(T entity)
         {
             await context.AddAsync(entity);
-            //context.SaveChanges();
             return entity;
         }
 
@@ -28,7 +27,6 @@ namespace MyDocAppointment.BusinessLayer.Repositories
                 throw new ArgumentException($"There is no {typeof(T).Name} with id = {id}");
             }
             context.Remove(entity);
-            //context.SaveChanges();
             return entity;
         }
 
@@ -57,7 +55,6 @@ namespace MyDocAppointment.BusinessLayer.Repositories
         public virtual async Task<T> Update(T entity)
         {
             context.Update(entity);
-            //context.SaveChanges();
             return entity;
         }
     }

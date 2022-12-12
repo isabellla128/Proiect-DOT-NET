@@ -8,7 +8,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
         {
         }
 
-        public History History { get; private set; }
+        public History? History { get; private set; }
 
         public Guid HistoryId { get; private set; }
 

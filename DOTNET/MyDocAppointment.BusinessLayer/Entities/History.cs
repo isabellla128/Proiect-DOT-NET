@@ -19,7 +19,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
 
-        public Patient Patient { get; private set; }
+        public Patient? Patient { get; private set; }
 
         public Guid PatientId { get; private set; }
 

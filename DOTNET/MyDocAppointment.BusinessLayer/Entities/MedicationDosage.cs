@@ -16,7 +16,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
 
         public Guid Id { get; private set; }
 
-        public Medication Medication { get; private set; }
+        public Medication? Medication { get; private set; }
 
         public Guid MedicationId  { get; private set; }
 
