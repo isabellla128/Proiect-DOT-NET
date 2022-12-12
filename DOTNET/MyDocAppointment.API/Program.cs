@@ -23,8 +23,6 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
-//builder.Services.AddMvc();
-
 // Add services to the container.
 
 builder.Services.AddControllers().AddFluentValidation(c => c.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
@@ -48,31 +46,6 @@ builder.Services.AddScoped<IRepository<Event>, EventRepositrory>();
 builder.Services.AddScoped<IRepository<Schedule>, ScheduleRepository>();
 builder.Services.AddScoped<IRepository<MedicationDosageHistory>, MedicationDosageHistoryRepository>();
 builder.Services.AddScoped<IRepository<MedicationDosagePrescription>, MedicationDosagePrescriptionRepository>();
-
-// Create open SqliteConnection so EF won't automatically close it.
-//builder.Services.AddSingleton<DbConnection>(container =>
-//{
-//    var connection = new SqliteConnection("DataSource=:memory:");
-//    connection.Open();
-
-//    return connection;
-//});
-
-//builder.Services.AddDbContext<TestsDatabaseContext>((container, options) =>
-//{
-//    var connection = container.GetRequiredService<DbConnection>();
-//    options.UseSqlite(connection);
-//});
-
-
-//var conn = new SqliteConnection("Filename=:memory:");
-//conn.Open();
-//builder.Services.AddDbContext<TestsDatabaseContext>(c => c.UseSqlite(conn));
-
-
-var config = new ConfigurationBuilder();
-
-
 
 var app = builder.Build();
 

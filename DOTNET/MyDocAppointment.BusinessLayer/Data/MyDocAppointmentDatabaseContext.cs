@@ -29,12 +29,7 @@ namespace MyDocAppointment.BusinessLayer.Data
         public DbSet<MedicationDosagePrescription> MedicationDosagePrescriptions => Set<MedicationDosagePrescription>();
         public DbSet<MedicationDosageHistory> MedicationDosageHistories  => Set<MedicationDosageHistory>();
 
-        //public DbSet<Schedule> Schedules => Set<Schedule>();
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlite("Data Source = dbMyDocAppointmentManagement.db");
-        //}
+        public DbSet<Schedule> Schedules => Set<Schedule>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
