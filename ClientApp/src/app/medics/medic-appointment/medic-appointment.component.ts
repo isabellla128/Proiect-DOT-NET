@@ -11,7 +11,8 @@ import { EventColor } from 'calendar-utils';
 import { DoctorService } from 'src/shared/services/doctor.service';
 import { ActivatedRoute } from '@angular/router';
 import { PatientService } from 'src/shared/services/patient.service';
-import { Appointment } from 'src/models/appointment';
+import { Appointment, MyCalendarEvent } from 'src/models/appointment';
+import { AppointmentsService } from 'src/shared/services/appointments.service';
 
 const colors: Record<string, EventColor> = {
   yellow: {
@@ -75,13 +76,14 @@ export class MedicAppointmentComponent implements OnInit {
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [];
+  events: MyCalendarEvent[] = [];
 
   activeDayIsOpen: boolean = true;
 
   constructor(
     private doctorService: DoctorService,
     private patientService: PatientService,
+    private appointmentService: AppointmentsService,
     private route: ActivatedRoute
   ) {}
 
@@ -102,6 +104,7 @@ export class MedicAppointmentComponent implements OnInit {
           )
           .forEach((appointment, index) => {
             this.events.push({
+              id: appointment.id,
               start: new Date(appointment.startTime),
               end: new Date(appointment.endTime),
               title: 'Appointment' + index,
@@ -141,7 +144,7 @@ export class MedicAppointmentComponent implements OnInit {
     this.events = this.events.map((iEvent) => {
       if (iEvent === event) {
         return {
-          ...event,
+          ...(event as MyCalendarEvent),
           start: newStart,
           end: newEnd,
         };
@@ -171,8 +174,9 @@ export class MedicAppointmentComponent implements OnInit {
     this.doctorService.postAppointment(this.doctorId, this.appointmentModel);
   }
 
-  deleteEvent(eventToDelete: CalendarEvent) {
+  deleteEvent(eventToDelete: MyCalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToDelete);
+    this.appointmentService.delete(eventToDelete.id || '');
   }
 
   setView(view: CalendarView) {

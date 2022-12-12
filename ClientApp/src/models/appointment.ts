@@ -1,3 +1,4 @@
+import { CalendarEvent } from 'angular-calendar';
 import { Doctor } from './doctor';
 import { Patient } from './patent';
 
@@ -9,4 +10,8 @@ export interface Appointment {
   patient?: Patient;
   startTime: string;
   endTime: string;
+}
+
+export interface MyCalendarEvent extends CalendarEvent {
+  id?: string;
 }
