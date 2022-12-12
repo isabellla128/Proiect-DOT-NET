@@ -36,16 +36,8 @@ namespace MyDocAppointment.API.Features.Medications
                 return NotFound("There is no medication with given id");
             }
 
-            var m = new MedicationDto
-            {
-                Id = medication.Id,
-                Name = medication.Name,
-                Stock = medication.Stock,
-                Unit = medication.Unit,
-                Capacity = medication.Capacity,
-                Price = medication.Price,   
-            };
-            return Ok(m);
+            var medicationDto = mapper.Map<MedicationDto>(medication);
+            return Ok(medicationDto);
         }
 
 
@@ -54,7 +46,7 @@ namespace MyDocAppointment.API.Features.Medications
         {
             if (medicationDto.Name != null && medicationDto.Unit != null)
             {
-                var medication = new Medication(medicationDto.Name, medicationDto.Stock, medicationDto.Unit, medicationDto.Capacity, medicationDto.Price);
+                var medication = mapper.Map<Medication>(medicationDto);
                 medicationRepository.Add(medication);
                 medicationRepository.SaveChanges();
                 return Created(nameof(GetAllMedications), medication);
