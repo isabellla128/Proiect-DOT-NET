@@ -8,8 +8,6 @@ namespace MyDocAppointment.BusinessLayer.Entities
         {
         }
 
-        public Prescription? Prescription { get; private set; }
-
         public Guid PrescriptionId { get; private set; }
 
         public Result RegisterMedicationInfoToPrescription(Prescription? prescription)
@@ -19,7 +17,6 @@ namespace MyDocAppointment.BusinessLayer.Entities
                 return Result.Failure("Prescription should not be null");
             }
 
-            Prescription = prescription;
             PrescriptionId = prescription.Id;
             return Result.Success();
         }
