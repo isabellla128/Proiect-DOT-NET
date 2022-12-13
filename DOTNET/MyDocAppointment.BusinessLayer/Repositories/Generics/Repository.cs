@@ -52,7 +52,7 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             await context.SaveChangesAsync();
         }
 
-        public virtual async Task<T> Update(T entity)
+        public virtual T Update(T entity)
         {
             context.Update(entity);
             return entity;
