@@ -4,6 +4,10 @@ import { MedicsComponent } from './medics/medics.component';
 import { MedicationsComponent } from './medications/medications.component';
 import { HomeComponent } from './home/home.component';
 import { MedicPageComponent } from './medics/medic-page/medic-page.component';
+import { MedicProfileComponent } from './medics/medic-profile/medic-profile.component';
+import { MedicAppointmentComponent } from './medics/medic-appointment/medic-appointment.component';
+import { MedicLocationComponent } from './medics/medic-location/medic-location.component';
+import { PrescriptionsComponent } from './prescriptions/prescriptions.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -12,8 +16,26 @@ const routes: Routes = [
     component: MedicsComponent,
   },
   {
+    path: 'prescriptions',
+    component: PrescriptionsComponent,
+  },
+  {
     path: 'medics/:id',
     component: MedicPageComponent,
+    children: [
+      {
+        path: 'profile',
+        component: MedicProfileComponent,
+      },
+      {
+        path: 'appointment',
+        component: MedicAppointmentComponent,
+      },
+      {
+        path: 'locations',
+        component: MedicLocationComponent,
+      },
+    ],
   },
   { path: 'medications', component: MedicationsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -21,7 +43,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      scrollOffset: [0, 0],
+      anchorScrolling: 'enabled',
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

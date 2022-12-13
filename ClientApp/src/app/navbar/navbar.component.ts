@@ -8,7 +8,7 @@ import { map, shareReplay } from 'rxjs/operators';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
@@ -17,6 +17,4 @@ export class NavbarComponent implements OnInit {
     );
 
   constructor(private breakpointObserver: BreakpointObserver) {}
-
-  ngOnInit() {}
 }

@@ -35,6 +35,16 @@
       <a
         class="nav-button"
         mat-button
+        routerLink="/prescriptions"
+        routerLinkActive="section-active"
+        color="primary"
+      >
+        <mat-icon color="primary">assignment</mat-icon>
+        <p>Prescriptions</p></a
+      >
+      <a
+        class="nav-button"
+        mat-button
         routerLink="/medics"
         routerLinkActive="section-active"
         color="primary"
@@ -55,16 +65,6 @@
       <a
         class="nav-button"
         mat-button
-        routerLink="/vital-informations"
-        color="primary"
-        routerLinkActive="section-active"
-      >
-        <mat-icon color="primary">track_changes</mat-icon>
-        <p>Vital Informations</p></a
-      >
-      <a
-        class="nav-button"
-        mat-button
         routerLink="/history"
         routerLinkActive="section-active"
         color="primary"
@@ -76,7 +76,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary" class="z-index-high">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -88,8 +88,6 @@
       </button>
       <span>MyDocAppointment</span>
     </mat-toolbar>
-    <!-- <app-home></app-home> -->
     <router-outlet></router-outlet>
-    <!-- Add Content Here -->
   </mat-sidenav-content>
 </mat-sidenav-container>
