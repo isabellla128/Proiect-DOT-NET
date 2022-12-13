@@ -6,8 +6,10 @@ namespace MyDocAppointment.API.Features.Appointments
     {
         public Guid Id { get; set; }
 
+        public Guid doctorId { get; set; }
         public Doctor? Doctor { get; set; }
 
+        public Guid patientId { get; set; }
         public Patient? Patient { get; set; }
 
         public DateTime StartTime { get; set; }

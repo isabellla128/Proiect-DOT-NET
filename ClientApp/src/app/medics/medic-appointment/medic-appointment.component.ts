@@ -97,26 +97,21 @@ export class MedicAppointmentComponent implements OnInit {
       next: (appointments) => {
         console.log(appointments);
 
-        appointments
-          .filter(
-            (appointment) =>
-              appointment.patientId === this.patientService.patientId
-          )
-          .forEach((appointment, index) => {
-            this.events.push({
-              id: appointment.id,
-              start: new Date(appointment.startTime),
-              end: new Date(appointment.endTime),
-              title: 'Appointment' + index,
-              color: { ...colors['purple'] },
-              actions: this.actions,
-              resizable: {
-                beforeStart: true,
-                afterEnd: true,
-              },
-              draggable: true,
-            });
+        appointments.forEach((appointment, index) => {
+          this.events.push({
+            id: appointment.id,
+            start: new Date(appointment.startTime),
+            end: new Date(appointment.endTime),
+            title: 'Appointment' + index,
+            color: { ...colors['purple'] },
+            actions: this.actions,
+            resizable: {
+              beforeStart: true,
+              afterEnd: true,
+            },
+            draggable: true,
           });
+        });
       },
       error: (error) => console.log(error),
     });
