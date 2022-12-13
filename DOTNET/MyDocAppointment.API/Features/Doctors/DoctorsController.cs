@@ -76,7 +76,7 @@ namespace MyDocAppointment.API.Features.Doctors
 
 
         [HttpPost("{doctorId:Guid}/appointments")]
-        public IActionResult RegisterNewDoctorsToPatient(Guid doctorId, [FromBody] List<AppointmentsDtoFromDoctor> appointmentDtos)
+        public IActionResult RegisterNewDoctorsToPatient(Guid doctorId, [FromBody] List<CreateAppointmentDto> appointmentDtos)
         {
             var doctor = doctorRepository.GetById(doctorId).Result;
             if (doctor == null)

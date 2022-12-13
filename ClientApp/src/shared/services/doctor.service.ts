@@ -27,6 +27,7 @@ export class DoctorService extends AbstractRestService<Doctor> {
           startTime: appointment.startTime,
           endTime: appointment.endTime,
           patientId: appointment.patientId,
+          doctorId: doctorId,
         },
       ])
       .subscribe({
