@@ -41,6 +41,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { PrescriptionsComponent } from './prescriptions/prescriptions.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,7 @@ import { PrescriptionsComponent } from './prescriptions/prescriptions.component'
     MedicAppointmentComponent,
     MedicProfileComponent,
     PrescriptionsComponent,
+    ShoppingCartComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,6 +94,8 @@ import { PrescriptionsComponent } from './prescriptions/prescriptions.component'
       useFactory: adapterFactory,
     }),
     NgbModule,
+    MatBadgeModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

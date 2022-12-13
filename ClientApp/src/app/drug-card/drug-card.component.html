@@ -1,5 +1,10 @@
 <div class="container">
-  <mat-card class="example-card card">
+  <mat-card
+    class="example-card card"
+    [matBadge]="counter !== 0 ? counter : null"
+    matBadgeSize="medium"
+    matBadgeColor="primary"
+  >
     <img
       mat-card-image
       src="assets/drug-placeholder.png"
@@ -13,7 +18,7 @@
       color="warn"
       class="delete-icon"
       (click)="onDelete($event)"
-      *ngIf="editable"
+      *ngIf="editable || canDelete"
     >
       <mat-icon>delete_forever</mat-icon>
     </button>
@@ -40,7 +45,19 @@
         <p class="grade price">{{ drug.price }} RON</p>
       </div>
     </mat-card-content>
-    <mat-card-actions> </mat-card-actions>
+    <mat-card-actions *ngIf="canBuy">
+      <button mat-button (click)="addToCart()">
+        BUY <mat-icon>add_shopping_cart</mat-icon>
+      </button>
+    </mat-card-actions>
+    <mat-card-actions *ngIf="forCart">
+      <button mat-raised-button (click)="addToCart()" color="primary">
+        <mat-icon>exposure_plus_1</mat-icon>
+      </button>
+      <button mat-raised-button (click)="decreaseFromCart()" color="warn">
+        <mat-icon>exposure_neg_1</mat-icon>
+      </button>
+    </mat-card-actions>
   </mat-card>
   <mat-sidenav
     #drawer

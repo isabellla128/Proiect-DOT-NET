@@ -76,17 +76,32 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="primary" class="z-index-high">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async"
+    <mat-toolbar color="primary" class="z-index-high top-toolbar">
+      <div>
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async"
+        >
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span>MyDocAppointment</span>
+      </div>
+      <a
+        mat-fab
+        color="primary"
+        aria-label="Example icon button with a delete icon"
+        routerLink="/shopping-cart"
       >
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>MyDocAppointment</span>
+        <mat-icon
+          [matBadge]="cartSize"
+          matBadgeSize="small"
+          matBadgeColor="accent"
+          >shopping_cart</mat-icon
+        >
+      </a>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
