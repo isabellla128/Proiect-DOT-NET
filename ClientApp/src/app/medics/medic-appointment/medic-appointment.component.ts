@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { isSameDay, isSameMonth } from 'date-fns';
-import { Subject } from 'rxjs';
+import { Observable, Subject, of, BehaviorSubject } from 'rxjs';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PatientService } from 'src/shared/services/patient.service';
 import { Appointment, MyCalendarEvent } from 'src/models/appointment';
 import { AppointmentsService } from 'src/shared/services/appointments.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const colors: Record<string, EventColor> = {
   yellow: {
@@ -68,7 +69,9 @@ export class MedicAppointmentComponent implements OnInit {
       label: '<i class="fas fa-fw fa-trash-alt"></i>',
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
+        this.events$.next(
+          this.events$.getValue().filter((iEvent) => iEvent !== event)
+        );
         this.handleEvent('Deleted', event);
       },
     },
@@ -76,7 +79,11 @@ export class MedicAppointmentComponent implements OnInit {
 
   refresh = new Subject<void>();
 
-  events: MyCalendarEvent[] = [];
+  defaultEvents: MyCalendarEvent[] = [];
+
+  events$: BehaviorSubject<MyCalendarEvent[]> = new BehaviorSubject<
+    MyCalendarEvent[]
+  >([]);
 
   activeDayIsOpen: boolean = true;
 
@@ -84,6 +91,7 @@ export class MedicAppointmentComponent implements OnInit {
     private doctorService: DoctorService,
     private patientService: PatientService,
     private appointmentService: AppointmentsService,
+    private snackBar: MatSnackBar,
     private route: ActivatedRoute
   ) {}
 
@@ -98,7 +106,8 @@ export class MedicAppointmentComponent implements OnInit {
         console.log(appointments);
 
         appointments.forEach((appointment, index) => {
-          this.events.push({
+          const newEvents = this.events$.getValue();
+          newEvents.push({
             id: appointment.id,
             start: new Date(appointment.startTime),
             end: new Date(appointment.endTime),
@@ -111,6 +120,7 @@ export class MedicAppointmentComponent implements OnInit {
             },
             draggable: true,
           });
+          this.events$.next(newEvents);
         });
       },
       error: (error) => console.log(error),
@@ -136,41 +146,57 @@ export class MedicAppointmentComponent implements OnInit {
     newStart,
     newEnd,
   }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...(event as MyCalendarEvent),
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
+    this.events$.next(
+      this.events$.getValue().map((iEvent) => {
+        if (iEvent === event) {
+          return {
+            ...(event as MyCalendarEvent),
+            start: newStart,
+            end: newEnd,
+          };
+        }
+        return iEvent;
+      })
+    );
     this.handleEvent('Dropped or resized', event);
   }
 
   handleEvent(action: string, event: CalendarEvent): void {}
 
   addAppointment(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'Appointment',
-        start: new Date(this.appointmentModel.startTime),
-        end: new Date(this.appointmentModel.endTime),
-        color: colors['purple'],
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
+    this.doctorService
+      .postAppointment(this.doctorId, this.appointmentModel)
+      .subscribe({
+        next: (result) => {
+          this.events$.next([
+            ...this.events$.getValue(),
+            {
+              title: 'Appointment',
+              start: new Date(this.appointmentModel.startTime),
+              end: new Date(this.appointmentModel.endTime),
+              color: colors['purple'],
+              draggable: true,
+              resizable: {
+                beforeStart: true,
+                afterEnd: true,
+              },
+            },
+          ]);
         },
-      },
-    ];
-    this.doctorService.postAppointment(this.doctorId, this.appointmentModel);
+        error: (error) => {
+          this.snackBar.open('There is an error!', 'Confirm', {
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+          });
+        },
+        complete: () => {},
+      });
   }
 
   deleteEvent(eventToDelete: MyCalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
+    this.events$.next(
+      this.events$.getValue().filter((event) => event !== eventToDelete)
+    );
     this.appointmentService.delete(eventToDelete.id || '');
   }
 
