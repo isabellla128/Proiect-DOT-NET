@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Medication } from 'src/models/medication';
 import { MedicationService } from 'src/shared/services/medication.service';
+import { ShoppingCartService } from 'src/shared/services/shopping-cart.service';
 
 @Component({
   selector: 'app-drug-card',
@@ -10,9 +11,16 @@ import { MedicationService } from 'src/shared/services/medication.service';
 export class DrugCardComponent implements OnInit {
   @Input() drug = {} as Medication;
   @Input() editable = false;
+  @Input() counter = 0;
+  @Input() canBuy = false;
+  @Input() forCart = false;
+  @Input() canDelete = false;
   @Output() delete = new EventEmitter<string>();
 
-  constructor(private medicationService: MedicationService) {}
+  constructor(
+    private medicationService: MedicationService,
+    private shoppingService: ShoppingCartService
+  ) {}
 
   ngOnInit(): void {
     this.medicationService.collection$.subscribe((medications) => {
@@ -26,5 +34,13 @@ export class DrugCardComponent implements OnInit {
   }
   onDelete(event: any) {
     this.delete.emit(this.drug.id);
+  }
+
+  addToCart() {
+    this.shoppingService.addToCard(this.drug);
+  }
+
+  decreaseFromCart() {
+    this.shoppingService.decreaseFromCart(this.drug.id);
   }
 }

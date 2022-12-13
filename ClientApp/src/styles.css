@@ -88,3 +88,11 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.generic-title {
+  font-weight: bold;
+  color: #2e333c;
+  max-width: 900px;
+  margin: auto;
+  font-size: 56px;
+}
