@@ -21,7 +21,7 @@ namespace MyDocAppointment.API.Features.Prescriptions.Handlers
 
         public async Task<List<MedicationDosagePrescriptionDto>> Handle(GetAllMedicationsFromPresctriptionQuery request, CancellationToken cancellationToken)
         {
-            var prescription = prescriptionRepository.GetById(request.Id).Result;
+            var prescription = await prescriptionRepository.GetById(request.Id);
             if (prescription == null)
             {
                 throw new Exception("Prescription with given id not found");

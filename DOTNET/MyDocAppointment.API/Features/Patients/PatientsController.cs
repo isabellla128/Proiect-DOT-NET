@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using MyDocAppointment.API.Features.Appointments;
+using MyDocAppointment.API.Features.Patients.Commands_and_Queries;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
@@ -10,62 +13,55 @@ namespace MyDocAppointment.API.Features.Patients
     [ApiController]
     public class PatientsController : ControllerBase
     {
-        public readonly IRepository<Patient> patientRepository;
-        public readonly IRepository<Doctor> doctorRepository;
-        public readonly IRepository<Appointment> appointmentRepository;
-        private readonly IMapper mapper;
+        private readonly IMediator mediator;
 
-        public PatientsController(IRepository<Patient> patientRepository, IRepository<Doctor> doctorRepository, IRepository<Appointment> appointmentRepository, IMapper mapper)
+        public PatientsController(IMediator mediator)
         {
-            this.patientRepository = patientRepository;
-            this.doctorRepository = doctorRepository;
-            this.appointmentRepository = appointmentRepository;
-            this.mapper = mapper;
+            this.mediator = mediator;
         }
+
         [HttpGet]
-        public IActionResult GetAllPatients()
+        public async Task<ActionResult<List<PatientDto>>> GetAllPatients()
         {
-            var patients = patientRepository.GetAll().Result;
-            var patientsDto = mapper.Map<IEnumerable<PatientDto>>(patients);
-            return Ok(patientsDto);
+            var result = await mediator.Send(new GetAllPatientsQuery());
+            return Ok(result);
         }
 
         [HttpGet("{patientId:Guid}/appointments")]
-        public IActionResult GetAllDoctorsFromPatient(Guid patientId)
+        public async Task<ActionResult<List<AppointmentsDtoFromPatient>>> GetAllAppointmentsFromPatient(Guid patientId)
         {
-
-            var appointments = appointmentRepository.Find(appointment => appointment.PatientId == patientId).Result;
-
-            if(!appointments.Any())
+            try
             {
-                return NotFound("There is no patient with given id");
+                var result = await mediator.Send(new GetAllAppointmentsFromPatientQuery(patientId));
+                return Ok(result);
             }
+            catch (Exception ex) 
+            {
+                return NotFound(ex.Message);
+            }
+            
 
-            var appoinmentDtos = mapper.Map<IEnumerable<AppointmentsDtoFromPatient>>(appointments);
-
-            return Ok(appoinmentDtos);
         }
 
         [HttpPost]
-        public IActionResult CreatePatient([FromBody] CreatePatientDto patientDto)
+        public async Task<ActionResult<PatientDto>> CreatePatient([FromBody] CreatePatientCommand command)
         {
-
-            if (patientDto.FirstName != null && patientDto.LastName != null && patientDto.Email != null && patientDto.Phone != null)
+            try
             {
-                var patient = mapper.Map<Patient>(patientDto);
-                patientRepository.Add(patient);
-                patientRepository.SaveChanges();
-                return Created(nameof(GetAllPatients), patient);
+                var result = await mediator.Send(command);
+                return Created(nameof(GetAllPatients),result);
             }
-            return BadRequest("The fields in patient must not be null");
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
 
         [HttpDelete("{patientId:Guid}")]
-        public IActionResult DeletePatient(Guid patientId)
+        public async Task<IActionResult> DeletePatient(Guid patientId)
         {
-            patientRepository.Delete(patientId);
-            patientRepository.SaveChanges();
+            await mediator.Send(new DeletePatientComand(patientId));
             return NoContent();
         }
 
