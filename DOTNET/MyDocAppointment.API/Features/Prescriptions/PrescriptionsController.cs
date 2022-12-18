@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MyDocAppointment.API.Features.MedicationDosage;
+using MyDocAppointment.API.Features.Prescriptions.Commands_and_Queries;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
 
@@ -9,97 +12,58 @@ namespace MyDocAppointment.API.Features.Prescriptions
     [ApiController]
     public class PrescriptionsController : ControllerBase
     {
-        public readonly IRepository<Prescription> prescriptionRepository;
-        public readonly IRepository<Doctor> doctorRepository;
-        public readonly IRepository<Patient> patientRepository;
-        private readonly IRepository<Medication> medicationRepository;
-        private readonly IMapper mapper;
+        private readonly IMediator mediator;
 
-        public PrescriptionsController(IRepository<Prescription> prescriptionRepository, IRepository<Doctor> doctorRepository, IRepository<Patient> patientRepository, IRepository<Medication> medicationRepository, IMapper mapper)
+
+        public PrescriptionsController(IMediator mediator)
         {
-            this.prescriptionRepository=prescriptionRepository;
-            this.doctorRepository=doctorRepository;
-            this.patientRepository = patientRepository;
-            this.medicationRepository = medicationRepository;
-            this.mapper=mapper;
+            this.mediator = mediator;
         }
 
         [HttpGet]
-        public IActionResult GetAllPrescriptions()
+        public async Task<ActionResult<List<PrescriptionDto>>> GetAllPrescriptions()
         {
-            var prescriptions = prescriptionRepository.GetAll().Result;
-            var prescriptionsDto = mapper.Map<IEnumerable<PrescriptionDto>>(prescriptions);
-            return Ok(prescriptionsDto);
+            var result = await mediator.Send(new GetAllPrescriptionsQuery());
+            return Ok(result);
         }
 
         [HttpGet("{prescriptionId:Guid}/medicationsDosages")]
-        public IActionResult GetAllMedicationsFromPrescription(Guid prescriptionId)
+        public async Task<ActionResult<List<MedicationDosagePrescriptionDto>>> GetAllMedicationsFromPrescription(Guid prescriptionId)
         {
-            var prescription = prescriptionRepository.GetById(prescriptionId).Result;
-            if (prescription == null)
+            try
             {
-                return NotFound("Prescription with given id not found");
+                var medications = await mediator.Send(new GetAllMedicationsFromPresctriptionQuery(prescriptionId));
+                return Ok(medications);
             }
-
-            var medications = prescription.MedicationDosagePrescriptions;
-            return Ok(medications);
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+            
         }
 
 
         [HttpPost]
-        public IActionResult CreatePrescription([FromBody] CreatePrescriptionDto prescriptionDto)
+        public IActionResult CreatePrescription([FromBody] CreatePrescriptionCommnad command)
         {
-
-            var prescription = new Prescription();
+            try
+            {
+                var result = mediator.Send(command);
+                return Created(nameof(GetAllPrescriptions), result.Result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
             
-            var doctor = doctorRepository.GetById(prescriptionDto.DoctorId).Result;
-            var patient = patientRepository.GetById(prescriptionDto.PacientId).Result;
 
-            if(doctor == null)
-            {
-                return BadRequest("There is no doctor with given id");
-            }
-            if(patient == null)
-            {
-                return BadRequest("There is no patient with given id");
-            }
-            doctor.AddPrescription(prescription);
-            patient.AddPrescription(prescription);
-
-            var medicationDosages = new List<MedicationDosagePrescription>();
-            if (prescriptionDto.MedicationDosages != null)
-            {
-                foreach (var medicationDosageDto in prescriptionDto.MedicationDosages)
-                {
-                    var medication = medicationRepository.GetById(medicationDosageDto.MedicationId).Result;
-
-                    if (medication == null)
-                    {
-                        return BadRequest("Medication with given id not found");
-                    }
-
-                    var medicationDosage = new MedicationDosagePrescription(medicationDosageDto.StartDate, medicationDosageDto.EndDate, medicationDosageDto.Quantity, medicationDosageDto.Frequency);
-                    medicationDosage.AddMedication(medication);
-                    medicationDosages.Add(medicationDosage);
-
-                }
-
-                prescription.AddMedications(medicationDosages);
-
-
-                prescriptionRepository.Add(prescription);
-                prescriptionRepository.SaveChanges();
-                return Created(nameof(GetAllPrescriptions), prescription);
-            }
-            return BadRequest("There are no medications for this prescription");
         }
 
 
         [HttpDelete("{prescriptionId:Guid}")]
-        public IActionResult DeletePrescription(Guid prescriptionId)
+        public async Task<IActionResult> DeletePrescription(Guid prescriptionId)
         {
-            prescriptionRepository.Delete(prescriptionId);
-            prescriptionRepository.SaveChanges();
+            await mediator.Send(new DeletePrescriptionCommand(prescriptionId));
             return NoContent();
         }
     }

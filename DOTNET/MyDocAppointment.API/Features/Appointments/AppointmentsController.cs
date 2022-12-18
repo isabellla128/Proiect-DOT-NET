@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
@@ -17,17 +18,18 @@ namespace MyDocAppointment.API.Features.Appointments
         public AppointmentsController(IRepository<Appointment> appointmentRepository, IRepository<Patient> patientRepository, IRepository<Doctor> doctorRepository, IMapper mapper)
         {
             this.appointmentRepository = appointmentRepository;
-            this.patientRepository = patientRepository; 
+            this.patientRepository = patientRepository;
             this.doctorRepository = doctorRepository;
             this.mapper = mapper;
         }
+
 
         [HttpGet]
         public IActionResult GetAllAppointments()
         {
 
             var appointments = appointmentRepository.GetAll().Result;
-            var appointmentsDto=mapper.Map<IEnumerable<AppointmentDto>>(appointments);
+            var appointmentsDto = mapper.Map<IEnumerable<AppointmentDto>>(appointments);
             
             return Ok(appointmentsDto);
             

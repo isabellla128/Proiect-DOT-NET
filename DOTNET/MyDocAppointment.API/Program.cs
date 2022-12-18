@@ -1,5 +1,6 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MyDocAppointment.API;
 using MyDocAppointment.BusinessLayer.Data;
@@ -23,6 +24,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 // Add services to the container.
 

@@ -13,7 +13,11 @@ namespace MyDocAppointment.BusinessLayer.Repositories
         public override async Task<IReadOnlyCollection<Prescription>> GetAll()
         {
             return await context.Prescriptions.Include(p => p.MedicationDosagePrescriptions).ToListAsync();
+        }
 
+        public override async Task<Prescription?> GetById(Guid id)
+        {
+            return await context.Prescriptions.Include(p => p.MedicationDosagePrescriptions).FirstOrDefaultAsync(d => d.Id == id);
         }
     }
 }
