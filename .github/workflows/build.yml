@@ -58,10 +58,15 @@ jobs:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
       - name: Install dependencies
         run: |
+          ls
           cd ClientApp
-          npm install
-          npm install -g sonarqube-scanner
+          ls
+          npm install 
+          npm install -g jest
           npm run test
+
+      # - name: Install dependencies
+      #   run:  npm install
       # - name: Install Jest globally
       #   run:  npm install -g jest
       # - name: Run Tests
