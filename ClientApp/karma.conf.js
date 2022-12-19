@@ -26,7 +26,7 @@ module.exports = function (config) {
       encoding: "utf-8",
       legacyMode: false,
       reportName: (metadata) => {
-        return metadata.concat("xml").join(".");
+        return "test-report.xml";
       },
     },
     angularCli: {
