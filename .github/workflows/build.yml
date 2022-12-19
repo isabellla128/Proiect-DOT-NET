@@ -59,8 +59,7 @@ jobs:
       - name: Install dependencies
         with:
           projectBaseDir: ClientApp
-        run: |
-          npm install 
+        run: npm install
           npm install -g jest
           npm run test
 
