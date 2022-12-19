@@ -1,6 +1,4 @@
-// Karma configuration file, see link for more information
-// https://karma-runner.github.io/1.0/config/configuration-file.html
-
+// Example of a typical configuration
 module.exports = function (config) {
   config.set({
     basePath: "",
@@ -9,26 +7,30 @@ module.exports = function (config) {
       require("karma-jasmine"),
       require("karma-chrome-launcher"),
       require("karma-jasmine-html-reporter"),
+      require("karma-coverage-istanbul-reporter"),
       require("karma-coverage"),
       require("karma-sonarqube-reporter"),
       require("@angular-devkit/build-angular/plugins/karma"),
     ],
     client: {
-      jasmine: {
-        // you can add configuration options for Jasmine here
-        // the possible options are listed at https://jasmine.github.io/api/edge/Configuration.html
-        // for example, you can disable the random execution with `random: false`
-        // or set a specific seed with `seed: 4321`
+      clearContext: false,
+    },
+    coverageIstanbulReporter: {
+      reports: ["html", "lcovonly"],
+      fixWebpackSourcePaths: true,
+    },
+    sonarqubeReporter: {
+      basePath: "src/app",
+      outputFolder: "reports",
+      filePattern: "**/*spec.ts",
+      encoding: "utf-8",
+      legacyMode: false,
+      reportName: (metadata) => {
+        return metadata.concat("xml").join(".");
       },
-      clearContext: false, // leave Jasmine Spec Runner output visible in browser
     },
-    jasmineHtmlReporter: {
-      suppressAll: true, // removes the duplicated traces
-    },
-    coverageReporter: {
-      dir: require("path").join(__dirname, "./coverage/my-doc-appointment"),
-      subdir: ".",
-      reporters: [{ type: "html" }, { type: "text-summary" }],
+    angularCli: {
+      environment: "dev",
     },
     reporters: ["progress", "kjhtml", "sonarqube"],
     port: 9876,
@@ -37,25 +39,5 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ["Chrome"],
     singleRun: false,
-    restartOnFileChange: true,
-    sonarqubeReporter: {
-      basePath: "src/app", // test files folder
-      filePattern: "**/*spec.ts", // test files glob pattern
-      encoding: "utf-8", // test files encoding
-      outputFolder: "reports", // report destination
-      legacyMode: false, // report for Sonarqube < 6.2 (disabled)
-      reportName: function (metadata) {
-        // report name callback, but accepts also a
-        // string (file name) to generate a single file
-        /**
-         * Report metadata array:
-         * - metadata[0] = browser name
-         * - metadata[1] = browser version
-         * - metadata[2] = plataform name
-         * - metadata[3] = plataform version
-         */
-        return "sonarqube_report.xml";
-      },
-    },
   });
 };

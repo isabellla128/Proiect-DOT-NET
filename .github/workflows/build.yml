@@ -61,9 +61,9 @@ jobs:
           ls
           cd ClientApp
           ls
-          npm install 
-          npm install -g jest
-          npm run test
+          npm install -g @angular/cli
+          npm install
+          npm run test:headless
 
       # - name: Install dependencies
       #   run:  npm install
