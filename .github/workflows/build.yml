@@ -59,7 +59,9 @@ jobs:
       - name: Install dependencies
         run: |
           ls
-          npm install
+          cd ClientApp
+          ls
+          npm install 
           npm install -g jest
           npm run test
  
