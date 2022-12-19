@@ -57,12 +57,12 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Install dependencies
+        # uses: actions/checkout@v2
         with:
-            projectBaseDir: ClientApp
-        run: |
-            npm install 
-            npm install -g jest
-            npm run test
+          projectBaseDir: ClientApp
+        run: npm install 
+        run: npm install -g jest
+        run: npm run test
         
       # - name: Install dependencies
       #   run:  npm install 
