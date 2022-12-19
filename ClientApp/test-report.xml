@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
-  <file path="D:\C_sub_acoperire\GitHubProjects\Proiect-DOT-NET\ClientApp\src\app\medics\medic-location\medic-location.component.spec.ts">
-  </file>
   <file path="D:\C_sub_acoperire\GitHubProjects\Proiect-DOT-NET\ClientApp\src\app\medics\medic-page\medic-page.component.spec.ts">
   </file>
   <file path="D:\C_sub_acoperire\GitHubProjects\Proiect-DOT-NET\ClientApp\src\app\medics\medic-form\medic-form.component.spec.ts">
