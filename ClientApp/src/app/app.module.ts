@@ -27,18 +27,15 @@ import { MedicationFormComponent } from './medications/medication-form/medicatio
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MedicFormComponent } from './medics/medic-form/medic-form.component';
 import { MedicPageComponent } from './medics/medic-page/medic-page.component';
-import { MedicLocationComponent } from './medics/medic-location/medic-location.component';
 import { MedicAppointmentComponent } from './medics/medic-appointment/medic-appointment.component';
 import { MedicProfileComponent } from './medics/medic-profile/medic-profile.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { PrescriptionsComponent } from './prescriptions/prescriptions.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
@@ -57,7 +54,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MedicationFormComponent,
     MedicFormComponent,
     MedicPageComponent,
-    MedicLocationComponent,
     MedicAppointmentComponent,
     MedicProfileComponent,
     PrescriptionsComponent,

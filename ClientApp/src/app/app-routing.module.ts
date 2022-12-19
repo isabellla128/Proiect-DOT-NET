@@ -6,7 +6,6 @@ import { HomeComponent } from './home/home.component';
 import { MedicPageComponent } from './medics/medic-page/medic-page.component';
 import { MedicProfileComponent } from './medics/medic-profile/medic-profile.component';
 import { MedicAppointmentComponent } from './medics/medic-appointment/medic-appointment.component';
-import { MedicLocationComponent } from './medics/medic-location/medic-location.component';
 import { PrescriptionsComponent } from './prescriptions/prescriptions.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
@@ -31,10 +30,6 @@ const routes: Routes = [
       {
         path: 'appointment',
         component: MedicAppointmentComponent,
-      },
-      {
-        path: 'locations',
-        component: MedicLocationComponent,
       },
     ],
   },

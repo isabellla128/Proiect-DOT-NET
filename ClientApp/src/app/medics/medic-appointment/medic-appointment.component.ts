@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { isSameDay, isSameMonth } from 'date-fns';
-import { Observable, Subject, of, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -98,8 +98,8 @@ export class MedicAppointmentComponent implements OnInit {
   ngOnInit(): void {
     this.appointmentModel.patientId = this.patientService.patientId;
     this.route.parent?.params.subscribe((params) => {
-      (this.doctorId = params['id']),
-        (this.appointmentModel.doctorId = params['id']);
+      this.doctorId = params['id'];
+      this.appointmentModel.doctorId = params['id'];
     });
     this.doctorService.getAppointments(this.doctorId).subscribe({
       next: (appointments) => {
@@ -161,7 +161,9 @@ export class MedicAppointmentComponent implements OnInit {
     this.handleEvent('Dropped or resized', event);
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {}
+  handleEvent(action: string, event: CalendarEvent): void {
+    console.log(action);
+  }
 
   addAppointment(): void {
     this.doctorService
