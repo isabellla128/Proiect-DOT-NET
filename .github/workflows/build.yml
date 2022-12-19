@@ -63,7 +63,7 @@ jobs:
           ls
           npm install -g @angular/cli
           npm install
-          npm run test:headless
+          npm run test
 
       # - name: Install dependencies
       #   run:  npm install

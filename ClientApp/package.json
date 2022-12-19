@@ -6,8 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test:headless": "ng test --watch=false --code-coverage --source-map=false",
-    "sonar-scanner": "sonar-scanner"
+    "test": "ng test --watch=false --code-coverage"
   },
   "private": true,
   "dependencies": {
