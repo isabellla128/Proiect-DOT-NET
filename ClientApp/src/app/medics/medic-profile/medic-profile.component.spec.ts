@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MedicProfileComponent } from './medic-profile.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MedicProfileComponent', () => {
   let component: MedicProfileComponent;
@@ -8,9 +10,9 @@ describe('MedicProfileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MedicProfileComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      declarations: [MedicProfileComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MedicProfileComponent);
     component = fixture.componentInstance;

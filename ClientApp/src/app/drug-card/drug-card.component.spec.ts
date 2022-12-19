@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DrugCardComponent } from './drug-card.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('DrugCardComponent', () => {
   let component: DrugCardComponent;
@@ -8,9 +9,9 @@ describe('DrugCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DrugCardComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientTestingModule],
+      declarations: [DrugCardComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DrugCardComponent);
     component = fixture.componentInstance;
