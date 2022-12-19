@@ -60,9 +60,8 @@ jobs:
         # uses: actions/checkout@v2
         with:
           projectBaseDir: ClientApp
-        run: npm install 
-        run: npm install -g jest
-        run: npm run test
+        run: npm install && npm install -g jest && npm run test
+ 
         
       # - name: Install dependencies
       #   run:  npm install 
