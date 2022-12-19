@@ -18,15 +18,8 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "es2020",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
-    "types": [
-      "@angular/localize",
-      "jest",
-      "node"
-    ],
+    "lib": ["es2020", "dom"],
+    "types": ["@angular/localize", "@types/jest", "node"],
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
