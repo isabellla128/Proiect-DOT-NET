@@ -4948,6 +4948,13 @@
     "mkdirp" "^1.0.0"
     "winston" "^3.0.0"
 
+"karma-sonarqube-unit-reporter@^0.0.23":
+  "integrity" "sha512-Mp1b8pkZzFxRWS2eeEDzkrPXIlotRckLJ0C2fXUiUoilAVYJ5AiAyYN14cJzxGbRx65DdXBpu5LI+lt+MHigWA=="
+  "resolved" "https://registry.npmjs.org/karma-sonarqube-unit-reporter/-/karma-sonarqube-unit-reporter-0.0.23.tgz"
+  "version" "0.0.23"
+  dependencies:
+    "xmlbuilder" "^13.0.2"
+
 "karma-source-map-support@1.4.0":
   "integrity" "sha512-RsBECncGO17KAoJCYXjv+ckIz+Ii9NCi+9enk+rq6XC81ezYkb4/RHE6CTXdA7IOJqoF3wcaLfVG0CPmE5ca6A=="
   "resolved" "https://registry.npmjs.org/karma-source-map-support/-/karma-source-map-support-1.4.0.tgz"
@@ -4955,7 +4962,7 @@
   dependencies:
     "source-map-support" "^0.5.5"
 
-"karma@^6.0.0", "karma@^6.3.0", "karma@~6.4.0":
+"karma@^6.0.0", "karma@^6.3.0", "karma@>=0.9", "karma@~6.4.0":
   "integrity" "sha512-Cj57NKOskK7wtFWSlMvZf459iX+kpYIPXmkNUzP2WAFcA7nhr/ALn5R7sw3w+1udFDcpMx/tuB8d5amgm3ijaA=="
   "resolved" "https://registry.npmjs.org/karma/-/karma-6.4.1.tgz"
   "version" "6.4.1"
@@ -7583,6 +7590,11 @@
   "integrity" "sha512-huCv9IH9Tcf95zuYCsQraZtWnJvBtLVE0QHMOs8bWyZAFZNDcYjsPq1nEx8jKA9y+Beo9v+7OBPRisQTjinQMw=="
   "resolved" "https://registry.npmjs.org/xml/-/xml-1.0.1.tgz"
   "version" "1.0.1"
+
+"xmlbuilder@^13.0.2":
+  "integrity" "sha512-Eux0i2QdDYKbdbA6AM6xE4m6ZTZr4G4xF9kahI2ukSEMCzwce2eX9WlTI5J3s+NU7hpasFsr8hWIONae7LluAQ=="
+  "resolved" "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-13.0.2.tgz"
+  "version" "13.0.2"
 
 "xmlcreate@^2.0.4":
   "integrity" "sha512-nquOebG4sngPmGPICTS5EnxqhKbCmz5Ox5hsszI2T6U5qdrJizBc+0ilYSEjTSzU0yZcmvppztXe/5Al5fUwdg=="
