@@ -66,8 +66,7 @@ jobs:
       - name: Tests
         run: |
           cd ClientApp
-          ng test
-        # npm install 
-        # npm install -g jest
-        # npm run test
+          npm install 
+          npm install -g jest
+          npm run test
       
