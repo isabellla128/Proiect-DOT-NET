@@ -41,7 +41,7 @@ import { PrescriptionsComponent } from './prescriptions/prescriptions.component'
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { OverlayModule } from '@angular/cdk/overlay';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +61,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   ],
   imports: [
     BrowserModule,
+    OverlayModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
