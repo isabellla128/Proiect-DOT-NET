@@ -20,6 +20,7 @@
     "module": "es2020",
     "lib": ["es2020", "dom"],
     "types": ["@angular/localize", "@types/jest", "node"],
+    "skipLibCheck": true,
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
