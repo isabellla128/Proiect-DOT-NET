@@ -59,13 +59,10 @@ jobs:
       - name: Install dependencies
         with:
           projectBaseDir: ClientApp
-        run: npm install 
-
-      - name: Install Sonarqube Scanner
-          run: npm install -g sonarqube-scanner
-
-      - name: Run test
-          run: npm run test
+        run: |
+          npm install 
+          npm install -g jest
+          npm run test
 
       # - name: Install dependencies
       #   run:  npm install
