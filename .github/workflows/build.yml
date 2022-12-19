@@ -61,7 +61,7 @@ jobs:
           projectBaseDir: ClientApp
         run: |
           npm install 
-          npm install -g sonarqube-scanner
+          npm install -g jest
           npm run test
 
       # - name: Install dependencies
