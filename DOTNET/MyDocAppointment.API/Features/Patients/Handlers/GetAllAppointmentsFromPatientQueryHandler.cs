@@ -25,7 +25,7 @@ namespace MyDocAppointment.API.Features.Patients.Handlers
 
             if (!appointments.Any())
             {
-                throw new Exception("There is no patient with given id");
+                throw new KeyNotFoundException("There is no patient with given id");
             }
 
             var appoinmentDtos = mapper.Map<List<AppointmentsDtoFromPatient>>(appointments);

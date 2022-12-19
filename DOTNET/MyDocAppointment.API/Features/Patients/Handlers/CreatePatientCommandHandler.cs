@@ -27,7 +27,7 @@ namespace MyDocAppointment.API.Features.Patients.Handlers
                 var patientDto = mapper.Map<PatientDto>(patient);
                 return patientDto;
             }
-            throw new Exception("The fields in patient must not be null");
+            throw new BadHttpRequestException("The fields in patient must not be null");
         }
     }
 }

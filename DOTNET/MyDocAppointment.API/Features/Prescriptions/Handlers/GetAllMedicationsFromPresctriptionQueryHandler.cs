@@ -24,7 +24,7 @@ namespace MyDocAppointment.API.Features.Prescriptions.Handlers
             var prescription = await prescriptionRepository.GetById(request.Id);
             if (prescription == null)
             {
-                throw new Exception("Prescription with given id not found");
+                throw new KeyNotFoundException("Prescription with given id not found");
             }
 
             var medications = prescription.MedicationDosagePrescriptions;

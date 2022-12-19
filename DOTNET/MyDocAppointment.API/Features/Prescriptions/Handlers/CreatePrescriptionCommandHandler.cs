@@ -40,11 +40,11 @@ namespace MyDocAppointment.API.Features.Prescriptions.Handlers
 
             if (doctor == null)
             {
-                throw new Exception("There is no doctor with given id");
+                throw new BadHttpRequestException("There is no doctor with given id");
             }
             if (patient == null)
             {
-                throw new Exception("There is no patient with given id");
+                throw new BadHttpRequestException("There is no patient with given id");
             }
             doctor.AddPrescription(prescription);
             patient.AddPrescription(prescription);
@@ -58,7 +58,7 @@ namespace MyDocAppointment.API.Features.Prescriptions.Handlers
 
                     if (medication == null)
                     {
-                        throw new Exception("Medication with given id not found");
+                        throw new BadHttpRequestException("Medication with given id not found");
                     }
 
                     var medicationDosage = new MedicationDosagePrescription(medicationDosageDto.StartDate, medicationDosageDto.EndDate, medicationDosageDto.Quantity, medicationDosageDto.Frequency);
@@ -70,11 +70,11 @@ namespace MyDocAppointment.API.Features.Prescriptions.Handlers
                 prescription.AddMedications(medicationDosages);
 
 
-                prescriptionRepository.Add(prescription);
+                await prescriptionRepository.Add(prescription);
                 prescriptionRepository.SaveChanges();
                 return mapper.Map<PrescriptionDto>(prescription);
             }
-            throw new Exception("There are no medications for this prescription");
+            throw new BadHttpRequestException("There are no medications for this prescription");
         }
     }
 }
