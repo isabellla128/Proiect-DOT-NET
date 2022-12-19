@@ -57,12 +57,14 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Install dependencies
-        with:
-            projectBaseDir: ClientApp
         run: |
-            npm install 
-            npm install -g jest
-            npm run test
+          ls
+          cd ClientApp
+          ls
+          npm install 
+          npm install -g jest
+          npm run test
+ 
         
       # - name: Install dependencies
       #   run:  npm install 
