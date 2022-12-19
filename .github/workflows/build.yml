@@ -61,7 +61,7 @@ jobs:
           cd ClientApp
           npm install
           npm install -g sonarqube-scanner
-          rpm run test
+          npm run test
       # - name: Install Jest globally
       #   run:  npm install -g jest
       # - name: Run Tests
