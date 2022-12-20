@@ -1,6 +1,7 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+import { EventColor } from 'calendar-utils';
 
 export const environment = {
   production: false,
@@ -13,3 +14,14 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
+
+export const colors: Record<string, EventColor> = {
+  yellow: {
+    primary: '#ffd740',
+    secondary: '#FDF1BA',
+  },
+  purple: {
+    primary: '#673ab7',
+    secondary: '#FAE3E3',
+  },
+};

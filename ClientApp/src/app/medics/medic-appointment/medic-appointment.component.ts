@@ -7,7 +7,6 @@ import {
   CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';
-import { EventColor } from 'calendar-utils';
 import { DoctorService } from 'src/shared/services/doctor.service';
 import { ActivatedRoute } from '@angular/router';
 import { PatientService } from 'src/shared/services/patient.service';
@@ -16,17 +15,7 @@ import { AppointmentsService } from 'src/shared/services/appointments.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Patient } from 'src/models/patent';
 import * as moment from 'moment';
-
-const colors: Record<string, EventColor> = {
-  yellow: {
-    primary: '#ffd740',
-    secondary: '#FDF1BA',
-  },
-  purple: {
-    primary: '#673ab7',
-    secondary: '#FAE3E3',
-  },
-};
+import { colors } from 'src/environments/environment';
 
 @Component({
   selector: 'app-medic-appointment',
@@ -60,26 +49,6 @@ export class MedicAppointmentComponent implements OnInit {
         event: CalendarEvent;
       }
     | undefined;
-
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events$.next(
-          this.events$.getValue().filter((iEvent) => iEvent !== event)
-        );
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
 
   refresh = new Subject<void>();
 
@@ -136,7 +105,6 @@ export class MedicAppointmentComponent implements OnInit {
             end: new Date(appointment.endTime),
             title: 'Appointment' + index,
             color: { ...colors['purple'] },
-            actions: this.actions,
             resizable: {
               beforeStart: true,
               afterEnd: true,

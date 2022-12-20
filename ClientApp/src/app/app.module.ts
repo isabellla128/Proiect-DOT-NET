@@ -42,6 +42,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SettingsComponent } from './settings/settings.component';
+import { AppointmentsComponent } from './appointments/appointments.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { SettingsComponent } from './settings/settings.component';
     PrescriptionsComponent,
     ShoppingCartComponent,
     SettingsComponent,
+    AppointmentsComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { MedicAppointmentComponent } from './medics/medic-appointment/medic-appo
 import { PrescriptionsComponent } from './prescriptions/prescriptions.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { SettingsComponent } from './settings/settings.component';
+import { AppointmentsComponent } from './appointments/appointments.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
     ],
   },
   { path: 'medications', component: MedicationsComponent },
+  { path: 'appointments', component: AppointmentsComponent },
   { path: 'shopping-cart', component: ShoppingCartComponent },
   { path: 'settings', component: SettingsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },

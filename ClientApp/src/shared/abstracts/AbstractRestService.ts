@@ -6,7 +6,9 @@ export default abstract class AbstractRestService<T> {
     private _http: HttpClient,
     protected _url: string,
     private _collection$: BehaviorSubject<T[]>
-  ) {}
+  ) {
+    this.getAll();
+  }
 
   public get collection$(): BehaviorSubject<T[]> {
     return this._collection$;

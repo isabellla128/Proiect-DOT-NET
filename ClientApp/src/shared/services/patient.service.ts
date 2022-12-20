@@ -12,13 +12,13 @@ export class PatientService extends AbstractRestService<Patient> {
   currentPatient$ = new BehaviorSubject<Patient>({} as Patient);
   constructor(private http: HttpClient) {
     super(http, BASE_API_URL + 'Patients', new BehaviorSubject<Patient[]>([]));
-    this.getAll();
     this.currentPatient$.next(this.getPatientFromLocalStorage());
 
     this.currentPatient$.subscribe((patient) => {
       localStorage.setItem('patient', JSON.stringify(patient));
     });
   }
+
   getPatientFromLocalStorage() {
     try {
       const parsedJSON = JSON.parse(localStorage.getItem('patient') || '');
