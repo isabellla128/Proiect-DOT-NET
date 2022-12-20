@@ -17,11 +17,14 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.patientService.collection$.subscribe((patients) => {
       this.patients = patients;
-      this.patientControl.setValue(this.patients[0]);
     });
 
-    this.patientControl.valueChanges.subscribe((value) =>
-      this.patientService.currentPatient$.next(value || ({} as Patient))
-    );
+    this.patientService.currentPatient$.subscribe((patient) => {
+      this.patientControl.setValue(patient);
+    });
+
+    this.patientControl.valueChanges.subscribe((value) => {
+      this.patientService.currentPatient$.next(value || ({} as Patient));
+    });
   }
 }
