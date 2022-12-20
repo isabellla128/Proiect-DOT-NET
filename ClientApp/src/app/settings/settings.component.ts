@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Patient } from 'src/models/patent';
 import { PatientService } from 'src/shared/services/patient.service';
 

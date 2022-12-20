@@ -3,7 +3,6 @@ import { isSameDay, isSameMonth } from 'date-fns';
 import { Subject, BehaviorSubject } from 'rxjs';
 import {
   CalendarEvent,
-  CalendarEventAction,
   CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';

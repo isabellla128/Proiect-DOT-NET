@@ -13,14 +13,14 @@ export class MedicsComponent implements OnInit {
   constructor(public doctorService: DoctorService) {}
 
   ngOnInit() {
-    this.doctorService.collection$.subscribe(
-      (response) => {
+    this.doctorService.collection$.subscribe({
+      next: (response) => {
         this.doctors = response;
       },
-      (error) => {
+      error: (error) => {
         console.error(error);
-      }
-    );
+      },
+    });
   }
 
   onDelete(id: string) {
