@@ -41,6 +41,7 @@ import { PrescriptionsComponent } from './prescriptions/prescriptions.component'
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MedicProfileComponent,
     PrescriptionsComponent,
     ShoppingCartComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

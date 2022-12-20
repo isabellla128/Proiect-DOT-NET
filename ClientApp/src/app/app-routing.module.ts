@@ -8,6 +8,7 @@ import { MedicProfileComponent } from './medics/medic-profile/medic-profile.comp
 import { MedicAppointmentComponent } from './medics/medic-appointment/medic-appointment.component';
 import { PrescriptionsComponent } from './prescriptions/prescriptions.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
   },
   { path: 'medications', component: MedicationsComponent },
   { path: 'shopping-cart', component: ShoppingCartComponent },
+  { path: 'settings', component: SettingsComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' },
 ];

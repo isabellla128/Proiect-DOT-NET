@@ -14,6 +14,7 @@ import { PatientService } from 'src/shared/services/patient.service';
 import { Appointment, MyCalendarEvent } from 'src/models/appointment';
 import { AppointmentsService } from 'src/shared/services/appointments.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Patient } from 'src/models/patent';
 
 const colors: Record<string, EventColor> = {
   yellow: {
@@ -34,6 +35,8 @@ const colors: Record<string, EventColor> = {
 })
 export class MedicAppointmentComponent implements OnInit {
   doctorId: string = '';
+
+  currentPatient: Patient = {} as Patient;
 
   view: CalendarView = CalendarView.Month;
 
@@ -96,7 +99,11 @@ export class MedicAppointmentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.appointmentModel.patientId = this.patientService.patientId;
+    this.patientService.currentPatient$.subscribe((patient) => {
+      this.appointmentModel.patientId = patient.id;
+      this.currentPatient = patient;
+    });
+
     this.route.parent?.params.subscribe((params) => {
       this.doctorId = params['id'];
       this.appointmentModel.doctorId = params['id'];
@@ -105,23 +112,27 @@ export class MedicAppointmentComponent implements OnInit {
       next: (appointments) => {
         console.log(appointments);
 
-        appointments.forEach((appointment, index) => {
-          const newEvents = this.events$.getValue();
-          newEvents.push({
-            id: appointment.id,
-            start: new Date(appointment.startTime),
-            end: new Date(appointment.endTime),
-            title: 'Appointment' + index,
-            color: { ...colors['purple'] },
-            actions: this.actions,
-            resizable: {
-              beforeStart: true,
-              afterEnd: true,
-            },
-            draggable: true,
+        appointments
+          .filter(
+            (appointment) => appointment.patientId === this.currentPatient.id
+          )
+          .forEach((appointment, index) => {
+            const newEvents = this.events$.getValue();
+            newEvents.push({
+              id: appointment.id,
+              start: new Date(appointment.startTime),
+              end: new Date(appointment.endTime),
+              title: 'Appointment' + index,
+              color: { ...colors['purple'] },
+              actions: this.actions,
+              resizable: {
+                beforeStart: true,
+                afterEnd: true,
+              },
+              draggable: true,
+            });
+            this.events$.next(newEvents);
           });
-          this.events$.next(newEvents);
-        });
       },
       error: (error) => console.log(error),
     });
