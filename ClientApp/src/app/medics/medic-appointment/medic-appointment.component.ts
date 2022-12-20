@@ -15,6 +15,7 @@ import { Appointment, MyCalendarEvent } from 'src/models/appointment';
 import { AppointmentsService } from 'src/shared/services/appointments.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Patient } from 'src/models/patent';
+import * as moment from 'moment';
 
 const colors: Record<string, EventColor> = {
   yellow: {
@@ -49,8 +50,8 @@ export class MedicAppointmentComponent implements OnInit {
     id: '',
     doctorId: '',
     patientId: '',
-    startTime: '',
-    endTime: '',
+    startTime: moment(this.currentDate).add(1, 'd').add(10, 'm').toISOString(),
+    endTime: moment(this.currentDate).add(1, 'd').add(20, 'm').toISOString(),
   };
 
   modalData:
@@ -87,6 +88,9 @@ export class MedicAppointmentComponent implements OnInit {
   events$: BehaviorSubject<MyCalendarEvent[]> = new BehaviorSubject<
     MyCalendarEvent[]
   >([]);
+  patientEvents$: BehaviorSubject<MyCalendarEvent[]> = new BehaviorSubject<
+    MyCalendarEvent[]
+  >([]);
 
   activeDayIsOpen: boolean = true;
 
@@ -96,7 +100,19 @@ export class MedicAppointmentComponent implements OnInit {
     private appointmentService: AppointmentsService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.events$.subscribe((events) => {
+      const filteredEvents = events.filter(
+        (event) => event.patientId === this.appointmentModel.patientId
+      );
+
+      filteredEvents.forEach((event) => {
+        event.color = { ...colors['yellow'] };
+      });
+
+      this.patientEvents$.next(filteredEvents);
+    });
+  }
 
   ngOnInit(): void {
     this.patientService.currentPatient$.subscribe((patient) => {
@@ -110,12 +126,12 @@ export class MedicAppointmentComponent implements OnInit {
     });
     this.doctorService.getAppointments(this.doctorId).subscribe({
       next: (appointments) => {
-        console.log(appointments);
-
         appointments.forEach((appointment, index) => {
           const newEvents = this.events$.getValue();
           newEvents.push({
             id: appointment.id,
+            patientId: appointment.patientId,
+            doctorId: appointment.doctorId,
             start: new Date(appointment.startTime),
             end: new Date(appointment.endTime),
             title: 'Appointment' + index,
@@ -198,7 +214,21 @@ export class MedicAppointmentComponent implements OnInit {
             verticalPosition: 'bottom',
           });
         },
-        complete: () => {},
+        complete: () => {
+          this.appointmentModel = {
+            id: '',
+            doctorId: '',
+            patientId: '',
+            startTime: moment(this.currentDate)
+              .add(1, 'd')
+              .add(10, 'm')
+              .toISOString(),
+            endTime: moment(this.currentDate)
+              .add(1, 'd')
+              .add(20, 'm')
+              .toISOString(),
+          };
+        },
       });
   }
 

@@ -14,4 +14,6 @@ export interface Appointment {
 
 export interface MyCalendarEvent extends CalendarEvent {
   id?: string;
+  patientId?: string;
+  doctorId?: string;
 }
