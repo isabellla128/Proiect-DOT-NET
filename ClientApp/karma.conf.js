@@ -15,8 +15,22 @@ module.exports = function (config) {
     client: {
       clearContext: false,
     },
+    coverageReporter: {
+      dir: "coverage",
+      subdir: ".",
+      reporters: [{ type: "lcov" }],
+      check: {
+        global: {
+          statements: 15,
+          branches: 15,
+          functions: 15,
+          lines: 15,
+        },
+      },
+    },
     coverageIstanbulReporter: {
-      reports: ["html", "lcovonly"],
+      reports: ["html", "lcovonly", "text-summary"],
+
       fixWebpackSourcePaths: true,
     },
     sonarqubeReporter: {
