@@ -47,6 +47,11 @@ namespace MyDocAppointment.BusinessLayer.Repositories
             return await context.FindAsync<T>(id);
         }
 
+        public virtual async Task<T?> GetById(string id)
+        {
+            return await context.FindAsync<T>(id);
+        }
+
         public async void SaveChanges()
         {
             await context.SaveChangesAsync();

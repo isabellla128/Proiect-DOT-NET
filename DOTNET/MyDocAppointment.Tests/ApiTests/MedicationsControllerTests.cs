@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using MyDocAppointment.API.Features.Medications;
 using System.Net.Http.Json;
-using Xunit;
 
 namespace MyDocAppointment.Tests.ApiTests
 {

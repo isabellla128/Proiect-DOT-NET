@@ -11,6 +11,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
             Stock = stock;
             Prescriptions = new List<Prescription>();
             Histories = new List<History>();
+            Bills = new List<Bill>();
             Unit = unit;
             Capacity = capacity;
             Price = price;
@@ -30,6 +31,8 @@ namespace MyDocAppointment.BusinessLayer.Entities
     
         public ICollection<History> Histories { get; private set; }
 
+        public ICollection<Bill> Bills { get; private set; }
+
         public Result UpdateMedication(Medication? medication)
         {
             if (medication == null)
@@ -44,6 +47,29 @@ namespace MyDocAppointment.BusinessLayer.Entities
             Price = medication.Price;
 
             return Result.Success();
+        }
+
+        public Result RegisterBillToMedication(Bill? bill)
+        {
+            if (bill == null)
+            {
+                return Result.Failure("Bill should not be null");
+            }
+
+            Bills.Add(bill);
+
+            return Result.Success();
+        }
+
+        public Result UpdateStock()
+        {
+            if (Stock >= 1)
+            {
+                Stock -= 1;
+                return Result.Success();
+            }
+
+            return Result.Failure($"Medication {Name} does not have enough stock.");
         }
     }
 }

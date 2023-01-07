@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.BusinessLayer.Entities;
 using MyDocAppointment.BusinessLayer.Repositories;
-using ShelterManagement.Business.Helpers;
 
 namespace MyDocAppointment.API.Features.Doctors
 {

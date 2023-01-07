@@ -2,7 +2,6 @@ using FluentAssertions;
 using MyDocAppointment.API.Features.Histories;
 using MyDocAppointment.API.Features.Patients;
 using System.Net.Http.Json;
-using Xunit;
 
 namespace MyDocAppointment.Tests.ApiTests
 {

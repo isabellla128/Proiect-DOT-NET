@@ -11,5 +11,6 @@ namespace MyDocAppointment.BusinessLayer.Repositories
         T Update(T entity);
         Task<IReadOnlyCollection<T>> Find(Expression<Func<T, bool>> predicate);
         void SaveChanges();
+        Task<T?> GetById(string id);
     }
 }

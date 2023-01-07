@@ -31,6 +31,8 @@ namespace MyDocAppointment.API
             services.AddScoped<IRepository<Appointment>, AppointmentRepository>();
             services.AddScoped<IRepository<MedicationDosageHistory>, MedicationDosageHistoryRepository>();
             services.AddScoped<IRepository<MedicationDosagePrescription>, MedicationDosagePrescriptionRepository>();
+            services.AddScoped<IRepository<Bill>, BillRepository>();
+            services.AddScoped<IRepository<Payment>, PaymentRepository>();
             services.AddDbContext<MyDocAppointmentDatabaseContext>(options => options.UseSqlite("Data Source = dbMyDocAppointmentManagement.db"));
             return services;
         }

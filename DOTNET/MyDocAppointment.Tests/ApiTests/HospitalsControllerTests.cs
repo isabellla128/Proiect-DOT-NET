@@ -2,7 +2,6 @@
 using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.API.Features.Hospitals;
 using System.Net.Http.Json;
-using Xunit;
 
 namespace MyDocAppointment.Tests.ApiTests
 {

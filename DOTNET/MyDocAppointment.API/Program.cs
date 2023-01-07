@@ -1,12 +1,4 @@
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 using MyDocAppointment.API;
-using MyDocAppointment.BusinessLayer.Data;
-using MyDocAppointment.BusinessLayer.Entities;
-using MyDocAppointment.BusinessLayer.Repositories;
-using System.Reflection;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
