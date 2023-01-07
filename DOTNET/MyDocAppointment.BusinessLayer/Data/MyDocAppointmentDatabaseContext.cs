@@ -27,6 +27,9 @@ namespace MyDocAppointment.BusinessLayer.Data
         public DbSet<MedicationDosagePrescription> MedicationDosagePrescriptions => Set<MedicationDosagePrescription>();
         public DbSet<MedicationDosageHistory> MedicationDosageHistories  => Set<MedicationDosageHistory>();
 
+        public DbSet<Bill> Bills => Set<Bill>();
+        public DbSet<Payment> Payments => Set<Payment>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //set null hospitalId on doctor when delete hospital
@@ -36,6 +39,11 @@ namespace MyDocAppointment.BusinessLayer.Data
                 .HasForeignKey(@"HospitalId")
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .IsRequired(false);
+            modelBuilder.Entity<Bill>()
+                    .HasOne(b => b.Payment)
+                    .WithOne(p => p.Bill)
+                    .HasForeignKey<Payment>(p => p.BillId);
+
             base.OnModelCreating(modelBuilder);
 
 

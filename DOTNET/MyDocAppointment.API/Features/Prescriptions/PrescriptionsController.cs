@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MyDocAppointment.API.Features.MedicationDosage;
 using MyDocAppointment.API.Features.Prescriptions.Commands_and_Queries;
-using MyDocAppointment.BusinessLayer.Entities;
-using MyDocAppointment.BusinessLayer.Repositories;
 
 namespace MyDocAppointment.API.Features.Prescriptions
 {

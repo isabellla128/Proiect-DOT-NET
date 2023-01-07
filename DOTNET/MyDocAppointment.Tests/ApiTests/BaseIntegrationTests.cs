@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MyDocAppointment.BusinessLayer.Data;
-using Xunit;
 
 namespace MyDocAppointment.Tests.ApiTests
 {

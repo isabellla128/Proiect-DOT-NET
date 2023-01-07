@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MyDocAppointment.API.Features.Appointments;
+using MyDocAppointment.API.Features.Bills;
 using MyDocAppointment.API.Features.Doctors;
 using MyDocAppointment.API.Features.Histories;
 using MyDocAppointment.API.Features.Hospitals;
@@ -44,6 +45,10 @@ namespace MyDocAppointment.API
             CreateMap<Prescription, CreatePrescriptionCommnad>().ReverseMap();
             CreateMap<MedicationDosagePrescription, MedicationDosagePrescriptionDto>().ReverseMap();
 
+            CreateMap<Bill, BillDto>().ReverseMap();
+            CreateMap<Bill, CreateBillDto>().ReverseMap();
+            
+            CreateMap<Payment, PaymentDto>().ReverseMap();
 
         }
     }

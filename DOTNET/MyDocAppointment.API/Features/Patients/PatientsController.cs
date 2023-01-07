@@ -1,11 +1,7 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using MyDocAppointment.API.Features.Appointments;
 using MyDocAppointment.API.Features.Patients.Commands_and_Queries;
-using MyDocAppointment.BusinessLayer.Entities;
-using MyDocAppointment.BusinessLayer.Repositories;
 
 namespace MyDocAppointment.API.Features.Patients
 {

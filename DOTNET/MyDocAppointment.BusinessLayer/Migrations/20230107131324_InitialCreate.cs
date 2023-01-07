@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -10,6 +11,19 @@ namespace MyDocAppointment.BusinessLayer.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Bills",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    BillTotal = table.Column<double>(type: "REAL", nullable: false),
+                    PaymentId = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bills", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Hospitals",
                 columns: table => new
@@ -56,16 +70,23 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Schedule",
+                name: "Payments",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    OrderStatus = table.Column<int>(type: "INTEGER", nullable: false),
+                    CardholderName = table.Column<string>(type: "TEXT", nullable: false),
+                    BillId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Schedule", x => x.Id);
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_Bills_BillId",
+                        column: x => x.BillId,
+                        principalTable: "Bills",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,6 +117,30 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BillMedication",
+                columns: table => new
+                {
+                    BillsId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    MedicationsId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BillMedication", x => new { x.BillsId, x.MedicationsId });
+                    table.ForeignKey(
+                        name: "FK_BillMedication_Bills_BillsId",
+                        column: x => x.BillsId,
+                        principalTable: "Bills",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BillMedication_Medications_MedicationsId",
+                        column: x => x.MedicationsId,
+                        principalTable: "Medications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "History",
                 columns: table => new
                 {
@@ -117,27 +162,6 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                         name: "FK_History_Patients_PatientId",
                         column: x => x.PatientId,
                         principalTable: "Patients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Events",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ScheduleId = table.Column<Guid>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Events", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Events_Schedule_ScheduleId",
-                        column: x => x.ScheduleId,
-                        principalTable: "Schedule",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -269,14 +293,14 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 column: "PatientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BillMedication_MedicationsId",
+                table: "BillMedication",
+                column: "MedicationsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Doctors_HospitalId",
                 table: "Doctors",
                 column: "HospitalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Events_ScheduleId",
-                table: "Events",
-                column: "ScheduleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_History_MedicationId",
@@ -309,6 +333,12 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 column: "PrescriptionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Payments_BillId",
+                table: "Payments",
+                column: "BillId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Prescriptions_DoctorId",
                 table: "Prescriptions",
                 column: "DoctorId");
@@ -331,7 +361,7 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 name: "Appointments");
 
             migrationBuilder.DropTable(
-                name: "Events");
+                name: "BillMedication");
 
             migrationBuilder.DropTable(
                 name: "MedicationDosageHistories");
@@ -340,13 +370,16 @@ namespace MyDocAppointment.BusinessLayer.Migrations
                 name: "MedicationDosagePrescriptions");
 
             migrationBuilder.DropTable(
-                name: "Schedule");
+                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "History");
 
             migrationBuilder.DropTable(
                 name: "Prescriptions");
+
+            migrationBuilder.DropTable(
+                name: "Bills");
 
             migrationBuilder.DropTable(
                 name: "Doctors");
