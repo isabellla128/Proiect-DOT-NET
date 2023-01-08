@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import AbstractRestService from '../abstracts/AbstractRestService';
-import { Presctiption } from 'src/models/prescription';
+import { PrescriptinResponse, Prescription } from 'src/models/prescription';
 import { HttpClient } from '@angular/common/http';
 import { BASE_API_URL } from 'src/environments/global';
 import { BehaviorSubject } from 'rxjs';
@@ -9,13 +9,25 @@ import { MedicationDosages } from 'src/models/medication';
 @Injectable({
   providedIn: 'root',
 })
-export class PrescriptionService extends AbstractRestService<Presctiption> {
+export class PrescriptionService extends AbstractRestService<Prescription> {
   constructor(private http: HttpClient) {
     super(
       http,
       BASE_API_URL + 'Prescriptions',
-      new BehaviorSubject<Presctiption[]>([])
+      new BehaviorSubject<Prescription[]>([])
     );
+  }
+
+  override getAll(): any {
+    this.http.get<PrescriptinResponse[]>(this._url).subscribe({
+      next: (result) =>
+        this.collection$.next({
+          ...result,
+          medicationDosage: {},
+        }),
+      error: (error) => console.log(error),
+      complete: () => {},
+    });
   }
 
   getMedicationDosages(prescriptionId: string) {

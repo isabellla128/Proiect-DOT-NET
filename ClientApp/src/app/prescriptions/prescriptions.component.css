@@ -1,8 +1,15 @@
-h3 {
-  margin: 0 0 10px;
+.edit-button {
+  z-index: 10000;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
-pre {
-  background-color: #f5f5f5;
-  padding: 15px;
+.example-header-image {
+  background-image: url("../../assets/medic-image-placeholder.jpg");
+  background-size: cover;
+}
+
+.mat-card {
+  margin: 1rem;
 }
