@@ -4,7 +4,7 @@ import { MyCalendarEvent } from 'src/models/appointment';
 import { AppointmentsService } from 'src/shared/services/appointments.service';
 import { colors } from 'src/environments/environment';
 import { PatientService } from 'src/shared/services/patient.service';
-import { Patient } from 'src/models/patent';
+import { Patient } from 'src/models/patient';
 
 @Component({
   selector: 'app-appointments',

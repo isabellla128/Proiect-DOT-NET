@@ -1,6 +1,6 @@
 import { CalendarEvent } from 'angular-calendar';
 import { Doctor } from './doctor';
-import { Patient } from './patent';
+import { Patient } from './patient';
 
 export interface Appointment {
   id: string;

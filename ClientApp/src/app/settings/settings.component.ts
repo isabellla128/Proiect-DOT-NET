@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Doctor } from 'src/models/doctor';
-import { Patient } from 'src/models/patent';
+import { Patient } from 'src/models/patient';
 import { DoctorService } from 'src/shared/services/doctor.service';
 import { PatientService } from 'src/shared/services/patient.service';
 

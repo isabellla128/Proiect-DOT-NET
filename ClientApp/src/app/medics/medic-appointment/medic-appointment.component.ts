@@ -12,7 +12,7 @@ import { PatientService } from 'src/shared/services/patient.service';
 import { Appointment, MyCalendarEvent } from 'src/models/appointment';
 import { AppointmentsService } from 'src/shared/services/appointments.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Patient } from 'src/models/patent';
+import { Patient } from 'src/models/patient';
 import * as moment from 'moment';
 import { colors } from 'src/environments/environment';
 
