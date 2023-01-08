@@ -57,8 +57,6 @@ export const CURRENCIES = {
 };
 
 export interface OrderStatusParams {
-  userName: string;
-  password: string;
   orderId: string;
   orderNumber?: string;
 }
@@ -141,7 +139,7 @@ export interface OrderQueryParams {
   token?: string;
 }
 
-export interface InsurancePayment {
+export interface BillPayment {
   //TODO add extra data prescription/medications
   payment: OrderStatusResponse;
 }

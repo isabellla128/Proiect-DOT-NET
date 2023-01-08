@@ -1,1 +1,33 @@
-<p>payment-presentation works!</p>
+<div class="container">
+  <div class="half">
+    <h1>Transaction</h1>
+    <mat-card>
+      <mat-card-title>Status</mat-card-title>
+      <mat-card-content>{{ response.actionCodeDescription }}</mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>Order Number</mat-card-title>
+      <mat-card-content>{{ response.orderNumber }}</mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-title>Amount</mat-card-title>
+      <mat-card-content>{{ response.amount / 100 }} Lei</mat-card-content>
+    </mat-card>
+  </div>
+  <div class="half">
+    <h1>Products</h1>
+
+    <mat-card>
+      <mat-card-content>Simple card</mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content>Simple card</mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content>Simple card</mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content>Simple card</mat-card-content>
+    </mat-card>
+  </div>
+</div>

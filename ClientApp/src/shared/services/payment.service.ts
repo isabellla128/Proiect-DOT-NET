@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { USERNAME, PASSWORD, PAYMENT_API_URL } from 'src/environments/global';
 import {
+  BillPayment,
   OrderStatusParams,
   OrderStatusResponse,
   RegisterDoParams,
@@ -65,4 +66,6 @@ export class PaymentService {
     };
     return this.http.post<OrderStatusResponse>(endpoint, body, httpOptions);
   }
+
+  savePayment(payment: BillPayment) {}
 }

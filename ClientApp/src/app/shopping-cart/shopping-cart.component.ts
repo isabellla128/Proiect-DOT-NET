@@ -21,7 +21,7 @@ export class ShoppingCartComponent implements OnInit {
     private shoppingCartService: ShoppingCartService,
     private snackBar: MatSnackBar,
     private paymentService: PaymentService,
-    public domSanitizerService: DomSanitizer
+    private domSanitizerService: DomSanitizer
   ) {}
 
   ngOnInit(): void {
