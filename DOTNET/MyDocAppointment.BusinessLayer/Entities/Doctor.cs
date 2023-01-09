@@ -36,7 +36,7 @@ namespace MyDocAppointment.BusinessLayer.Entities
         public string Profession { get; private set; }
         public string Location { get; private set; }
         public double Grade { get; private set; }
-
+        public string Tenant { get; set; } = Tenants.Internet;
         public int Reviews { get; private set; }
 
 

@@ -5,11 +5,11 @@ namespace MyDocAppointment.BusinessLayer.Data
 {
     public class MyDocAppointmentDatabaseContext : DbContext
     {
-
-        public MyDocAppointmentDatabaseContext(DbContextOptions<MyDocAppointmentDatabaseContext> options) : base(options)
+        private readonly string tenant;
+        public MyDocAppointmentDatabaseContext(DbContextOptions<MyDocAppointmentDatabaseContext> options, ITenantGetter tenantGetter) : base(options)
         {
             this.Database.EnsureCreated();
-
+            tenant = tenantGetter.Tenant;
         }
 
 
@@ -34,6 +34,7 @@ namespace MyDocAppointment.BusinessLayer.Data
         {
             //set null hospitalId on doctor when delete hospital
             modelBuilder.Entity<Doctor>()
+                .HasQueryFilter(a => a.Tenant == tenant)
                 .HasOne(d => d.Hospial)
                 .WithMany(h => h.Doctors)
                 .HasForeignKey(@"HospitalId")
