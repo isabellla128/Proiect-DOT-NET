@@ -23,7 +23,7 @@
                   <mat-card-title>{{ medication.name }}</mat-card-title>
                   <mat-card-subtitle class="text-color-white"
                     ><p>Quantity: {{ dosage.quantity }}</p>
-                    <p>Frequency: {{ dosage.frequency }}</p>
+                    <p>Frequency: {{ dosage.frequency }} per Day</p>
                     <p>From: {{ getDate(dosage.startDate) }}</p>
                     <p>To: {{ getDate(dosage.endDate) }}</p></mat-card-subtitle
                   >
@@ -38,7 +38,11 @@
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="accent">
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="addToCart(prescription.medicationDosagePrescriptions)"
+        >
           Add to cart <mat-icon>add_shopping_cart</mat-icon>
         </button>
       </mat-card-actions>
