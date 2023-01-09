@@ -1,5 +1,8 @@
 <div class="container">
-  <div class="" *ngFor="let prescription of prescriptions; let i = index">
+  <div
+    class="prescription-container"
+    *ngFor="let prescription of prescriptions; let i = index"
+  >
     <mat-card>
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
@@ -9,19 +12,35 @@
         >
         <mat-card-subtitle>{{ doctors[i].profession }}</mat-card-subtitle>
       </mat-card-header>
-      <mat-card-content>
-        <div
-          class=""
-          *ngFor="let dosage of prescription.medicationDosagePrescriptions"
-        ></div>
-        <h2>From:</h2>
-        <p>
-          {{ doctors[i].title }} {{ doctors[i].firstName }}
-          {{ doctors[i].lastName }}
-        </p>
+      <mat-card-content class="card-content">
+        <div *ngFor="let dosage of prescription.medicationDosagePrescriptions">
+          <div
+            *ngIf="medicationService.getOne(dosage.medicationId) as medication"
+          >
+            <mat-card class="dosage-card">
+              <mat-card-header>
+                <mat-card-title-group>
+                  <mat-card-title>{{ medication.name }}</mat-card-title>
+                  <mat-card-subtitle class="text-color-white"
+                    ><p>Quantity: {{ dosage.quantity }}</p>
+                    <p>Frequency: {{ dosage.frequency }}</p>
+                    <p>From: {{ getDate(dosage.startDate) }}</p>
+                    <p>To: {{ getDate(dosage.endDate) }}</p></mat-card-subtitle
+                  >
+                  <img
+                    mat-card-sm-image
+                    src="../../assets/drug-placeholder.png"
+                  />
+                </mat-card-title-group>
+              </mat-card-header>
+            </mat-card>
+          </div>
+        </div>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button>Add to cart</button>
+        <button mat-raised-button color="accent">
+          Add to cart <mat-icon>add_shopping_cart</mat-icon>
+        </button>
       </mat-card-actions>
     </mat-card>
   </div>

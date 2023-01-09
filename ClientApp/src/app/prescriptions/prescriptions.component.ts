@@ -19,7 +19,7 @@ export class PrescriptionsComponent implements OnInit {
   constructor(
     private prescriptionService: PrescriptionService,
     private doctorService: DoctorService,
-    private medicationService: MedicationService,
+    public medicationService: MedicationService,
     private patientService: PatientService
   ) {}
 
@@ -37,5 +37,10 @@ export class PrescriptionsComponent implements OnInit {
       console.log(prescriptions);
       console.log(this.doctors);
     });
+  }
+
+  getDate(date: string) {
+    const dateObj = new Date(date);
+    return dateObj.toLocaleDateString('en-GB');
   }
 }
