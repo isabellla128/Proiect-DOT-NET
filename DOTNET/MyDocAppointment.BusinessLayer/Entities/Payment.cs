@@ -15,8 +15,6 @@ namespace MyDocAppointment.BusinessLayer.Entities
         public int OrderStatus { get; private set; }
         public string CardholderName { get; private set; }
         public Bill? Bill { get; private set; }
-
-       // [ForeignKey("Bill")]
         public Guid BillId { get; private set; }
 
         public Result AddBillToPayment(Bill? bill)
