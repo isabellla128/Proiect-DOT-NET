@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { BASE_API_URL } from 'src/environments/global';
-import { Patient } from 'src/models/patent';
+import { Patient } from 'src/models/patient';
 import AbstractRestService from '../abstracts/AbstractRestService';
 
 @Injectable({

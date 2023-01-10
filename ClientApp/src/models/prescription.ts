@@ -1,13 +1,9 @@
-export interface MedicationDosages {
-  medicationId: string;
-  startDate: string;
-  endDate: string;
-  quantity: number;
-  frequency: number;
-}
+import { MedicationDosages } from './medication';
 
-export interface Presctiption {
+export interface Prescription {
+  id?: string;
   doctorId: string;
-  pacientId: string;
-  medicationDosages: MedicationDosages[];
+  patientId: string;
+  medicationDosages?: MedicationDosages[];
+  medicationDosagePrescriptions?: MedicationDosages[];
 }

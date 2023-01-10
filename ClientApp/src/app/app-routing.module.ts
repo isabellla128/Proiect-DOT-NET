@@ -10,6 +10,8 @@ import { PrescriptionsComponent } from './prescriptions/prescriptions.component'
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
+import { PaymentPresentationComponent } from './payment-presentation/payment-presentation.component';
+import { HistoryComponent } from './history/history.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -39,6 +41,8 @@ const routes: Routes = [
   { path: 'appointments', component: AppointmentsComponent },
   { path: 'shopping-cart', component: ShoppingCartComponent },
   { path: 'settings', component: SettingsComponent },
+  { path: 'payment', component: PaymentPresentationComponent },
+  { path: 'history', component: HistoryComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' },
 ];

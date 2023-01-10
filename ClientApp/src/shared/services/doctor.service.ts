@@ -10,8 +10,23 @@ import AbstractRestService from '../abstracts/AbstractRestService';
   providedIn: 'root',
 })
 export class DoctorService extends AbstractRestService<Doctor> {
+  currentDoctor$ = new BehaviorSubject<Doctor>({} as Doctor);
   constructor(private http: HttpClient) {
     super(http, BASE_API_URL + 'Doctors', new BehaviorSubject<Doctor[]>([]));
+    this.currentDoctor$.next(this.getDoctorFromLocalStorage());
+
+    this.currentDoctor$.subscribe((doctor) => {
+      localStorage.setItem('doctor', JSON.stringify(doctor));
+    });
+  }
+
+  getDoctorFromLocalStorage() {
+    try {
+      const parsedJSON = JSON.parse(localStorage.getItem('doctor') || '');
+      return parsedJSON as Doctor;
+    } catch (error) {
+      return {} as Doctor;
+    }
   }
 
   getAppointments(doctorId: string) {

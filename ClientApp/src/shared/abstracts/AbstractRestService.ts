@@ -23,7 +23,9 @@ export default abstract class AbstractRestService<T> {
   }
 
   getOne(id: string) {
-    return this._http.get<T>(this._url + '/' + id);
+    return this._collection$
+      .getValue()
+      .find((enitity) => (enitity as any)['id'] === id);
   }
 
   post(entity: T) {

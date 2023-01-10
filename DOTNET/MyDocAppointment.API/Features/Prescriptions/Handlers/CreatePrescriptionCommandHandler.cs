@@ -36,7 +36,7 @@ namespace MyDocAppointment.API.Features.Prescriptions.Handlers
             var prescription = new Prescription();
 
             var doctor = doctorRepository.GetById(request.DoctorId).Result;
-            var patient = patientRepository.GetById(request.PacientId).Result;
+            var patient = patientRepository.GetById(request.PatientId).Result;
 
             if (doctor == null)
             {
