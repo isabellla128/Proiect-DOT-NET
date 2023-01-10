@@ -14,8 +14,14 @@ export class BillService extends AbstractRestService<BillPayment> {
     super(http, BASE_API_URL + 'Bills', new BehaviorSubject<BillPayment[]>([]));
   }
 
+  override post(bill: BillPayment) {
+    return this.http.post<BillPayment>(this._url, bill);
+  }
+
   getMedications(billId: string) {
-    this.http.get<Medication[]>(this._url + '/' + billId + '/medications');
+    return this.http.get<Medication[]>(
+      this._url + '/' + billId + '/medications'
+    );
   }
 
   postMedications(billId: string, medications: Medication[]) {
