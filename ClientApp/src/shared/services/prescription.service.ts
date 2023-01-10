@@ -10,6 +10,7 @@ import { MedicationDosages } from 'src/models/medication';
   providedIn: 'root',
 })
 export class PrescriptionService extends AbstractRestService<Prescription> {
+  private toBeDeleted: Prescription[] = [];
   constructor(private http: HttpClient) {
     super(
       http,
@@ -21,6 +22,16 @@ export class PrescriptionService extends AbstractRestService<Prescription> {
   getMedicationDosages(prescriptionId: string) {
     return this.http.get<MedicationDosages[]>(
       this._url + '/' + prescriptionId + '/medicationDosages'
+    );
+  }
+
+  addToDelede(prescription: Prescription) {
+    this.toBeDeleted.push(prescription);
+  }
+
+  deleteToBeDeletedPrescriptions() {
+    this.toBeDeleted.forEach((prescription) =>
+      this.delete(prescription.id || '')
     );
   }
 }

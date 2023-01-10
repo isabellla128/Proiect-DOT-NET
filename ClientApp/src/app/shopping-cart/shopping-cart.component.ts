@@ -6,6 +6,7 @@ import { Medication } from 'src/models/medication';
 import { CURRENCIES, RegisterDoParams } from 'src/models/payment';
 import { PaymentService } from 'src/shared/services/payment.service';
 import { ShoppingCartService } from 'src/shared/services/shopping-cart.service';
+import { PrescriptionService } from 'src/shared/services/prescription.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -21,7 +22,8 @@ export class ShoppingCartComponent implements OnInit {
     private shoppingCartService: ShoppingCartService,
     private snackBar: MatSnackBar,
     private paymentService: PaymentService,
-    private domSanitizerService: DomSanitizer
+    private domSanitizerService: DomSanitizer,
+    private prescriptionService: PrescriptionService
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +39,7 @@ export class ShoppingCartComponent implements OnInit {
 
   onPay() {
     if (this.totalPrice !== 0) {
-      console.log(this.totalPrice);
+      this.prescriptionService.deleteToBeDeletedPrescriptions();
 
       const paymentParams: RegisterDoParams = {
         orderNumber: Math.floor(Math.random() * 10000000).toString(),

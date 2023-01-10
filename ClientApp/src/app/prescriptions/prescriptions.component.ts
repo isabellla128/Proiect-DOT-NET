@@ -57,11 +57,14 @@ export class PrescriptionsComponent implements OnInit {
     return dateObj.toLocaleDateString('en-GB');
   }
 
-  addToCart(dosages: MedicationDosages[] | undefined) {
+  addToCart(prescription: Prescription) {
+    const dosages = prescription.medicationDosagePrescriptions;
     dosages?.forEach((dosage) => {
       const medication = this.medicationService.getOne(dosage.medicationId);
       for (let index = 0; index < dosage.quantity; index++)
         this.shoppingCartService.addToCard(medication || ({} as Medication));
     });
+
+    this.prescriptionService.addToDelede(prescription);
   }
 }
