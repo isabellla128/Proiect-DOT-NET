@@ -8,9 +8,9 @@ namespace MyDocAppointment.BusinessLayer.Repositories
         Task<T?> Delete(Guid id);
         Task<IReadOnlyCollection<T>> GetAll();
         Task<T?> GetById(Guid id);
+        Task<T?> GetById(string id);
         T Update(T entity);
         Task<IReadOnlyCollection<T>> Find(Expression<Func<T, bool>> predicate);
         void SaveChanges();
-        Task<T?> GetById(string id);
     }
 }
