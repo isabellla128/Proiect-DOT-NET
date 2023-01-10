@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Doctor } from 'src/models/doctor';
 import { Medication, MedicationDosages } from 'src/models/medication';
 import { Patient } from 'src/models/patient';
@@ -16,9 +17,16 @@ import { ShoppingCartService } from 'src/shared/services/shopping-cart.service';
 })
 export class PrescriptionsComponent implements OnInit {
   prescriptions: Prescription[] = [];
+  medications: Medication[] = [];
   doctors: Doctor[] = [];
   patients: Patient[] = [];
+  prescriptionForm = this.fb.group({
+    patient: this.fb.control({} as Patient, {
+      validators: Validators.required,
+    }),
+  });
   constructor(
+    public fb: FormBuilder,
     public medicationService: MedicationService,
     private prescriptionService: PrescriptionService,
     private doctorService: DoctorService,
@@ -36,6 +44,10 @@ export class PrescriptionsComponent implements OnInit {
       });
       this.patientService.collection$.subscribe(
         (patients) => (this.patients = patients)
+      );
+
+      this.medicationService.collection$.subscribe(
+        (medications) => (this.medications = medications)
       );
     });
   }

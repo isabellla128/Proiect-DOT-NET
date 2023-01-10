@@ -8,7 +8,7 @@ namespace MyDocAppointment.API.Validations
         public PrescriptionValidator()
         {
             RuleFor(p => p.DoctorId).NotNull().NotEmpty();
-            RuleFor(p=>p.PacientId).NotNull().NotEmpty();
+            RuleFor(p=>p.PatientId).NotNull().NotEmpty();
             RuleForEach(u => u.MedicationDosages)
                 .ChildRules(m =>
                 {

@@ -37,6 +37,7 @@
           </div>
         </div>
       </mat-card-content>
+
       <mat-card-actions>
         <button
           mat-raised-button
@@ -58,7 +59,6 @@
     position="end"
   >
     <div>
-      <p>Hello</p>
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -69,6 +69,10 @@
       >
         <mat-icon aria-label="Side nav toggle icon">close</mat-icon>
       </button>
+      <app-prescription-form
+        [medications]="medications"
+        [patients]="patients"
+      ></app-prescription-form>
     </div>
   </mat-sidenav>
   <button

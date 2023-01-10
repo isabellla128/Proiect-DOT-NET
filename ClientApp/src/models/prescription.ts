@@ -1,7 +1,7 @@
 import { MedicationDosages } from './medication';
 
 export interface Prescription {
-  id: string;
+  id?: string;
   doctorId: string;
   patientId: string;
   medicationDosages?: MedicationDosages[];

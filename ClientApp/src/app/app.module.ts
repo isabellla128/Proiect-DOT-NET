@@ -44,6 +44,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SettingsComponent } from './settings/settings.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { PaymentPresentationComponent } from './payment-presentation/payment-presentation.component';
+import { PrescriptionFormComponent } from './prescriptions/prescription-form/prescription-form.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { PaymentPresentationComponent } from './payment-presentation/payment-pre
     SettingsComponent,
     AppointmentsComponent,
     PaymentPresentationComponent,
+    PrescriptionFormComponent,
   ],
   imports: [
     BrowserModule,

@@ -107,12 +107,12 @@ namespace MyDocAppointment.Tests.ApiTests
         }
 
 
-        private static CreatePrescriptionDto CreateSUT(Guid doctorId, Guid pacientId, Guid medicationId)
+        private static CreatePrescriptionDto CreateSUT(Guid doctorId, Guid patientId, Guid medicationId)
         {
             return new CreatePrescriptionDto
             {
                 DoctorId = doctorId,
-                PacientId = pacientId,
+                PatientId = patientId,
                 MedicationDosages = new List<MedicationDosagePrescriptionDto>()
                 {
                     new MedicationDosagePrescriptionDto()
