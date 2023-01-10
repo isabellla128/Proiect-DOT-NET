@@ -1,3 +1,5 @@
+import { Medication } from './medication';
+
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface BillingInfo {
   deliveryType?: string;
@@ -140,6 +142,15 @@ export interface OrderQueryParams {
 }
 
 export interface BillPayment {
-  //TODO add extra data prescription/medications
-  payment: OrderStatusResponse;
+  id?: string;
+  medications?: Medication[];
+  billTotal?: number;
+  paymentId?: string;
+  payment?: Payment;
+}
+
+export interface Payment {
+  id?: string;
+  orderStatus: number;
+  cardHolderName: string;
 }

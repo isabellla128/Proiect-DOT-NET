@@ -39,8 +39,6 @@ export class ShoppingCartComponent implements OnInit {
 
   onPay() {
     if (this.totalPrice !== 0) {
-      this.prescriptionService.deleteToBeDeletedPrescriptions();
-
       const paymentParams: RegisterDoParams = {
         orderNumber: Math.floor(Math.random() * 10000000).toString(),
         amount: this.totalPrice,
@@ -66,7 +64,7 @@ export class ShoppingCartComponent implements OnInit {
           );
           this.document.location.href = safeUrl || 'localhost:4200';
         });
-
+      this.prescriptionService.deleteToBeDeletedPrescriptions();
       this.shoppingCartService.cleanCart();
     } else {
       this.snackBar.open('The shopping cart is empty', 'Ok!', {
