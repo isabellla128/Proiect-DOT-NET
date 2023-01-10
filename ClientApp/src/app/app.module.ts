@@ -45,6 +45,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { PaymentPresentationComponent } from './payment-presentation/payment-presentation.component';
 import { PrescriptionFormComponent } from './prescriptions/prescription-form/prescription-form.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { PrescriptionFormComponent } from './prescriptions/prescription-form/pre
     AppointmentsComponent,
     PaymentPresentationComponent,
     PrescriptionFormComponent,
+    HistoryComponent,
   ],
   imports: [
     BrowserModule,
